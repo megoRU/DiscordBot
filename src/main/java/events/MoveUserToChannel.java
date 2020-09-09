@@ -9,8 +9,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class MoveUserToChannel extends ListenerAdapter {
 
-
-
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     try {
@@ -24,7 +22,7 @@ public class MoveUserToChannel extends ListenerAdapter {
         event.getGuild().moveVoiceMember(users.get(1),
             event.getGuild().getVoiceChannels().get(0))
             .queue();
-        users.remove(1, event.getMember());
+        users.remove(1);
         Thread.sleep(1800000);
       }
     } catch (Exception e) {
