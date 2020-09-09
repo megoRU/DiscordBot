@@ -16,13 +16,22 @@ public class MessageDeleting extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
-    if (message.matches(DELETE_INDEXES2)) {
+    String idUser = event.getMember().getUser().getId();
+    if (message.matches(DELETE_INDEXES2) & !event.getMember().getUser().isBot() & !idUser
+        .equals("250699265389625347") & !idUser.equals("580388852448100355") & !idUser.equals("335466800793911298")) {
       List<Member> memberList = new ArrayList<>();
       memberList.add(event.getMember());
 
       event.getGuild().moveVoiceMember(memberList.get(0),
           event.getGuild().getVoiceChannels().get(1))
           .queue();
+
+      try {
+        Thread.sleep(1000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+
       event.getGuild().moveVoiceMember(memberList.get(0),
           event.getGuild().getVoiceChannels().get(0))
           .queue();
@@ -64,6 +73,4 @@ public class MessageDeleting extends ListenerAdapter {
       }
     }
   }
-
-
 }

@@ -24,7 +24,6 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
 
     if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
-      String id = event.getMember().getUser().getId();
       textChannel.sendMessage("Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter + " зашёл в канал: " + nameChannelEnterUser).queue();
     }
   }

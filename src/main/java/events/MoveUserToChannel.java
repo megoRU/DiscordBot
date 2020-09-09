@@ -12,18 +12,29 @@ public class MoveUserToChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     try {
-      while (true) {
-        HashMap<Integer, Member> users = new HashMap<Integer, Member>();
-       // List<Member> memberList = new ArrayList<>();
-        users.put(1, event.getMember());
-        event.getGuild().moveVoiceMember(users.get(1),
-            event.getGuild().getVoiceChannels().get(1))
-            .queue();
-        event.getGuild().moveVoiceMember(users.get(1),
-            event.getGuild().getVoiceChannels().get(0))
-            .queue();
-        users.remove(1);
-        Thread.sleep(1800000);
+      String idUser = event.getMember().getUser().getId();
+      if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")
+          & !idUser.equals("580388852448100355") & !idUser.equals("335466800793911298")) {
+        while (true) {
+          HashMap<Integer, Member> users = new HashMap<Integer, Member>();
+          // List<Member> memberList = new ArrayList<>();
+          users.put(1, event.getMember());
+          event.getGuild().moveVoiceMember(users.get(1),
+              event.getGuild().getVoiceChannels().get(1))
+              .queue();
+
+          try {
+            Thread.sleep(1000);
+          } catch (InterruptedException e) {
+            e.printStackTrace();
+          }
+
+          event.getGuild().moveVoiceMember(users.get(1),
+              event.getGuild().getVoiceChannels().get(0))
+              .queue();
+          users.remove(1);
+          Thread.sleep(1800000);
+        }
       }
     } catch (Exception e) {
       e.printStackTrace();
