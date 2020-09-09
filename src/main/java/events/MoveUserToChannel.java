@@ -13,7 +13,7 @@ public class MoveUserToChannel extends ListenerAdapter {
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     try {
       while (true) {
-        final HashMap<Integer, Member> users = new HashMap<Integer, Member>();
+        HashMap<Integer, Member> users = new HashMap<Integer, Member>();
        // List<Member> memberList = new ArrayList<>();
         users.put(1, event.getMember());
         event.getGuild().moveVoiceMember(users.get(1),
