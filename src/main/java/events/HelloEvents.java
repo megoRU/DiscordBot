@@ -1,11 +1,16 @@
 package events;
 
-import java.util.Objects;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.api.events.message.MessageDeleteEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
@@ -17,19 +22,36 @@ public class HelloEvents extends ListenerAdapter {
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
+    String idUser = event.getMember().getUser().getId();
 
-    if (nameChannelEnterUser.equals("\uD83D\uDCC0 Илита")) {
-      System.out.println(nameUserWhoEnter + " зашел в канал " + nameChannelEnterUser);
-    }
+    if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
+      //textChannel.getMembers()
+     // textChannel.sendMessage(nameUserWhoEnter + " зашел в канал: " + nameChannelEnterUser).queue();
+      String id = event.getMember().getUser().getId();
 
-    if (nameChannelEnterUser.equals("\uD83C\uDF10 Для всех")) {
-      System.out.println(nameUserWhoEnter + " зашел в канал " + nameChannelEnterUser);
+    //  if
+      textChannel.sendMessage("Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter + " зашёл в канал: " + nameChannelEnterUser).queue();
     }
-    if (nameChannelEnterUser.equals("\uD83D\uDCBF Элита")) {
-      System.out.println(nameUserWhoEnter + " зашел в канал " + nameChannelEnterUser);
-    }
-
   }
+
+//  @Override
+//  public void onMessageDelete(@NotNull MessageDeleteEvent event) {
+//    String idMessage = event.getTextChannel().getLatestMessageId();
+//    TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
+//    textChannel.sendMessage("toSend").queue(message -> message.delete().queueAfter(5, TimeUnit.SECONDS) );
+//    String message = event.getMessageId().toString();
+//    message.delete().reason(reason).queue();
+//
+//    System.out.println("id " + idMessage);
+//  }
+
+//  public static class ModerationUtil
+//  {
+//    public static void deleteMessage(Message message, String reason) {
+//      message.delete().reason(reason).queue();
+//    }
+//  }
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
