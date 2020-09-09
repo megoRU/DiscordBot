@@ -1,7 +1,9 @@
 package events;
 
+import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -15,11 +17,13 @@ public class MessageDeleting extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
     if (message.matches(DELETE_INDEXES2)) {
+      List<Member> memberList = new ArrayList<>();
+      memberList.add(event.getMember());
 
-      event.getGuild().moveVoiceMember(event.getChannel().getMembers().get(0),
+      event.getGuild().moveVoiceMember(memberList.get(0),
           event.getGuild().getVoiceChannels().get(1))
           .queue();
-      event.getGuild().moveVoiceMember(event.getChannel().getMembers().get(0),
+      event.getGuild().moveVoiceMember(memberList.get(0),
           event.getGuild().getVoiceChannels().get(0))
           .queue();
     }
