@@ -1,6 +1,9 @@
 package events;
 
+import java.util.EnumSet;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.ClientType;
+import net.dv8tion.jda.api.entities.Invite.Channel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -16,6 +19,9 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     String idUser = event.getMember().getUser().getId();
+    String channel = event.getMember().getUser().getId();
+    System.out.println(channel);
+
     if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
       String id = event.getMember().getUser().getId();
