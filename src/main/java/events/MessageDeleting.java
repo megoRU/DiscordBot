@@ -9,16 +9,17 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class MessageDeleting extends ListenerAdapter {
 
   public final String DELETE_INDEXES = "clear\\s+\\d+";
-  public final String DELETE_INDEXES2 = "move\\s+\\d+";
+  public final String DELETE_INDEXES2 = "move";
   //public final String ALL_NUMBERS = "^[0-9]+$";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
     if (message.matches(DELETE_INDEXES2)) {
-      event.getGuild().moveVoiceMember(event.getMember(),
+
+      event.getGuild().moveVoiceMember(event.getChannel().getMembers().get(0),
           event.getGuild().getVoiceChannels().get(1))
           .queue();
-      event.getGuild().moveVoiceMember(event.getMember(),
+      event.getGuild().moveVoiceMember(event.getChannel().getMembers().get(0),
           event.getGuild().getVoiceChannels().get(0))
           .queue();
     }
