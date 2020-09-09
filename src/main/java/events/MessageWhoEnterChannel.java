@@ -9,21 +9,16 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
 
-public class HelloEvents extends ListenerAdapter {
+public class MessageWhoEnterChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     String idUser = event.getMember().getUser().getId();
-
     if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
-      //textChannel.getMembers()
-     // textChannel.sendMessage(nameUserWhoEnter + " зашел в канал: " + nameChannelEnterUser).queue();
       String id = event.getMember().getUser().getId();
-
-    //  if
       textChannel.sendMessage("Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter + " зашёл в канал: " + nameChannelEnterUser).queue();
     }
   }
