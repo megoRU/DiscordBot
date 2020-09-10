@@ -16,7 +16,7 @@ public class Main {
     builder.addEventListeners(new MoveUserToChannel());
     builder.addEventListeners(new YoutubeUrlWithTime());
 
-    builder.setActivity(Activity.listening("как орёт мамка Юры"));
+    builder.setActivity(Activity.playing("—> !help"));
     builder.build();
   }
 }
