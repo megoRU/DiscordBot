@@ -1,3 +1,4 @@
+import config.Config;
 import events.MessageWhoEnterChannel;
 import events.MessageDeleting;
 import events.MoveUserToChannel;
@@ -8,7 +9,7 @@ import net.dv8tion.jda.api.entities.Activity;
 public class Main {
 
   public static void main(String[] args) throws Exception  {
-    JDABuilder builder = JDABuilder.createDefault("NzUzMDAxNzQ5NjUyMTc3MDI4.X1f1hw.8UPL84pkbZakPWgbtJsGAgQCBIE");
+    JDABuilder builder = JDABuilder.createDefault(Config.getTOKEN()); //The token was changed after opening the repository!
     builder.setBulkDeleteSplittingEnabled(false);
     builder.addEventListeners(new MessageWhoEnterChannel());
     builder.addEventListeners(new MessageDeleting());

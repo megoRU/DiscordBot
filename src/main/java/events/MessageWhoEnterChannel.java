@@ -1,13 +1,13 @@
 package events;
 
-import java.util.EnumSet;
+import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.ClientType;
-import net.dv8tion.jda.api.entities.Invite.Channel;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.user.update.UserUpdateOnlineStatusEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.managers.AudioManager;
 import org.jetbrains.annotations.NotNull;
@@ -27,6 +27,22 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
       textChannel.sendMessage(
           "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
               + " зашёл в канал: " + nameChannelEnterUser).queue();
+    }
+  }
+
+  @Override
+  public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+    String nameChannelEnterUser = event.getChannelJoined().getName();
+    String nameUserWhoEnter = event.getMember().getUser().getName();
+    String idUser = event.getMember().getUser().getId();
+    String channel = event.getMember().getUser().getId();
+    //System.out.println(channel);
+
+    if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
+      textChannel.sendMessage(
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+              + " вышел из канала: " + nameChannelEnterUser).queue();
     }
   }
 
