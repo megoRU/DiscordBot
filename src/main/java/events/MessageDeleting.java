@@ -3,6 +3,7 @@ package events;
 import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -17,8 +18,11 @@ public class MessageDeleting extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
     String idUser = event.getMember().getUser().getId();
-    if (message.matches(DELETE_INDEXES2) & !event.getMember().getUser().isBot() & !idUser
-        .equals("250699265389625347") & !idUser.equals("580388852448100355") & !idUser.equals("335466800793911298")) {
+    // boolean bool = event.getGuild().getMember(event.getMember().getUser()).hasPermission(event.getChannel(), Permission.ADMINISTRATOR);
+    boolean bool2 = event.getMember().getGuild().getMember(event.getMember().getUser()).hasPermission(event.getChannel(), Permission.ADMINISTRATOR);
+
+    if (message.matches(DELETE_INDEXES2) & !event.getMember().getUser().isBot() & idUser
+        .equals("310364711587676161")) {
       List<Member> memberList = new ArrayList<>();
       memberList.add(event.getMember());
 
@@ -37,7 +41,7 @@ public class MessageDeleting extends ListenerAdapter {
           .queue();
     }
 
-    if (message.matches(DELETE_INDEXES)) {
+    if (message.matches(DELETE_INDEXES) & bool2) {
       String[] commandArray = message.split("\\s+", 2);
       String index = commandArray[1];
       int indexParseInt = Integer.parseInt(index);

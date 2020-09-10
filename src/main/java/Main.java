@@ -12,7 +12,7 @@ public class Main {
     builder.addEventListeners(new MessageWhoEnterChannel());
     builder.addEventListeners(new MessageDeleting());
     builder.addEventListeners(new MoveUserToChannel());
-
+    
     builder.setActivity(Activity.playing("JS для даунов"));
     builder.build();
   }
