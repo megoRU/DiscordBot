@@ -15,7 +15,7 @@ public class Main {
     builder.addEventListeners(new MoveUserToChannel());
     builder.addEventListeners(new YoutubeUrlWithTime());
 
-    builder.setActivity(Activity.playing("JS для даунов"));
+    builder.setActivity(Activity.listening("как орёт мамка Юры"));
     builder.build();
   }
 }
