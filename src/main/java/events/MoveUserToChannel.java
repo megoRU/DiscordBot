@@ -1,6 +1,5 @@
 package events;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -16,14 +15,9 @@ public class MoveUserToChannel extends ListenerAdapter {
       if (!event.getMember().getUser().isBot() & idUser.equals("310364711587676161")) {
         while (true) {
           HashMap<Integer, Member> users = new HashMap<Integer, Member>();
-          // List<Member> memberList = new ArrayList<>();
           users.put(1, event.getMember());
-          event.getGuild().moveVoiceMember(users.get(1),
-              event.getGuild().getVoiceChannels().get(1))
-              .queue();
-
           try {
-            Thread.sleep(1000);
+            Thread.sleep(100);
           } catch (InterruptedException e) {
             e.printStackTrace();
           }

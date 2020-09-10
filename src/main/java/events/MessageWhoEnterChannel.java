@@ -20,11 +20,13 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
     String nameUserWhoEnter = event.getMember().getUser().getName();
     String idUser = event.getMember().getUser().getId();
     String channel = event.getMember().getUser().getId();
-    System.out.println(channel);
+    //System.out.println(channel);
 
     if (!event.getMember().getUser().isBot() & !idUser.equals("250699265389625347")) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat",true).get(0);
-      textChannel.sendMessage("Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter + " зашёл в канал: " + nameChannelEnterUser).queue();
+      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
+      textChannel.sendMessage(
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+              + " зашёл в канал: " + nameChannelEnterUser).queue();
     }
   }
 
@@ -49,14 +51,14 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
 
-      // Checks if the bot has permissions.
-      //TextChannel channel = event.getChannel();
-      TextChannel channel = event.getChannel();
+    // Checks if the bot has permissions.
+    //TextChannel channel = event.getChannel();
+    TextChannel channel = event.getChannel();
 
     System.out.println(event.getChannel());
 
     // Checks if the command is !join.
-      if(message.equals("!join")) {
+    if (message.equals("!join")) {
 
       if (!event.getGuild().getSelfMember().hasPermission(channel, Permission.VOICE_CONNECT)) {
         // The bot does not have permission to join any voice channel. Don't forget the .queue()!
@@ -65,9 +67,9 @@ public class MessageWhoEnterChannel extends ListenerAdapter {
       }
       // Creates a variable equal to the channel that the user is in.
       VoiceChannel connectedChannel = event.getMember().getVoiceState().getChannel();
-        assert connectedChannel != null;
-        System.out.println(connectedChannel.getMembers());
-        // Checks if they are in a channel -- not being in a channel means that the variable = null.
+      assert connectedChannel != null;
+      System.out.println(connectedChannel.getMembers());
+      // Checks if they are in a channel -- not being in a channel means that the variable = null.
       if (connectedChannel == null) {
         // Don't forget to .queue()!
         channel.sendMessage("You are not connected to a voice channel!").queue();

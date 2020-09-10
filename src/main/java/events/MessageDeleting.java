@@ -3,7 +3,6 @@ package events;
 import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -13,13 +12,32 @@ public class MessageDeleting extends ListenerAdapter {
 
   public final String DELETE_INDEXES = "clear\\s+\\d+";
   public final String DELETE_INDEXES2 = "move";
+  public final String HELP = "!help";
   //public final String ALL_NUMBERS = "^[0-9]+$";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
     String idUser = event.getMember().getUser().getId();
     // boolean bool = event.getGuild().getMember(event.getMember().getUser()).hasPermission(event.getChannel(), Permission.ADMINISTRATOR);
-    boolean bool2 = event.getMember().getGuild().getMember(event.getMember().getUser()).hasPermission(event.getChannel(), Permission.ADMINISTRATOR);
+    // boolean bool2 = event.getMember().getGuild().getMember(event.getMember().getUser()).hasPermission(event.getChannel(), Permission.ADMINISTRATOR);
+
+    if (message.matches(HELP)) {
+      EmbedBuilder info = new EmbedBuilder();
+      info.setColor(0xf45642);
+      info.setTitle("Информация");
+      info.setDescription("Команды: " + "\n"
+          + "!help" + "\n"
+          + "clear + индекс" + "// удаляет сообщения" + "\n"
+          + "ютуб ссылка + пробел + время в минутах (целое число 1, 2, 3 и т.д) -> конвертирует в короткую ссылку со временем"
+          + "\n"
+      );
+      info.addField("Создал бота", "mego", false);
+      //event.getChannel().queue();
+      event.getChannel().sendMessage(info.build()).queue();
+      info.clear();
+
+
+    }
 
     if (message.matches(DELETE_INDEXES2) & !event.getMember().getUser().isBot() & idUser
         .equals("310364711587676161")) {
@@ -41,7 +59,7 @@ public class MessageDeleting extends ListenerAdapter {
           .queue();
     }
 
-    if (message.matches(DELETE_INDEXES) & bool2) {
+    if (message.matches(DELETE_INDEXES)) {
       String[] commandArray = message.split("\\s+", 2);
       String index = commandArray[1];
       int indexParseInt = Integer.parseInt(index);
