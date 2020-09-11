@@ -31,6 +31,11 @@ public class BotShutDown extends ListenerAdapter {
       event.getChannel().sendMessage(info.build()).queue();
       info.clear();
       event.getJDA().shutdown();
+      try {
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       System.exit(-1);
     }
   }

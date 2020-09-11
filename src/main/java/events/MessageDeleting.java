@@ -39,7 +39,7 @@ public class MessageDeleting extends ListenerAdapter {
           event.getChannel().sendMessage(error.build()).queue();
           error.clear();
         }
-        if (indexParseInt > 1 & indexParseInt < 99) {
+        if (indexParseInt > 1 & indexParseInt <= 99) {
           List<Message> messages = event.getChannel().getHistory().retrievePast(indexParseInt)
               .complete();
           event.getChannel().deleteMessages(messages).queue();
@@ -52,7 +52,7 @@ public class MessageDeleting extends ListenerAdapter {
               .flatMap(Message::delete).submit();
           error.clear();
         }
-        if (indexParseInt < 1 || indexParseInt > 99) {
+        if (indexParseInt < 1 || indexParseInt >= 100) {
           EmbedBuilder error = new EmbedBuilder();
           error.setColor(0xff3923);
           error.setTitle("🔴 Error: Too many messages selected");
