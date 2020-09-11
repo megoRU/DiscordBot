@@ -1,5 +1,6 @@
 import config.Config;
 import events.BotJoinChannel;
+import events.GetOnlineUsers;
 import events.MessageDeleting;
 import events.MessageInfoHelp;
 import events.MessageMoveUser;
@@ -20,6 +21,7 @@ public class Main {
     builder.setActivity(Activity.playing("—> !help"));
     builder.setBulkDeleteSplittingEnabled(false);
     builder.addEventListeners(new BotJoinChannel());
+    builder.addEventListeners(new GetOnlineUsers());
     builder.addEventListeners(new MessageDeleting());
     builder.addEventListeners(new MessageInfoHelp());
     builder.addEventListeners(new MessageMoveUser());
