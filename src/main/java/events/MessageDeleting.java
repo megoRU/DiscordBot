@@ -17,11 +17,7 @@ public class MessageDeleting extends ListenerAdapter {
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
     if (message.matches(DELETE_INDEXES) & !boolPermissionAdmin) {
-      EmbedBuilder error = new EmbedBuilder();
-      error.setColor(0xff3923);
-      error.setTitle("🔴 Error: You not Admin");
-      error.setDescription("You need Permission.ADMINISTRATOR");
-      event.getChannel().sendMessage(error.build()).queue();
+     return;
     }
 
     if (message.matches(DELETE_INDEXES) & boolPermissionAdmin) {

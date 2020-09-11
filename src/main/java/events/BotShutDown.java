@@ -15,11 +15,12 @@ public class BotShutDown extends ListenerAdapter {
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & !boolPermissionAdmin) {
-      EmbedBuilder error = new EmbedBuilder();
-      error.setColor(0xff3923);
-      error.setTitle("🔴 Error: You not Admin");
-      error.setDescription("You need Permission.ADMINISTRATOR");
-      event.getChannel().sendMessage(error.build()).queue();
+      EmbedBuilder errorShutDown = new EmbedBuilder();
+      errorShutDown.setColor(0xff3923);
+      errorShutDown.setTitle("🔴 Error: You not Admin");
+      errorShutDown.setDescription("You need Permission.ADMINISTRATOR"
+          + "\n(BotShutDown)");
+      event.getChannel().sendMessage(errorShutDown.build()).queue();
     }
 
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & boolPermissionAdmin) {

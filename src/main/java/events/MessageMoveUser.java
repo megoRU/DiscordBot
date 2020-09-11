@@ -40,7 +40,8 @@ public class MessageMoveUser extends ListenerAdapter {
       EmbedBuilder error = new EmbedBuilder();
       error.setColor(0xff3923);
       error.setTitle("🔴 Error: You not Admin");
-      error.setDescription("You need Permission.ADMINISTRATOR");
+      error.setDescription("You need Permission.ADMINISTRATOR"
+          + "\n (MessageMoveUser)");
       event.getChannel().sendMessage(error.build()).queue();
     }
   }
