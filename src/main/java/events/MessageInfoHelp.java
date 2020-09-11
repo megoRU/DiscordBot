@@ -18,16 +18,14 @@ public class MessageInfoHelp extends ListenerAdapter {
       EmbedBuilder info = new EmbedBuilder();
       info.setColor(0xf45642);
       info.setTitle("Информация");
-      info.setDescription("Команды: " + "\n"
-          + "[!help/help/info] -> Информация" + "\n"
-          + "clear + число" + " -> Удаляет сообщения. Нужно быть админом" + "\n"
-          + "Ютуб ссылка + пробел + время в минутах! -> конвертирует в короткую ссылку со временем"
+      info.setDescription("Команды: "
+          + "\n[!help/help/info] -> Информация"
+          + "\nclear + число" + " -> Удаляет сообщения. Нужно быть админом"
+          + "\nЮтуб ссылка + пробел + время в минутах! -> конвертирует в короткую ссылку со временем"
       );
-      info.addField("Ссылки:", "Сайт: [megolox.ru](https://megolox.ru)" + "\n"
-              + "TS3 Сервер: ` ts3.megolox.ru`" + "\n"
-              + "CS:GO Сервер: `176.96.238.167:27015`" + "\n"
-              + "",
-          false);
+      info.addField("Ссылки:", "Сайт: [megolox.ru](https://megolox.ru)"
+              + "\nTS3 Сервер: ` ts3.megolox.ru`"
+              + "\nCS:GO Сервер: `176.96.238.167:27015`", false);
       info.addField("Создатель бота", "[mego](https://steamcommunity.com/id/megoRU)", false);
       event.getChannel().sendMessage(info.build()).queue();
       info.clear();

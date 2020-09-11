@@ -21,7 +21,7 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
   public void onGuildLeave(@NotNull GuildLeaveEvent event) {
     Objects.requireNonNull(event.getGuild().getDefaultChannel())
         .sendMessage(
-            "You remove " + "**mego BOT**" + " to " + "!\nFrom the Guild: " + event.getGuild()
+            "You remove " + "**mego BOT**" + "\nFrom the Guild: " + event.getGuild()
                 .getName()).queue();
   }
 }
