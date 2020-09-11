@@ -20,6 +20,8 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setTitle("Информация");
       info.setDescription("Команды: "
           + "\n[!help/help/info] -> Информация"
+          + "\n[!uptime/uptime] -> uptime bot"
+          + "\n[!ping/ping] -> время затраченное на выполнение команды"
           + "\nclear + число" + " -> Удаляет сообщения. Нужно быть админом"
           + "\nЮтуб ссылка + пробел + время в минутах! -> конвертирует в короткую ссылку со временем"
       );

@@ -15,7 +15,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
     String channel = event.getMember().getUser().getId();
-    //System.out.println(channel);
 
     if (!user.isBot()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
@@ -31,7 +30,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
     String channel = event.getMember().getUser().getId();
-    //System.out.println(channel);
 
     if (!user.isBot()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
