@@ -1,7 +1,6 @@
 package events;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
@@ -14,7 +13,6 @@ public class MessageInfoHelp extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
     String idUser = event.getMember().getUser().getId();
-    boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
     if (message.matches(HELP) || message.matches(HELP_WITH_OUT) || message.matches(INFO)) {
       EmbedBuilder info = new EmbedBuilder();
@@ -35,5 +33,4 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.clear();
     }
   }
-
 }
