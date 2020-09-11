@@ -1,6 +1,6 @@
 import config.Config;
 import events.BotJoinChannel;
-import events.GuildMemberLeaveJoin;
+import events.BotShutDown;
 import events.MessagePing;
 import events.MessageUptimeBot;
 import events.MessageDeleting;
@@ -23,7 +23,7 @@ public class Main {
     builder.setActivity(Activity.playing("—> !help"));
     builder.setBulkDeleteSplittingEnabled(false);
     builder.addEventListeners(new BotJoinChannel());
-    builder.addEventListeners(new GuildMemberLeaveJoin());
+    builder.addEventListeners(new BotShutDown());
     builder.addEventListeners(new MessagePing());
     builder.addEventListeners(new MessageDeleting());
     builder.addEventListeners(new MessageInfoHelp());
