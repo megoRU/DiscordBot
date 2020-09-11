@@ -17,19 +17,21 @@ public class BotShutDown extends ListenerAdapter {
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & !boolPermissionAdmin) {
       EmbedBuilder errorShutDown = new EmbedBuilder();
       errorShutDown.setColor(0xff3923);
-      errorShutDown.setTitle("🔴 Error: You not Admin");
+      errorShutDown.setTitle("🔴 Error: You are not Admin");
       errorShutDown.setDescription("You need Permission.ADMINISTRATOR"
-          + "\n(BotShutDown)");
+          + "\n-> BotShutDown.java");
       event.getChannel().sendMessage(errorShutDown.build()).queue();
     }
 
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & boolPermissionAdmin) {
       EmbedBuilder info = new EmbedBuilder();
-      info.setColor(0xf45642);
-      info.setTitle("Бот выключен!");
+      info.setColor(0x00FF00);
+      info.setTitle(":white_check_mark: Бот выключен!");
+      info.setDescription("Process finished with exit code -1");
       event.getChannel().sendMessage(info.build()).queue();
       info.clear();
       event.getJDA().shutdown();
+      System.exit(-1);
     }
   }
 }

@@ -40,12 +40,12 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
             + "https://youtu.be/" + resultsUrl + "?t=" + results).queue();
       }
     } catch (Exception exception) {
-      EmbedBuilder error = new EmbedBuilder();
-      error.setColor(0xff3923);
-      error.setTitle("🔴 Error: Произошла ошибка №хуй");
-      error.setDescription(
-          "Где пиздец случился: public class YoutubeUrlWithTime extends ListenerAdapter");
-      event.getChannel().sendMessage(error.build()).queue();
+      EmbedBuilder errorYoutube = new EmbedBuilder();
+      errorYoutube.setColor(0xff3923);
+      errorYoutube.setTitle("🔴 Error: Произошла ошибка №хуй");
+      errorYoutube.setDescription("-> YoutubeUrlWithTime.java");
+      event.getChannel().sendMessage(errorYoutube.build()).queue();
+      errorYoutube.clear();
     }
   }
 }

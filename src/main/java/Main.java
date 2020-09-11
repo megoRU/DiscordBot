@@ -10,13 +10,14 @@ import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import events.MoveUserToChannel;
 import events.YoutubeUrlWithTime;
+import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 
 public class Main {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) throws LoginException {
     JDABuilder builder = JDABuilder.createDefault(Config.getTOKEN()); //The token was changed after opening the repository!
     builder.setAutoReconnect(true);
     builder.setStatus(OnlineStatus.ONLINE);
@@ -33,6 +34,7 @@ public class Main {
     builder.addEventListeners(new MessageWhoEnterLeaveChannel());
     builder.addEventListeners(new MoveUserToChannel());
     builder.addEventListeners(new YoutubeUrlWithTime());
+
     builder.build();
   }
 }
