@@ -17,7 +17,7 @@ public class MessagePing extends ListenerAdapter {
       long time = System.currentTimeMillis();
       channels.sendMessage("Pong!") /* => RestAction<Message> */
           .queue(response /* => Message */ -> {
-            response.editMessageFormat("Pong: %d ms", System.currentTimeMillis() - time).queue();
+            response.editMessageFormat("API Response: %d ms", System.currentTimeMillis() - time).queue();
           });
     }
   }
