@@ -1,32 +1,25 @@
 package events;
 
-import java.util.HashMap;
-import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
+import java.util.concurrent.TimeUnit;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class MoveUserToChannel extends ListenerAdapter {
 
   @Override
-  public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+  public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     try {
       String idUser = event.getMember().getUser().getId();
       if (!event.getMember().getUser().isBot() & idUser.equals("310364711587676161")) {
         while (true) {
-          HashMap<Integer, Member> users = new HashMap<Integer, Member>();
-          users.put(1, event.getMember());
-          try {
-            Thread.sleep(100);
-          } catch (InterruptedException e) {
-            e.printStackTrace();
-          }
-
-          event.getGuild().moveVoiceMember(users.get(1),
-              event.getGuild().getVoiceChannels().get(0))
+          event.getChannelJoined().getGuild()
+              .moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannels().get(1))
               .queue();
-          users.remove(1);
-          Thread.sleep(1800000);
+          event.getChannelJoined().getGuild()
+              .moveVoiceMember(event.getMember(), event.getGuild().getVoiceChannels().get(0))
+              .queue();
+          TimeUnit.SECONDS.sleep(1800);
         }
       }
     } catch (Exception e) {
