@@ -17,7 +17,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String channel = event.getMember().getUser().getId();
 
     if (!user.isBot()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true).get(0);
       textChannel.sendMessage(
           "Эй @here!" + "\n" + "Пользователь: " + nameUserWhoEnter
               + " зашёл в канал: " + nameChannelEnterUser).queue();
@@ -32,7 +32,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String channel = event.getMember().getUser().getId();
 
     if (!user.isBot()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("botchat", true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true).get(0);
       textChannel.sendMessage(
           "Эй @here!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
