@@ -11,7 +11,7 @@ public class BotShutDown extends ListenerAdapter {
   public final String SHUTDOWN_WITH_OUT = "shutdown";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & !boolPermissionAdmin) {

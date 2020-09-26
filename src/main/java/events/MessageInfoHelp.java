@@ -11,7 +11,7 @@ public class MessageInfoHelp extends ListenerAdapter {
   public final String INFO = "info";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = event.getMember().getUser().getId();
 
     if (message.matches(HELP) || message.matches(HELP_WITH_OUT) || message.matches(INFO)) {

@@ -14,7 +14,7 @@ public class MessageUptimeBot extends ListenerAdapter {
   public final String UPTIME_WITH_OUT = "uptime";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     User user = Objects.requireNonNull(event.getMember()).getUser();
 
     if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT)) {

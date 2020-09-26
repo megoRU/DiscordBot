@@ -14,7 +14,7 @@ public class MessageMoveUser extends ListenerAdapter {
   public final String MOVE = "move";
 
   public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = event.getMember().getUser().getId();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 

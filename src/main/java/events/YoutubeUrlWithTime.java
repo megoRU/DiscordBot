@@ -13,7 +13,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
   public final String YOUTUBE_MINI_2 = "(?:https:\\/\\/)?(?:)youtu\\.be\\/[a-zA-z-0-9]+\\s+[0-9]+\\s+[0-9]{2}+";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
 
     try {

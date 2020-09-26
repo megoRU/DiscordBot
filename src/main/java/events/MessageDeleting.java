@@ -14,7 +14,7 @@ public class MessageDeleting extends ListenerAdapter {
   public final String DELETE_INDEXES = "clear\\s+\\d+";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw();
+    String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
