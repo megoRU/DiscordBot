@@ -41,19 +41,17 @@ public class ExchangeRates extends ListenerAdapter {
       Elements namesOfStations = doc.getElementsByClass("key-indicator_table");
       String[] text = namesOfStations.text().split(" ");
       String usd =
-          text[5] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-          + text[3] + " США" + "⠀⠀⠀⠀⠀"
+          text[5] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
           + text[6] + "⠀⠀⠀⠀⠀⠀⠀"
           + text[7];
       String euro =
-          text[9] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-              + text[8] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+          text[9] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
               + text[10] + "⠀⠀⠀⠀⠀⠀⠀"
               + text[11];
       EmbedBuilder info = new EmbedBuilder();
       info.setColor(0xf45642);
       info.setTitle("Курсы рубля к иностранным валютам | ЦБ");
-      info.setDescription("Код валюты⠀⠀⠀⠀⠀Валюта⠀⠀⠀⠀⠀⠀⠀⠀Покупка⠀⠀⠀⠀⠀⠀Продажа\n"
+      info.setDescription("Код валюты⠀⠀⠀⠀⠀⠀Покупка⠀⠀⠀⠀⠀⠀Продажа\n"
           + "" + usd + "\n"
           + "" + euro);
       event.getChannel().sendMessage(info.build()).queue();
