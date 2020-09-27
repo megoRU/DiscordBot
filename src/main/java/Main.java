@@ -2,6 +2,7 @@ import config.Config;
 import events.BotJoinChannel;
 import events.BotShutDown;
 import events.ChangeBitrateChannel;
+import events.ExchangeRates;
 import events.MessagePing;
 import events.MessageUptimeBot;
 import events.MessageDeleting;
@@ -36,6 +37,7 @@ public class Main {
     builder.addEventListeners(new MoveUserToChannel());
     builder.addEventListeners(new YoutubeUrlWithTime());
     builder.addEventListeners(new ChangeBitrateChannel());
+    builder.addEventListeners(new ExchangeRates());
 
     builder.build();
   }

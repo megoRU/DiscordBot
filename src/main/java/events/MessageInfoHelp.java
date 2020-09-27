@@ -20,6 +20,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setTitle("Информация");
       info.setDescription("Команды: "
           + "\n[!help/help/info] -> Информация"
+          + "\n[курс/курс доллара/курс евро] -> Данные от ЦБ"
           + "\n[!uptime/uptime] -> uptime bot"
           + "\n[!shutdown/shutdown] -> Бот выключается на Linux сервере"
           + "\n[!ping/ping] -> время затраченное на выполнение команды"
