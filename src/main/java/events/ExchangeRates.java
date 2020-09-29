@@ -1,6 +1,7 @@
 package events;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -38,22 +39,24 @@ public class ExchangeRates extends ListenerAdapter {
         e.printStackTrace();
       }
       assert doc != null;
-      Elements namesOfStations = doc.getElementsByClass("key-indicator_table");
-      String[] text = namesOfStations.text().split(" ");
+      Elements values = doc.getElementsByClass("key-indicator_table");
+      String[] text = values.text().split(" ");
+      DecimalFormat formatter = new DecimalFormat("#0.00");
+
       String usd =
-          text[5] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-          + text[6] + "⠀⠀⠀⠀⠀⠀⠀"
-          + text[7];
+          text[5] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+          + formatter.format(Double.parseDouble(text[6].replace(",", "."))) + "⠀⠀⠀⠀⠀⠀⠀"
+          + formatter.format(Double.parseDouble(text[7].replace(",", ".")));
       String euro =
-          text[9] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-              + text[10] + "⠀⠀⠀⠀⠀⠀⠀"
-              + text[11];
+          text[9] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
+              + formatter.format(Double.parseDouble(text[10].replace(",", "."))) + "⠀⠀⠀⠀⠀⠀⠀"
+              + formatter.format(Double.parseDouble(text[11].replace(",", ".")));
       EmbedBuilder info = new EmbedBuilder();
       info.setColor(0xf45642);
-      info.setTitle("Курсы рубля к иностранным валютам | ЦБ");
-      info.setDescription("Код валюты⠀⠀ ⠀⠀⠀⠀Покупка⠀⠀ ⠀⠀⠀⠀Продажа\n"
-          + "" + usd + "\n"
-          + "" + euro);
+      info.setTitle("Курс рубля к иностранным валютам | ЦБ");
+      info.setDescription("Код валюты⠀⠀|⠀⠀Покупка⠀⠀|⠀⠀Продажа\n"
+          + usd + "\n"
+          + euro);
       event.getChannel().sendMessage(info.build()).queue();
       info.clear();
     }
