@@ -3,6 +3,7 @@ import events.BotJoinChannel;
 import events.BotShutDown;
 import events.ChangeBitrateChannel;
 import events.ExchangeRates;
+import events.GoogleSearch;
 import events.MessagePing;
 import events.MessageUptimeBot;
 import events.MessageDeleting;
@@ -10,7 +11,7 @@ import events.MessageInfoHelp;
 import events.MessageMoveUser;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
-import events.MoveUserToChannel;
+import events.DrinkBoolean;
 import events.YoutubeUrlWithTime;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
@@ -34,11 +35,12 @@ public class Main {
     builder.addEventListeners(new MessageUptimeBot());
     builder.addEventListeners(new MessageWhenBotLeaveJoinToGuild());
     builder.addEventListeners(new MessageWhoEnterLeaveChannel());
-    builder.addEventListeners(new MoveUserToChannel());
     builder.addEventListeners(new YoutubeUrlWithTime());
     builder.addEventListeners(new ChangeBitrateChannel());
+    builder.addEventListeners(new GoogleSearch());
     builder.addEventListeners(new ExchangeRates());
-
+    builder.addEventListeners(new DrinkBoolean());
     builder.build();
+
   }
 }
