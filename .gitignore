@@ -13,6 +13,7 @@
 .mtj.tmp/
 .idea/
 .idea
+trash
 .target/
 .src/main/resources/
 

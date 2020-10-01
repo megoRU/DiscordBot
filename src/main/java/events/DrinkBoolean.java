@@ -22,7 +22,6 @@ public class DrinkBoolean extends ListenerAdapter {
         || message.matches(DRINK4)) {
       boolean drink = drink();
       if (drink) {
-
         EmbedBuilder drinks = new EmbedBuilder();
         drinks.setColor(0x00FF00);
         drinks.setTitle(":white_check_mark: Сегодня мы бухаем!");
@@ -30,10 +29,9 @@ public class DrinkBoolean extends ListenerAdapter {
         drinks.clear();
       }
       if (!drink) {
-
         EmbedBuilder drinks = new EmbedBuilder();
         drinks.setColor(0xff3923);
-        drinks.setTitle(":no_entry_sign: Сегодня мы не бухаем!");
+        drinks.setTitle(":x: Сегодня мы не бухаем!");
         event.getChannel().sendMessage(drinks.build()).queue();
         drinks.clear();
       }

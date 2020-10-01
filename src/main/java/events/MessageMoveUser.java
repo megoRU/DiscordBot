@@ -2,12 +2,16 @@ package events;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.internal.entities.UserById;
 
 public class MessageMoveUser extends ListenerAdapter {
 
@@ -15,11 +19,15 @@ public class MessageMoveUser extends ListenerAdapter {
 
   public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    String idUser = event.getMember().getUser().getId();
+    String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
+    User user = new UserById(Long.parseLong(idUser));
+    VoiceChannel connectedChannel = Objects.requireNonNull(event.getMember().getVoiceState()).getChannel();
 
-    if (message.matches(MOVE) & !event.getMember().getUser().isBot() & idUser
-        .equals("310364711587676161") & boolPermissionAdmin) {
+    if (message.matches(MOVE)
+        & !event.getMember().getUser().isBot()
+        & idUser.equals("310364711587676161")
+        & boolPermissionAdmin) {
       List<Member> memberList = new ArrayList<>();
       memberList.add(event.getMember());
 
