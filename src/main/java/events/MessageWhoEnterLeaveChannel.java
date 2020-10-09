@@ -12,9 +12,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   public boolean inChannel;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  public String userIdMeshiva = "753218484455997491";
+  public String userIdMeshiva = "310364711587676161";
   //bottestchannel //botchat
-  public String channelNameForBot = "bottestchannel";
+  public String channelNameForBot = "botchat";
+  public ArrayList<String> listUsersInChannels = new ArrayList<>();
+
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -25,10 +27,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String channel = event.getMember().getUser().getId();
     event.getVoiceState().inVoiceChannel();
     event.getMember().getVoiceState();
-    ArrayList<String> listUsersInChannels = new ArrayList<>();
     event.getGuild().getVoiceChannels().stream()
         .forEach(e -> e.getMembers().stream()
-        .forEach(f -> listUsersInChannels.add(f.getUser().getId())));
+            .forEach(f -> listUsersInChannels.add(f.getUser().getId())));
 
     System.out.println(isInChannel());
     for (String listlop : listUsersInChannels) {
@@ -42,25 +43,46 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
     }
     System.out.println(isInChannel());
-//&& !idEnterUser.matches("310364711587676161")
+    //&& !idEnterUser.matches("310364711587676161")
     if (!user.isBot() && isInChannel()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoEnter
               + " зашёл в канал: " + nameChannelEnterUser).queue();
+      deleteList();
+      return;
+    }
+
+    if (!user.isBot() && !isInChannel() && idEnterUser.matches("250699265389625347")) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+          .get(0);
+      textChannel.sendMessage(
+          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+              + " зашёл в канал: " + nameChannelEnterUser).queue();
+      deleteList();
+      return;
+    }
+
+    if (!user.isBot() && !isInChannel() && idEnterUser.matches("335466800793911298")) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+          .get(0);
+      textChannel.sendMessage(
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+              + " зашёл в канал: " + nameChannelEnterUser).queue();
+      deleteList();
+      return;
     }
 
     if (!user.isBot() && !isInChannel()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: "
+              + nameUserWhoEnter
               + " зашёл в канал: " + nameChannelEnterUser).queue();
-    }
-    //Очистка списка
-    for (int i = 0; i < listUsersInChannels.size(); i++) {
-      listUsersInChannels.remove(i);
+      deleteList();
+      return;
     }
   }
 
@@ -71,7 +93,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
     String channel = event.getMember().getUser().getId();
-    ArrayList<String> listUsersInChannels = new ArrayList<>();
     event.getGuild().getVoiceChannels().stream()
         .forEach(e -> e.getMembers().stream()
         .forEach(f -> listUsersInChannels.add(f.getUser().getId())));
@@ -88,22 +109,42 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
     }
     System.out.println(isInChannel());
-// && !idLeaveUser.matches("310364711587676161")
+    // && !idLeaveUser.matches("310364711587676161")
     if (!user.isBot() && isInChannel()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
+      deleteList();
+      return;
     }
-    if (!user.isBot() && !isInChannel()) {
+
+    if (!user.isBot() && !isInChannel() && idLeaveUser.matches("250699265389625347")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
       textChannel.sendMessage(
           "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
+      deleteList();
+      return;
     }
-    //Очистка списка
-    for (int i = 0; i < listUsersInChannels.size(); i++) {
-      listUsersInChannels.remove(i);
+
+    if (!user.isBot() && !isInChannel() && idLeaveUser.matches("335466800793911298")) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
+      textChannel.sendMessage(
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoLeave
+              + " вышел из канала: " + nameChannelLeaveUser).queue();
+      deleteList();
+      return;
+    }
+
+    if (!user.isBot() && !isInChannel()) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+          .get(0);
+      textChannel.sendMessage(
+          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
+              + " вышел в канал: " + nameChannelLeaveUser).queue();
+      deleteList();
+      return;
     }
   }
 
@@ -113,5 +154,15 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   public void setInChannel(boolean inChannel) {
     this.inChannel = inChannel;
+  }
+
+  public void deleteList() {
+    for (int i = 0; i < listUsersInChannels.size(); i++) {
+      listUsersInChannels.remove(i);
+    }
+  }
+
+  public int sizeList() {
+    return listUsersInChannels.size();
   }
 }
