@@ -11,10 +11,14 @@ import org.jetbrains.annotations.NotNull;
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   public boolean inChannel;
-  public String userIdMeshiva = "310364711587676161";
+  //310364711587676161 - Meshiva //753218484455997491 - megoTEST
+  public String userIdMeshiva = "753218484455997491";
+  //bottestchannel //botchat
+  public String channelNameForBot = "bottestchannel";
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+    String idEnterUser = event.getMember().getId();
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -38,9 +42,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
     }
     System.out.println(isInChannel());
-
+//&& !idEnterUser.matches("310364711587676161")
     if (!user.isBot() && isInChannel()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoEnter
@@ -48,16 +52,21 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannel()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
+          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
               + " зашёл в канал: " + nameChannelEnterUser).queue();
+    }
+    //Очистка списка
+    for (int i = 0; i < listUsersInChannels.size(); i++) {
+      listUsersInChannels.remove(i);
     }
   }
 
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+    String idLeaveUser = event.getMember().getId();
     String nameChannelLeaveUser = event.getChannelLeft().getName();
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -79,18 +88,22 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
     }
     System.out.println(isInChannel());
-
+// && !idLeaveUser.matches("310364711587676161")
     if (!user.isBot() && isInChannel()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
     }
     if (!user.isBot() && !isInChannel()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName("bottestchannel", true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
+          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
+    }
+    //Очистка списка
+    for (int i = 0; i < listUsersInChannels.size(); i++) {
+      listUsersInChannels.remove(i);
     }
   }
 
