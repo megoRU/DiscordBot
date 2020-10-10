@@ -3,6 +3,7 @@ import events.BotJoinChannel;
 import events.BotShutDown;
 import events.ChangeBitrateChannel;
 import events.ExchangeRates;
+import events.ExchangeValue;
 import events.GoogleSearch;
 import events.MessagePing;
 import events.MessageUptimeBot;
@@ -40,6 +41,7 @@ public class Main {
     builder.addEventListeners(new GoogleSearch());
     builder.addEventListeners(new ExchangeRates());
     builder.addEventListeners(new DrinkBoolean());
+    builder.addEventListeners(new ExchangeValue());
     builder.build();
 
   }
