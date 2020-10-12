@@ -10,7 +10,7 @@
 6. Bot welcome msg when Bot join Guild
 7. [Change channel bitrate](#change-channel-bitrate)
 8. [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
-9. [Exchange Values]()
+9. [Exchange Values](#exchange-values)
 
 ## Delete messages
 
