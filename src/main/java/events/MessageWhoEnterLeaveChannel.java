@@ -10,15 +10,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
-  public boolean inChannelMeshiva;
-  public boolean inChannelMego;
+  private boolean inChannelMeshiva;
+  private boolean inChannelMego;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  public String userIdMeshiva = "753218484455997491";
-  public String userIdMego = "250699265389625347";
+  private String userIdMeshiva = "310364711587676161";
+  private String userIdMego = "250699265389625347";
   //bottestchannel //botchat
-  public String channelNameForBot = "bottestchannel";
-  public ArrayList<String> listUsersInChannelsForMeshive = new ArrayList<>();
-  public ArrayList<String> listUsersInChannelsForMego = new ArrayList<>();
+  private String channelNameForBot = "botchat";
+  private ArrayList<String> listUsersInChannelsForMeshive = new ArrayList<>();
+  private ArrayList<String> listUsersInChannelsForMego = new ArrayList<>();
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -57,8 +57,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       }
       //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
     }
-    //TODO: сделать проверку на mego
-    if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches("753218484455997491")) {
+    if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches(userIdMeshiva)) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
@@ -68,7 +67,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       return;
     }
 
-    if (!user.isBot() && isInChannelMeshiva() && idEnterUser.matches("753218484455997491")) {
+    if (!user.isBot() && isInChannelMeshiva() && idEnterUser.matches(userIdMeshiva)) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
           .get(0);
       textChannel.sendMessage(
