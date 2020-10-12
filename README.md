@@ -14,7 +14,7 @@
 
 ## Delete messages
 
-Deleting multiple messages |  Checking Administrator's rights to delete messages
+Deleting multiple messages [clear 10] |  Checking Administrator's rights to delete messages
 :-------------------------:|:-------------------------:
 ![](https://megolox.ru/gitResources/deleteTenMessages.png) | ![](https://megolox.ru/gitResources/PrivilegesDeliting.png)
 
