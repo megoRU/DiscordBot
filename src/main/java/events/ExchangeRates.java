@@ -32,6 +32,7 @@ public class ExchangeRates extends ListenerAdapter {
         || message.matches(DOLLAR)
         || message.matches(COURSE_DOLLAR2))
     {
+      event.getChannel().sendTyping().queue();
       parserSBR();
       DecimalFormat formatter = new DecimalFormat("#0.00");
 

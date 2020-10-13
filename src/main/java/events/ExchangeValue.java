@@ -26,18 +26,21 @@ public class ExchangeValue extends ListenerAdapter {
             String[] text = exchangeRates.getElements();
             String[] messages = message.split(" ");
             if (message.matches(RUB_TO_DOLLAR) || message.matches(RUB_TO_DOLLAR_DOUBLE)) {
+                event.getChannel().sendTyping().queue();
                 double format = Double.parseDouble(text[7].replace(",", "."));
                 double result = Double.parseDouble(messages[0]) / format;
                 event.getChannel().sendMessage(messages[0] + " рублей в долларах: "
                     + "`" + formatter.format(result).replace(",", ".") + "`").queue();
             }
             if (message.matches(DOLLAR_TO_RUB)) {
+                event.getChannel().sendTyping().queue();
                 double format = Double.parseDouble(text[7].replace(",", "."));
                 double result = Double.parseDouble(messages[0]) * format;
                 event.getChannel().sendMessage(messages[0] + " долларов в рублях: "
                     + "`" + formatter.format(result).replace(",", ".") + "`").queue();
             }
             if (message.matches(RUB_TO_EURO) || message.matches(RUB_TO_EURO_DOUBLE)) {
+                event.getChannel().sendTyping().queue();
                 double format = Double.parseDouble(text[10].replace(",", "."));
                 double result = Double.parseDouble(messages[0]) * format;
                 event.getChannel().sendMessage(messages[0] + " евро в рублях: "
