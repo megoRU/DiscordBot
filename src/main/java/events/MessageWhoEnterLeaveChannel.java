@@ -11,14 +11,12 @@ import org.jetbrains.annotations.NotNull;
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   private boolean inChannelMeshiva;
-  private boolean inChannelMego;
-  //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  private String userIdMeshiva = "310364711587676161";
-  private String userIdMego = "250699265389625347";
+  //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
+  private final String userIdMeshiva = "310364711587676161";
+  private final String userIdMego = "250699265389625347";
   //bottestchannel //botchat
-  private String channelNameForBot = "botchat";
-  private ArrayList<String> listUsersInChannelsForMeshive = new ArrayList<>();
-  private ArrayList<String> listUsersInChannelsForMego = new ArrayList<>();
+  private final String botChannelLogs = "botchat";
+  private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -29,36 +27,23 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String channel = event.getMember().getUser().getId();
     event.getVoiceState().inVoiceChannel();
     event.getMember().getVoiceState();
-    event.getGuild().getVoiceChannels().stream()
-        .forEach(e -> e.getMembers().stream()
-        .forEach(f -> listUsersInChannelsForMeshive.add(f.getUser().getId())));
-    event.getGuild().getVoiceChannels().stream()
-        .forEach(e -> e.getMembers().stream()
-            .forEach(f -> listUsersInChannelsForMego.add(f.getUser().getId())));
+    event.getGuild().getVoiceChannels()
+        .forEach(e -> e.getMembers()
+        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
-    for (String listlop : listUsersInChannelsForMeshive) {
-      if (listlop.contains(userIdMeshiva)) {
+    for (String listLoop : listUsersInChannelsForMeshiva) {
+      if (listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(true);
         break;
       }
-      if (!listlop.contains(userIdMeshiva)) {
+      if (!listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(false);
       }
-      //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
+      //System.out.println(listLoop.matches("753218484455997491") + " " + listLoop);
     }
 
-    for (String listlop : listUsersInChannelsForMego) {
-      if (listlop.contains(userIdMego)) {
-        setInChannelMego(true);
-        break;
-      }
-      if (!listlop.contains(userIdMego)) {
-        setInChannelMego(false);
-      }
-      //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
-    }
     if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches(userIdMeshiva)) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoEnter
@@ -68,7 +53,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && isInChannelMeshiva() && idEnterUser.matches(userIdMeshiva)) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
@@ -78,7 +63,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.matches("250699265389625347")) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
@@ -88,7 +73,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.matches("335466800793911298")) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
@@ -98,7 +83,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: "
@@ -116,36 +101,23 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
     String channel = event.getMember().getUser().getId();
-    event.getGuild().getVoiceChannels().stream()
-        .forEach(e -> e.getMembers().stream()
-            .forEach(f -> listUsersInChannelsForMeshive.add(f.getUser().getId())));
-    event.getGuild().getVoiceChannels().stream()
-        .forEach(e -> e.getMembers().stream()
-            .forEach(f -> listUsersInChannelsForMego.add(f.getUser().getId())));
+    event.getGuild().getVoiceChannels()
+        .forEach(e -> e.getMembers()
+        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
-    for (String listlop : listUsersInChannelsForMeshive) {
-      if (listlop.contains(userIdMeshiva)) {
+    for (String listLoop : listUsersInChannelsForMeshiva) {
+      if (listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(true);
         break;
       }
-      if (!listlop.contains(userIdMeshiva)) {
+      if (!listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(false);
       }
-      //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
+      //System.out.println(listLoop.matches("753218484455997491") + " " + listLoop);
     }
 
-    for (String listlop : listUsersInChannelsForMego) {
-      if (listlop.contains(userIdMego)) {
-        setInChannelMego(true);
-        break;
-      }
-      if (!listlop.contains(userIdMego)) {
-        setInChannelMego(false);
-      }
-      //System.out.println(listlop.matches("753218484455997491") + " " + listlop);
-    }
     if (!user.isBot() && idLeaveUser.matches(userIdMeshiva)) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoLeave
@@ -155,7 +127,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && isInChannelMeshiva()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
           "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
@@ -164,7 +136,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("250699265389625347")) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
           "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
@@ -173,7 +145,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("335466800793911298")) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true).get(0);
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoLeave
               + " вышел из канала: " + nameChannelLeaveUser).queue();
@@ -182,7 +154,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
 
     if (!user.isBot() && !isInChannelMeshiva()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(channelNameForBot, true)
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
           "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
@@ -190,14 +162,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       deleteList();
       return;
     }
-  }
-
-  public boolean isInChannelMego() {
-    return inChannelMego;
-  }
-
-  public void setInChannelMego(boolean inChannelMego) {
-    this.inChannelMego = inChannelMego;
   }
 
   public boolean isInChannelMeshiva() {
@@ -209,15 +173,12 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   }
 
   public void deleteList() {
-    for (int i = 0; i < listUsersInChannelsForMeshive.size(); i++) {
-      listUsersInChannelsForMeshive.remove(i);
-    }
-    for (int i = 0; i < listUsersInChannelsForMego.size(); i++) {
-      listUsersInChannelsForMego.remove(i);
+    for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
+      listUsersInChannelsForMeshiva.remove(i);
     }
   }
 
   public int sizeList() {
-    return listUsersInChannelsForMeshive.size();
+    return listUsersInChannelsForMeshiva.size();
   }
 }

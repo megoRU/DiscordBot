@@ -13,17 +13,20 @@ import events.MessageMoveUser;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import events.DrinkBoolean;
+import events.SetRole;
 import events.YoutubeUrlWithTime;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class Main {
 
   public static void main(String[] args) throws LoginException {
     JDABuilder builder = JDABuilder.createDefault(Config.getTOKEN()); //The token was changed after opening the repository!
     builder.setAutoReconnect(true);
+    builder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     builder.setStatus(OnlineStatus.ONLINE);
     builder.setActivity(Activity.playing("—> !help"));
     builder.setBulkDeleteSplittingEnabled(false);
@@ -42,7 +45,7 @@ public class Main {
     builder.addEventListeners(new ExchangeRates());
     builder.addEventListeners(new DrinkBoolean());
     builder.addEventListeners(new ExchangeValue());
+    builder.addEventListeners(new SetRole());
     builder.build();
-
   }
 }

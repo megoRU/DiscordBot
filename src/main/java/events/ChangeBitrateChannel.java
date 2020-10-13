@@ -11,17 +11,17 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
   private boolean inChannelMeshiva;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  private String userIdMeshiva = "310364711587676161";
-  private ArrayList<String> listUsersInChannelsForMeshive = new ArrayList<>();
+  private final String userIdMeshiva = "310364711587676161";
+  private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     String idUser = event.getMember().getUser().getId();
-    event.getGuild().getVoiceChannels().stream()
-        .forEach(e -> e.getMembers().stream()
-        .forEach(f -> listUsersInChannelsForMeshive.add(f.getUser().getId())));
+    event.getGuild().getVoiceChannels()
+        .forEach(e -> e.getMembers()
+        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
-    for (String listlop : listUsersInChannelsForMeshive) {
+    for (String listlop : listUsersInChannelsForMeshiva) {
       if (listlop.contains(userIdMeshiva)) {
         setInChannelMeshiva(true);
         break;
@@ -61,8 +61,8 @@ public class ChangeBitrateChannel extends ListenerAdapter {
   }
 
   public void deleteList() {
-    for (int i = 0; i < listUsersInChannelsForMeshive.size(); i++) {
-      listUsersInChannelsForMeshive.remove(i);
+    for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
+      listUsersInChannelsForMeshiva.remove(i);
     }
   }
 
