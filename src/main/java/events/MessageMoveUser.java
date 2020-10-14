@@ -37,6 +37,7 @@ public class MessageMoveUser extends ListenerAdapter {
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
         e.printStackTrace();
       }
       event.getGuild().moveVoiceMember(memberList.get(0),

@@ -35,6 +35,7 @@ public class BotShutDown extends ListenerAdapter {
         Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
+        Thread.currentThread().interrupt();
       }
       System.exit(-1);
     }

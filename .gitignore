@@ -34,5 +34,5 @@ src/main/resources/
 src/test/
 target/
 target/generated-sources/
-/src/main/java/config/
-/src/main/java/config
+src/main/java/config/Config.java
+src/main/java/config/
