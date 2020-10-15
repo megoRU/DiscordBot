@@ -14,7 +14,7 @@ import org.jsoup.select.Elements;
 public class ExchangeRates extends ListenerAdapter {
 
   private final static String URL = "https://www.cbr.ru/key-indicators/";
-  String[] values = {"курс доллара","курс доллора","курс евро","курс", "евро", "доллар"};
+  private final String[] values = {"курс доллара","курс доллора","курс евро","курс", "евро", "доллар"};
   private String[] elements;
 
   @Override

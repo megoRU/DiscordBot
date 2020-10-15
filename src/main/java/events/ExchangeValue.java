@@ -8,9 +8,9 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 public class ExchangeValue extends ListenerAdapter {
-    String[] RUB = {"рублей", "рубль", "рублях"};
-    String[] USD = {"долларах", "долларов", "доллоров"};
-    String[] EUR = {"евро"};
+    private final String[] RUB = {"рублей", "рубль", "рублях"};
+    private final String[] USD = {"долларах", "долларов", "доллоров"};
+    private final String[] EUR = {"евро"};
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
