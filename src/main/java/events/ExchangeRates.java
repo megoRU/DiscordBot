@@ -2,6 +2,7 @@ package events;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Arrays;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -13,25 +14,14 @@ import org.jsoup.select.Elements;
 public class ExchangeRates extends ListenerAdapter {
 
   private final static String URL = "https://www.cbr.ru/key-indicators/";
-  public final String COURSE_DOLLAR = "курс доллара";
-  public final String COURSE_DOLLAR2 = "курс доллора";
-  public final String COURSE_EURO = "курс евро";
-  public final String COURSE = "курс";
-  public final String EURO_RU = "евро";
-  public final String DOLLAR = "доллар";
-
+  String[] values = {"курс доллара","курс доллора","курс евро","курс", "евро", "доллар"};
   private String[] elements;
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    if (message.matches(COURSE_DOLLAR)
-        || message.matches(COURSE_EURO)
-        || message.matches(COURSE)
-        || message.matches(EURO_RU)
-        || message.matches(DOLLAR)
-        || message.matches(COURSE_DOLLAR2))
-    {
+    boolean contains = Arrays.asList(values).contains(message);
+    if (contains) {
       event.getChannel().sendTyping().queue();
       parserSBR();
       DecimalFormat formatter = new DecimalFormat("#0.00");
