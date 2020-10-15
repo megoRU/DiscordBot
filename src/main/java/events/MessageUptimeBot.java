@@ -17,15 +17,13 @@ public class MessageUptimeBot extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase();
     User user = Objects.requireNonNull(event.getMember()).getUser();
 
-    if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT)) {
-      if (!user.isBot()) {
-        TextChannel textChannel = event.getChannel();
-        String[] messageFromhandle = uptimeBot().split(" ");
-        textChannel.sendMessage("Бот работает непрерывно: `"
-            + messageFromhandle[0] + " ч., "
-            + messageFromhandle[1] + " мин., "
-            + messageFromhandle[2] + " сек.`").queue();
-      }
+    if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT) && !user.isBot()) {
+      TextChannel textChannel = event.getChannel();
+      String[] messageFromhandle = uptimeBot().split(" ");
+      textChannel.sendMessage("Бот работает непрерывно: `"
+          + messageFromhandle[0] + " ч., "
+          + messageFromhandle[1] + " мин., "
+          + messageFromhandle[2] + " сек.`").queue();
     }
   }
 }
