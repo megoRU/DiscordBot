@@ -44,6 +44,13 @@ So far, only the dollar, the euro against the ruble.
 
 We need to rewrite this function. Now it works very crooked
 
-100 рублей                 | 100 долларов                
+100 рублей в долларах      | 100 долларов в рублях                
 :-------------------------:|:-------------------------:|
-![](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png) | 
+![](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png)
+
+## TODO
+
+- [ ] Channels for logging movements and enters
+- [ ] Connection counter. Quantity output on command
+- [ ] Command usage counter. Quantity output on command
+- [ ] Make a database to save data
