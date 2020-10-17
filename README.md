@@ -21,7 +21,7 @@
 -   [ ]   Channels for logging movements and enters
 -   [x] Connection counter. Quantity output on command
 -   [ ]   Command usage counter. Quantity output on command
--   [ ]   Make a database to save data
+-   [x]   Make a database to save data
 -   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 
 ## Delete messages
