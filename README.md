@@ -6,23 +6,23 @@
 
 ## What the bot can do:
 
-   1. [Delete messages](#delete-messages)
-   2. Move a specific client
-   3. [Available Commands](#available-commands)
-   4. [Write to the special channel when someone entered/left]()
-   5. YouTube link + space + time in minutes! -> converts to a short link with time (for phones users). Example: link 1 20 or link 1. First -> minutes. Second -> seconds 
-   6. Bot welcome msg when Bot join Guild
-   7. [Change channel bitrate](#change-channel-bitrate)
-   8. [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
-   9. [Exchange Values](#exchange-values)
+1. [Delete messages](#delete-messages)
+2. Move a specific client
+3. [Available Commands](#available-commands)
+4. [Write to the special channel when someone entered/left]()
+5. YouTube link + space + time in minutes! -> converts to a short link with time (for phones users). Example: link 1 20 or link 1. First -> minutes. Second -> seconds 
+6. Bot welcome msg when Bot join Guild
+7. [Change channel bitrate](#change-channel-bitrate)
+8. [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
+9. [Exchange Values](#exchange-values)
 
 ## TODO
 
-   - [ ]   Channels for logging movements and enters
-   - [ ]   Connection counter. Quantity output on command
-   - [ ]   Command usage counter. Quantity output on command
-   - [ ]   Make a database to save data
-   - [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+- [ ]   Channels for logging movements and enters
+- [ ]   Connection counter. Quantity output on command
+- [ ]   Command usage counter. Quantity output on command
+- [ ]   Make a database to save data
+- [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 
 ## Delete messages
 
@@ -44,12 +44,12 @@ Changes the bitrate of the channel, when a specific user enters. Optimization fo
 
 So far, only the dollar, the euro against the ruble.
 
-|курс доллара               |
-|---------------------------|
+|курс доллара|
+|------------|
 |![https://megolox.ru](https://megolox.ru/gitResources/ExchangeRates.png)|
 
 ## Exchange Values
 
-|100 рублей в долларах      | 100 долларов в рублях|
+|100 рублей в долларах      | 100 долларов в рублях    |
 |---------------------------|--------------------------|
 |![https://megolox.ru](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png)|
