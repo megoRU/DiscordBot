@@ -1,5 +1,6 @@
 package events;
 
+import db.DataBase;
 import java.util.ArrayList;
 import java.util.List;
 import net.dv8tion.jda.api.entities.Guild;
@@ -13,6 +14,20 @@ public class SetRole extends ListenerAdapter {
 
   @Override
   public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    try {
+      DataBase dataBase = new DataBase();
+      String idEnterUser = event.getMember().getId();
+      String nameEnterUser = event.getMember().getNickname();
+      String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
+      if (!userFromBD.contains(idEnterUser)) {
+        dataBase.createUser(idEnterUser, nameEnterUser);
+      }
+      if (userFromBD.contains(idEnterUser)) {
+        System.out.println("Ничего не делать");
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
     setJoinRole(event.getMember());
   }
 

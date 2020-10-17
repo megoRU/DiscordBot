@@ -36,6 +36,10 @@ public class BotShutDown extends ListenerAdapter {
       try {
         DataBase dataBase = new DataBase();
         dataBase.closeCon();
+        Thread.sleep(2000);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+        Thread.currentThread().interrupt();
       } catch (SQLException exception) {
         exception.printStackTrace();
       }
