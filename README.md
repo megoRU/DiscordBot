@@ -16,6 +16,14 @@
 8. [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
 9. [Exchange Values](#exchange-values)
 
+## TODO
+
+- [ ]   Channels for logging movements and enters
+- [ ]   Connection counter. Quantity output on command
+- [ ]   Command usage counter. Quantity output on command
+- [ ]   Make a database to save data
+- [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+
 ## Delete messages
 
 Deleting multiple messages [clear 10] |  Checking Administrator's rights to delete messages
@@ -42,15 +50,6 @@ So far, only the dollar, the euro against the ruble.
 
 ## Exchange Values
 
-We need to rewrite this function. Now it works very crooked
-
 100 рублей в долларах      | 100 долларов в рублях                
 :-------------------------:|:-------------------------:|
 ![](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png)
-
-## TODO
-
-- [ ] Channels for logging movements and enters
-- [ ] Connection counter. Quantity output on command
-- [ ] Command usage counter. Quantity output on command
-- [ ] Make a database to save data
