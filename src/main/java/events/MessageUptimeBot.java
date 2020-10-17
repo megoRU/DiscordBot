@@ -19,11 +19,12 @@ public class MessageUptimeBot extends ListenerAdapter {
 
     if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT) && !user.isBot()) {
       TextChannel textChannel = event.getChannel();
-      String[] messageFromhandle = uptimeBot().split(" ");
+      String[] messageFromHandle = uptimeBot().split(" ");
       textChannel.sendMessage("Бот работает непрерывно: `"
-          + messageFromhandle[0] + " ч., "
-          + messageFromhandle[1] + " мин., "
-          + messageFromhandle[2] + " сек.`").queue();
+          + messageFromHandle[0] + " ч., "
+          + messageFromHandle[1] + " мин., "
+          + messageFromHandle[2] + " сек.`").queue();
+
     }
   }
 }

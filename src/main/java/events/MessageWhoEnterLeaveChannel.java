@@ -1,5 +1,7 @@
 package events;
 
+import db.DataBase;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -15,12 +17,22 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private final String userIdMeshiva = "310364711587676161";
   private final String userIdMego = "250699265389625347";
   //bottestchannel //botchat
-  private final String botChannelLogs = "botchat";
+  private final String botChannelLogs = "bottestchannel";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+    try {
     String idEnterUser = event.getMember().getId();
+    DataBase dataBase = new DataBase();
+    String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
+    if (!userFromBD.contains(idEnterUser)) {
+      dataBase.createUser(idEnterUser);
+      dataBase.setCount(idEnterUser);
+    }
+    if (userFromBD.contains(idEnterUser)) {
+        dataBase.setCount(idEnterUser);
+    }
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -91,6 +103,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
               + " зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
+    }
+    } catch (SQLException exception) {
+      exception.printStackTrace();
     }
   }
 
