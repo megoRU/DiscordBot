@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataBase {
-  //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `countConn` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   private static final String CONN = "jdbc:mysql://95.181.157.159:3306/DiscordBot?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
   private static final String USER = "DiscordBot";
   private static final String TABLE = "Discord";
@@ -20,6 +20,7 @@ public class DataBase {
   }
 
   public void setCount(String userLongId) throws SQLException {
+    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
     String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
     PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -34,6 +35,7 @@ public class DataBase {
   }
 
   public int countConn(String userLongId) throws SQLException {
+    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
       Statement statement = conn.createStatement();
       ResultSet resultSet = statement
@@ -50,6 +52,7 @@ public class DataBase {
   }
 
   public long getUserId(String userLongId) throws SQLException {
+    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
       Statement statement = conn.createStatement();
       ResultSet resultSet = statement
@@ -67,10 +70,14 @@ public class DataBase {
   }
 
   public void createUser(String userLongId, String userName) throws SQLException {
+    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
-    String query = "INSERT INTO " + TABLE + "(userLongId, countConn, userName) values (" + userLongId + ", 0, " + userName + ")";
+    String query = "INSERT INTO " + TABLE + "(userLongId, userName, countConn) values (?, ?, ?)";
     PreparedStatement preparedStatement = conn.prepareStatement(query);
-    preparedStatement.executeUpdate();
+    preparedStatement.setString(1, userLongId);
+    preparedStatement.setString(2, userName);
+    preparedStatement.setString(3, "0");
+    preparedStatement.execute();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {

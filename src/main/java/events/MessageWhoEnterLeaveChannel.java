@@ -24,7 +24,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     try {
     String idEnterUser = event.getMember().getId();
-    String nameEnterUser = event.getMember().getNickname();
+    String nameEnterUser = event.getMember().getUser().getName();
     DataBase dataBase = new DataBase();
     String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
     if (!userFromBD.contains(idEnterUser)) {
