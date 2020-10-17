@@ -21,7 +21,7 @@ public class DataBase {
   }
 
   public void setCount(String userLongId) throws SQLException {
-    String query = "update " + TABLE + " SET countConn = ? WHERE userLongId = ?";
+    String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
     PreparedStatement preparedStmt = conn.prepareStatement(query);
     preparedStmt.setInt(1, countConn(userLongId) + 1);
     preparedStmt.setLong(2, Long.parseLong(userLongId));

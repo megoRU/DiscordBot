@@ -15,6 +15,7 @@ import events.MessageWhoEnterLeaveChannel;
 import events.DrinkBoolean;
 import events.SetRole;
 import events.YoutubeUrlWithTime;
+import events.countConnectionsEvent;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -46,6 +47,8 @@ public class Main {
     builder.addEventListeners(new DrinkBoolean());
     builder.addEventListeners(new ExchangeValue());
     builder.addEventListeners(new SetRole());
+    builder.addEventListeners(new countConnectionsEvent());
+
     builder.build();
   }
 }

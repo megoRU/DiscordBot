@@ -17,7 +17,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private final String userIdMeshiva = "310364711587676161";
   private final String userIdMego = "250699265389625347";
   //bottestchannel //botchat
-  private final String botChannelLogs = "bottestchannel";
+  private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   @Override
