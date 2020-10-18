@@ -11,7 +11,6 @@ public class GoogleSearch extends ListenerAdapter {
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    String idUser = event.getMember().getUser().getId();
     String[] messages = message.split(" ");
 
     if(messages[0].matches("!ищи")) {

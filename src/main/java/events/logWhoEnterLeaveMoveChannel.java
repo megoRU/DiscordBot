@@ -15,7 +15,6 @@ public class logWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-    String idEnterUser = event.getMember().getId();
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -30,7 +29,6 @@ public class logWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
-    String idLeaveUser = event.getMember().getId();
     String nameChannelMoveUser = event.getChannelLeft().getName();
     String nameUserWhoMove = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -46,7 +44,6 @@ public class logWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-    String idLeaveUser = event.getMember().getId();
     String nameChannelLeaveUser = event.getChannelLeft().getName();
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
