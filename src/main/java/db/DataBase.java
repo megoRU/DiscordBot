@@ -8,11 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import messages_events.UsersObjectsForTop;
 
 public class DataBase {
 
@@ -23,6 +19,7 @@ public class DataBase {
   private static final String PASS = "";
   private final Connection conn = DriverManager.getConnection(CONN, USER, PASS);
   private final Statement statement = conn.createStatement();
+  private final ArrayList<String> data = new ArrayList<>();
 
   //userLongId | countConn
   public DataBase() throws SQLException {
@@ -46,14 +43,10 @@ public class DataBase {
     try {
       String query = "SELECT userName, countConn FROM Discord Group By countConn Order By countConn DESC LIMIT 3";
       ResultSet resultSet = statement.executeQuery(query);
-      ArrayList<String> data = new ArrayList<>();
       while (resultSet.next()) {
         String name = resultSet.getString("userName");
         String countCon = resultSet.getString("countConn");
-        Map<String, UsersObjectsForTop> accounts = IntStream.range(0, 3).boxed().collect(
-        Collectors.toMap(String::valueOf, i -> new UsersObjectsForTop(name, countCon)));
-        accounts.values()
-        .forEach(s -> data.add(s.getNameUser() + " " + s.getCountConnections()));
+        data.add(name + " " + countCon);
       }
       return new LinkedHashSet<>(data);
     } catch (SQLException exception) {
@@ -115,6 +108,12 @@ public class DataBase {
       e.printStackTrace();
     } finally {
       conn.isClosed();
+    }
+  }
+
+  public void deleteList() {
+    for (int i = 0; i < data.size(); i++) {
+      data.remove(i);
     }
   }
 }
