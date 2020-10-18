@@ -14,13 +14,13 @@ public class DataBase {
   private static final String TABLE = "Discord";
   private static final String PASS = "";
   private final Connection conn = DriverManager.getConnection(CONN, USER, PASS);
+  private final Statement statement = conn.createStatement();
 
   //userLongId | countConn
   public DataBase() throws SQLException {
   }
 
   public void setCount(String userLongId) throws SQLException {
-    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
     String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
     PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -30,14 +30,12 @@ public class DataBase {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      conn.close();
+      conn.isClosed();
     }
   }
 
   public int countConn(String userLongId) throws SQLException {
-    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
-      Statement statement = conn.createStatement();
       ResultSet resultSet = statement
           .executeQuery("SELECT countConn FROM " + TABLE + " WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
@@ -46,15 +44,13 @@ public class DataBase {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      conn.close();
+      conn.isClosed();
     }
     return 0;
   }
 
   public long getUserId(String userLongId) throws SQLException {
-    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
-      Statement statement = conn.createStatement();
       ResultSet resultSet = statement
           .executeQuery("SELECT userLongId FROM " + TABLE + " WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
@@ -64,13 +60,12 @@ public class DataBase {
     } catch (SQLException | NumberFormatException exception) {
       exception.printStackTrace();
     } finally {
-      conn.close();
+      conn.isClosed();
     }
     return Long.parseLong("0");
   }
 
   public void createUser(String userLongId, String userName) throws SQLException {
-    Connection conn = DriverManager.getConnection(CONN, USER, PASS);
     try {
     String query = "INSERT INTO " + TABLE + "(userLongId, userName, countConn) values (?, ?, ?)";
     PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -81,7 +76,7 @@ public class DataBase {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      conn.close();
+      conn.isClosed();
     }
   }
 
@@ -91,8 +86,9 @@ public class DataBase {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      conn.close();
+      conn.isClosed();
     }
   }
+
 }
 

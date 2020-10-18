@@ -59,8 +59,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoEnter
-              + " зашёл в канал: " + nameChannelEnterUser).queue();
+          "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
     }
@@ -69,8 +69,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
-              + " зашёл в канал: " + nameChannelEnterUser).queue();
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
     }
@@ -79,8 +79,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoEnter
-              + " зашёл в канал: " + nameChannelEnterUser).queue();
+          "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
     }
@@ -89,8 +89,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoEnter
-              + " зашёл в канал: " + nameChannelEnterUser).queue();
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
     }
@@ -99,9 +99,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: "
+          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
               + nameUserWhoEnter
-              + " зашёл в канал: " + nameChannelEnterUser).queue();
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
       return;
     }
@@ -136,8 +136,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoLeave
-              + " вышел из канала: " + nameChannelLeaveUser).queue();
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+              + "** вышел из канала: " + nameChannelLeaveUser).queue();
       deleteList();
       return;
     }
@@ -145,8 +145,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     if (!user.isBot() && isInChannelMeshiva()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
-          "Эй <@310364711587676161>!" + "\n" + "Пользователь: " + nameUserWhoLeave
-              + " вышел из канала: " + nameChannelLeaveUser).queue();
+          "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+              + "** вышел из канала: " + nameChannelLeaveUser).queue();
       deleteList();
       return;
     }
@@ -154,8 +154,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("250699265389625347")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
-          "Эй <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
-              + " вышел из канала: " + nameChannelLeaveUser).queue();
+          "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+              + "** вышел из канала: " + nameChannelLeaveUser).queue();
       deleteList();
       return;
     }
@@ -163,8 +163,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("335466800793911298")) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347>!" + "\n" + "Пользователь: " + nameUserWhoLeave
-              + " вышел из канала: " + nameChannelLeaveUser).queue();
+          "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+              + "** вышел из канала: " + nameChannelLeaveUser).queue();
       deleteList();
       return;
     }
@@ -173,8 +173,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: " + nameUserWhoLeave
-              + " вышел в канал: " + nameChannelLeaveUser).queue();
+          "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+              + "** вышел в канал: " + nameChannelLeaveUser).queue();
       deleteList();
       return;
     }

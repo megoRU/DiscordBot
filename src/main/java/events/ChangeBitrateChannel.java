@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
+import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +21,43 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     event.getGuild().getVoiceChannels()
         .forEach(e -> e.getMembers()
         .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+
+    for (String listlop : listUsersInChannelsForMeshiva) {
+      if (listlop.contains(userIdMeshiva)) {
+        setInChannelMeshiva(true);
+        break;
+      }
+      if (!listlop.contains(userIdMeshiva)) {
+        setInChannelMeshiva(false);
+      }
+    }
+
+    if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
+      event.getNewValue().getManager().setBitrate(96000).queue();
+      deleteList();
+      return;
+    }
+
+    if (!idUser.equals(userIdMeshiva) && isInChannelMeshiva()) {
+      event.getNewValue().getManager().setBitrate(45000).queue();
+      deleteList();
+      return;
+    }
+
+    if (idUser.equals(userIdMeshiva)) {
+      event.getNewValue().getManager().setBitrate(45000).queue();
+      deleteList();
+      return;
+    }
+  }
+
+  //TODO need test:
+  @Override
+  public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+    String idUser = event.getMember().getUser().getId();
+    event.getGuild().getVoiceChannels()
+        .forEach(e -> e.getMembers()
+            .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
     for (String listlop : listUsersInChannelsForMeshiva) {
       if (listlop.contains(userIdMeshiva)) {

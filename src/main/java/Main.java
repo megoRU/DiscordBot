@@ -1,21 +1,21 @@
 import config.Config;
-import events.BotJoinChannel;
-import events.BotShutDown;
+import messagesEvents.BotShutDown;
 import events.ChangeBitrateChannel;
-import events.ExchangeRates;
-import events.ExchangeValue;
-import events.GoogleSearch;
-import events.MessagePing;
-import events.MessageUptimeBot;
-import events.MessageDeleting;
-import events.MessageInfoHelp;
-import events.MessageMoveUser;
+import messagesEvents.ExchangeRates;
+import messagesEvents.ExchangeValue;
+import messagesEvents.GoogleSearch;
+import messagesEvents.MessagePing;
+import messagesEvents.MessageUptimeBot;
+import messagesEvents.MessageDeleting;
+import messagesEvents.MessageInfoHelp;
+import messagesEvents.MessageMoveUser;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
-import events.DrinkBoolean;
-import events.SetRole;
-import events.YoutubeUrlWithTime;
-import events.countConnectionsEvent;
+import messagesEvents.DrinkBoolean;
+import events.EventJoinMemberToGuildSetRole;
+import messagesEvents.YoutubeUrlWithTime;
+import messagesEvents.countConnectionsEvent;
+import events.logWhoEnterLeaveMoveChannel;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -31,7 +31,6 @@ public class Main {
     builder.setStatus(OnlineStatus.ONLINE);
     builder.setActivity(Activity.playing("—> !help"));
     builder.setBulkDeleteSplittingEnabled(false);
-    builder.addEventListeners(new BotJoinChannel());
     builder.addEventListeners(new BotShutDown());
     builder.addEventListeners(new MessagePing());
     builder.addEventListeners(new MessageDeleting());
@@ -46,8 +45,9 @@ public class Main {
     builder.addEventListeners(new ExchangeRates());
     builder.addEventListeners(new DrinkBoolean());
     builder.addEventListeners(new ExchangeValue());
-    builder.addEventListeners(new SetRole());
+    builder.addEventListeners(new EventJoinMemberToGuildSetRole());
     builder.addEventListeners(new countConnectionsEvent());
+    builder.addEventListeners(new logWhoEnterLeaveMoveChannel());
 
     builder.build();
   }

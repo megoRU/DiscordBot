@@ -10,14 +10,14 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-public class SetRole extends ListenerAdapter {
+public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
 
   @Override
   public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
     try {
       DataBase dataBase = new DataBase();
       String idEnterUser = event.getMember().getId();
-      String nameEnterUser = event.getMember().getNickname();
+      String nameEnterUser = event.getMember().getUser().getName();
       String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
       if (!userFromBD.contains(idEnterUser)) {
         dataBase.createUser(idEnterUser, nameEnterUser);
@@ -25,10 +25,10 @@ public class SetRole extends ListenerAdapter {
       if (userFromBD.contains(idEnterUser)) {
         System.out.println("Ничего не делать");
       }
+      setJoinRole(event.getMember());
     } catch (Exception e) {
       e.printStackTrace();
     }
-    setJoinRole(event.getMember());
   }
 
   public static void setJoinRole(Member member) {

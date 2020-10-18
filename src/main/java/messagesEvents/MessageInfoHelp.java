@@ -1,4 +1,4 @@
-package events;
+package messagesEvents;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
