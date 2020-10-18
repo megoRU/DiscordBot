@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,8 +15,7 @@ public class MessageDeleting extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
-    boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
+    boolean boolPermissionAdmin = Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR);
 
     if (message.matches(DELETE_INDEXES) & !boolPermissionAdmin) {
       EmbedBuilder errorClear = new EmbedBuilder();

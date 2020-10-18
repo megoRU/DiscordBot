@@ -103,7 +103,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
               + nameUserWhoEnter
               + "** зашёл в канал: " + nameChannelEnterUser).queue();
       deleteList();
-      return;
     }
     } catch (SQLException exception) {
       exception.printStackTrace();
@@ -176,7 +175,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
               + "** вышел в канал: " + nameChannelLeaveUser).queue();
       deleteList();
-      return;
     }
   }
 

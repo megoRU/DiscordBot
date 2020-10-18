@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import db.DataBase;
 import java.sql.SQLException;

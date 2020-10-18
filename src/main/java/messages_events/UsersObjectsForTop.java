@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 public class UsersObjectsForTop {
 

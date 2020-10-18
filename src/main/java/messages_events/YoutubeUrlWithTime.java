@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import java.util.Objects;
 import net.dv8tion.jda.api.EmbedBuilder;

@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,8 @@ import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
-import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import net.dv8tion.jda.internal.entities.UserById;
 
 public class MessageMoveUser extends ListenerAdapter {
 
@@ -21,8 +18,6 @@ public class MessageMoveUser extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
-    User user = new UserById(Long.parseLong(idUser));
-    VoiceChannel connectedChannel = Objects.requireNonNull(event.getMember().getVoiceState()).getChannel();
 
     if (message.matches(MOVE)
         & !event.getMember().getUser().isBot()

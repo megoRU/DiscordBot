@@ -22,12 +22,12 @@ public class ChangeBitrateChannel extends ListenerAdapter {
         .forEach(e -> e.getMembers()
         .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
-    for (String listlop : listUsersInChannelsForMeshiva) {
-      if (listlop.contains(userIdMeshiva)) {
+    for (String listLoop : listUsersInChannelsForMeshiva) {
+      if (listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(true);
         break;
       }
-      if (!listlop.contains(userIdMeshiva)) {
+      if (!listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(false);
       }
     }
@@ -47,7 +47,6 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     if (idUser.equals(userIdMeshiva)) {
       event.getNewValue().getManager().setBitrate(45000).queue();
       deleteList();
-      return;
     }
   }
 
@@ -59,12 +58,12 @@ public class ChangeBitrateChannel extends ListenerAdapter {
         .forEach(e -> e.getMembers()
             .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
-    for (String listlop : listUsersInChannelsForMeshiva) {
-      if (listlop.contains(userIdMeshiva)) {
+    for (String listLoop : listUsersInChannelsForMeshiva) {
+      if (listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(true);
         break;
       }
-      if (!listlop.contains(userIdMeshiva)) {
+      if (!listLoop.contains(userIdMeshiva)) {
         setInChannelMeshiva(false);
       }
     }
@@ -84,7 +83,6 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     if (idUser.equals(userIdMeshiva)) {
       event.getNewValue().getManager().setBitrate(45000).queue();
       deleteList();
-      return;
     }
   }
 
@@ -94,7 +92,6 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
     if (idUser.matches(userIdMeshiva)) {
       event.getChannelLeft().getManager().setBitrate(96000).queue();
-      return;
     }
   }
 

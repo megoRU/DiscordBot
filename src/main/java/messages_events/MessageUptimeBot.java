@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import static time.UptimeBot.uptimeBot;
 

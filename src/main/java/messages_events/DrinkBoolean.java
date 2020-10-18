@@ -1,4 +1,4 @@
-package messagesEvents;
+package messages_events;
 
 import java.util.Random;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -15,7 +15,6 @@ public class DrinkBoolean extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    String idUser = event.getMember().getUser().getId();
     if (message.matches(DRINK)
         || message.matches(DRINK2)
         || message.matches(DRINK3)
