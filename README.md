@@ -21,7 +21,7 @@
 -   [x]   Channels for logging movements and enters
 -   [x]   Connection counter. Quantity output on command
 -   [x]   Make a database to save data
--   [ ]   Top 3 users connections to the channels
+-   [x]   Top 3 users connections to the channels
 -   [ ]   Command usage counter. Quantity output on command
 -   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 

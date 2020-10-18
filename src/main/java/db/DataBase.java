@@ -6,8 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import messagesEvents.UsersObjectsForTop;
 
 public class DataBase {
+
   //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   private static final String CONN = "jdbc:mysql://95.181.157.159:3306/DiscordBot?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
   private static final String USER = "DiscordBot";
@@ -22,16 +30,36 @@ public class DataBase {
 
   public void setCount(String userLongId) throws SQLException {
     try {
-    String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
-    PreparedStatement preparedStmt = conn.prepareStatement(query);
-    preparedStmt.setInt(1, countConn(userLongId) + 1);
-    preparedStmt.setLong(2, Long.parseLong(userLongId));
-    preparedStmt.executeUpdate();
+      String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.setInt(1, countConn(userLongId) + 1);
+      preparedStmt.setLong(2, Long.parseLong(userLongId));
+      preparedStmt.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
       conn.isClosed();
     }
+  }
+
+  public Set<String> topThree() {
+    try {
+      String query = "SELECT userName, countConn FROM Discord Group By countConn Order By countConn DESC LIMIT 3";
+      ResultSet resultSet = statement.executeQuery(query);
+      ArrayList<String> data = new ArrayList<>();
+      while (resultSet.next()) {
+        String name = resultSet.getString("userName");
+        String countCon = resultSet.getString("countConn");
+        Map<String, UsersObjectsForTop> accounts = IntStream.range(0, 3).boxed().collect(
+        Collectors.toMap(String::valueOf, i -> new UsersObjectsForTop(name, countCon)));
+        accounts.values()
+        .forEach(s -> data.add(s.getNameUser() + " " + s.getCountConnections()));
+      }
+      return new LinkedHashSet<>(data);
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
+    return null;
   }
 
   public int countConn(String userLongId) throws SQLException {
@@ -67,12 +95,12 @@ public class DataBase {
 
   public void createUser(String userLongId, String userName) throws SQLException {
     try {
-    String query = "INSERT INTO " + TABLE + "(userLongId, userName, countConn) values (?, ?, ?)";
-    PreparedStatement preparedStatement = conn.prepareStatement(query);
-    preparedStatement.setString(1, userLongId);
-    preparedStatement.setString(2, userName);
-    preparedStatement.setString(3, "0");
-    preparedStatement.execute();
+      String query = "INSERT INTO " + TABLE + "(userLongId, userName, countConn) values (?, ?, ?)";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setString(1, userLongId);
+      preparedStatement.setString(2, userName);
+      preparedStatement.setString(3, "0");
+      preparedStatement.execute();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
@@ -82,13 +110,12 @@ public class DataBase {
 
   public void closeCon() throws SQLException {
     try {
-    conn.close();
+      conn.close();
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
       conn.isClosed();
     }
   }
-
 }
 
