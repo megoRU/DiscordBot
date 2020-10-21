@@ -41,11 +41,11 @@ public class CountConnectionsEvent extends ListenerAdapter {
           info.setColor(0x00FF00);
           info.setTitle("Топ 3 по подключению");
           info.setDescription(
-              ":first_place: Первое место: " + first[0] + " | " + first[1] + GetEndingWord(
+              ":first_place: Первое место: " + first[0] + " | " + first[1] + getEndingWord(
                   Integer.parseInt(first[1]))
                   + "\n :second_place: Второе место: " + second[0] + " | " + second[1]
-                  + GetEndingWord(Integer.parseInt(second[1]))
-                  + "\n :third_place: Третье место: " + third[0] + " | " + third[1] + GetEndingWord(
+                  + getEndingWord(Integer.parseInt(second[1]))
+                  + "\n :third_place: Третье место: " + third[0] + " | " + third[1] + getEndingWord(
                   Integer.parseInt(third[1])));
           event.getChannel().sendMessage(info.build()).queue();
           info.clear();
@@ -56,7 +56,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           // info.setTitle("У — " + idUserName);
-          info.setDescription(idUserName + " подключался в канал: " + value + GetEndingWord(value));
+          info.setDescription(idUserName + " подключался в канал: " + value + getEndingWord(value));
           event.getChannel().sendMessage(info.build()).queue();
           info.clear();
         }
@@ -66,7 +66,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
     }
   }
 
-  private String GetEndingWord(int num) {
+  private String getEndingWord(int num) {
     int preLastDigit = num % 100 / 10;
     if (preLastDigit == 1) {
       return " раз!";
