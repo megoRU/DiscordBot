@@ -27,15 +27,15 @@
 
 ## Delete messages
 
-|Deleting multiple messages (clear 10) |  Checking Administrator's rights to delete messages|
-|-------------------------|-------------------------|
-|![https://megolox.ru](https://megolox.ru/gitResources/deleteTenMessages.png) | ![](https://megolox.ru/gitResources/PrivilegesDeliting.png)|
+| Deleting multiple messages (clear 10) | Checking Administrator's rights to delete messages|
+| ------------------------- | ------------------------- |
+|![https://megolox.ru](https://megolox.ru/gitResources/deleteTenMessages.png) | ![](https://megolox.ru/gitResources/PrivilegesDeliting.png) |
 
 ## Available Commands
 
-|info/help/!help            |  ping/!ping               |  uptime/!uptime         |
-|---------------------------|---------------------------|-------------------------|
-|![https://megolox.ru](https://megolox.ru/gitResources/info2.png) | ![](https://megolox.ru/gitResources/ping.png)| ![](https://megolox.ru/gitResources/uptime.png)|
+| info/help/!help            |  ping/!ping               |  uptime/!uptime         |
+| --------------------------- | ---------------------------| ------------------------- |
+| ![https://megolox.ru](https://megolox.ru/gitResources/info2.png) | ![](https://megolox.ru/gitResources/ping.png) | ![](https://megolox.ru/gitResources/uptime.png) |
 
 ## Change channel bitrate
 
@@ -45,12 +45,12 @@ Changes the bitrate of the channel, when a specific user enters. Optimization fo
 
 So far, only the dollar, the euro against the ruble.
 
-|курс доллара|
-|------------|
+| курс доллара |
+| --------------- |
 |![https://megolox.ru](https://megolox.ru/gitResources/ExchangeRates.png)|
 
 ## Exchange Values
 
-|100 рублей в долларах      | 100 долларов в рублях    |
-|---------------------------|--------------------------|
-|![https://megolox.ru](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png)|
+| 100 рублей в долларах      | 100 долларов в рублях    |
+| --------------------------- | -------------------------- |
+| ![https://megolox.ru](https://megolox.ru/gitResources/ExchangeValues.png)  | ![](https://megolox.ru/gitResources/ExchangeValues2.png) |
