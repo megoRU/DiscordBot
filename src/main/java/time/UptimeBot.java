@@ -5,7 +5,10 @@ import java.lang.management.RuntimeMXBean;
 
 public class UptimeBot {
 
-  public static String uptimeBot() {
+  public UptimeBot() {
+  }
+
+  public String uptimeBot() {
     RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
     long uptime = runtimeMXBean.getUptime();
     long uptimeInSeconds = uptime / 1000;

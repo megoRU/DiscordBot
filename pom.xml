@@ -6,7 +6,7 @@
 
   <groupId>org.example</groupId>
   <artifactId>DiscordBot</artifactId>
-  <version>1.7.4</version>
+  <version>1.9.1</version>
   <packaging>jar</packaging>
 
   <properties>

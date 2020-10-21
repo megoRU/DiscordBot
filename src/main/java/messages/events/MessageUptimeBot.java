@@ -1,12 +1,11 @@
 package messages.events;
 
-import static time.UptimeBot.uptimeBot;
-
 import java.util.Objects;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import time.UptimeBot;
 
 public class MessageUptimeBot extends ListenerAdapter {
 
@@ -19,7 +18,8 @@ public class MessageUptimeBot extends ListenerAdapter {
 
     if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT) && !user.isBot()) {
       TextChannel textChannel = event.getChannel();
-      String[] messageFromHandle = uptimeBot().split(" ");
+      UptimeBot ub = new UptimeBot();
+      String[] messageFromHandle = ub.uptimeBot().split(" ");
       textChannel.sendMessage("Бот работает непрерывно: `"
           + messageFromHandle[0] + " ч., "
           + messageFromHandle[1] + " мин., "
