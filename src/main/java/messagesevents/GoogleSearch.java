@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

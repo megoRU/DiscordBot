@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import java.io.IOException;
 import java.text.DecimalFormat;

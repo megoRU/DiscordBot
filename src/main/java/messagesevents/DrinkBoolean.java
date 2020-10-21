@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import java.util.Random;
 import net.dv8tion.jda.api.EmbedBuilder;

@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import java.util.Objects;
 import net.dv8tion.jda.api.entities.TextChannel;

@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import java.util.List;
 import java.util.Objects;

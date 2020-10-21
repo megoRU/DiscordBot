@@ -1,4 +1,4 @@
-package messages.events;
+package messagesevents;
 
 import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.entities.MessageChannel;
