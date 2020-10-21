@@ -1,21 +1,21 @@
 import config.Config;
-import messages_events.BotShutDown;
+import messages.events.BotShutDown;
 import events.ChangeBitrateChannel;
-import messages_events.ExchangeRates;
-import messages_events.ExchangeValue;
-import messages_events.GoogleSearch;
-import messages_events.MessagePing;
-import messages_events.MessageUptimeBot;
-import messages_events.MessageDeleting;
-import messages_events.MessageInfoHelp;
-import messages_events.MessageMoveUser;
+import messages.events.ExchangeRates;
+import messages.events.ExchangeValue;
+import messages.events.GoogleSearch;
+import messages.events.MessagePing;
+import messages.events.MessageUptimeBot;
+import messages.events.MessageDeleting;
+import messages.events.MessageInfoHelp;
+import messages.events.MessageMoveUser;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
-import messages_events.DrinkBoolean;
+import messages.events.DrinkBoolean;
 import events.EventJoinMemberToGuildSetRole;
-import messages_events.YoutubeUrlWithTime;
-import messages_events.countConnectionsEvent;
-import events.logWhoEnterLeaveMoveChannel;
+import messages.events.YoutubeUrlWithTime;
+import messages.events.CountConnectionsEvent;
+import events.LogWhoEnterLeaveMoveChannel;
 import javax.security.auth.login.LoginException;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
@@ -46,8 +46,8 @@ public class Main {
     builder.addEventListeners(new DrinkBoolean());
     builder.addEventListeners(new ExchangeValue());
     builder.addEventListeners(new EventJoinMemberToGuildSetRole());
-    builder.addEventListeners(new countConnectionsEvent());
-    builder.addEventListeners(new logWhoEnterLeaveMoveChannel());
+    builder.addEventListeners(new CountConnectionsEvent());
+    builder.addEventListeners(new LogWhoEnterLeaveMoveChannel());
 
     builder.build();
   }

@@ -1,4 +1,4 @@
-package messages_events;
+package messages.events;
 
 import java.util.Objects;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,6 +12,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
   public final String YOUTUBE_MINI = "(?:https:\\/\\/)?(?:)youtu\\.be\\/[a-zA-z-0-9]+\\s+[0-9]+"; // https://youtu.be/ALtLujDc1xw
   public final String YOUTUBE_MINI_2 = "(?:https:\\/\\/)?(?:)youtu\\.be\\/[a-zA-z-0-9]+\\s+[0-9]+\\s+[0-9]{2}+";
 
+  //TODO Сделать в 2 метода.
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();

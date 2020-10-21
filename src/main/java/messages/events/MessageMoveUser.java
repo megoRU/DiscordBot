@@ -1,4 +1,4 @@
-package messages_events;
+package messages.events;
 
 import java.util.ArrayList;
 import java.util.List;

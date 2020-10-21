@@ -8,7 +8,7 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-public class logWhoEnterLeaveMoveChannel extends ListenerAdapter {
+public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   //bottestchannel //botchat //botlog
   private final String botChannelLogs = "botlog";

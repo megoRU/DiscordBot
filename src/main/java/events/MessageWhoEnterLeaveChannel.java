@@ -37,7 +37,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
-    String channel = event.getMember().getUser().getId();
     event.getVoiceState().inVoiceChannel();
     event.getMember().getVoiceState();
     event.getGuild().getVoiceChannels()
@@ -115,7 +114,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameChannelLeaveUser = event.getChannelLeft().getName();
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
-    String channel = event.getMember().getUser().getId();
     event.getGuild().getVoiceChannels()
         .forEach(e -> e.getMembers()
         .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));

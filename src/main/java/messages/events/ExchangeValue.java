@@ -1,4 +1,4 @@
-package messages_events;
+package messages.events;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package messages_events;
+package messages.events;
 
 import db.DataBase;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-public class countConnectionsEvent extends ListenerAdapter {
+public class CountConnectionsEvent extends ListenerAdapter {
 
   public final String COUNT = "!колличество";
   public final String COUNT2 = "колличество";
@@ -25,7 +25,7 @@ public class countConnectionsEvent extends ListenerAdapter {
     if (message.matches(COUNT)
         || message.matches(COUNT2)
         || message.matches(COUNT3)
-        ||  message.matches(COUNT4)) {
+        || message.matches(COUNT4)) {
       event.getChannel().sendTyping().queue();
       try {
         DataBase dataBase = new DataBase();
@@ -39,6 +39,7 @@ public class countConnectionsEvent extends ListenerAdapter {
           String[] third = data.get(2).split(" ");
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
+          info.setTitle("Топ 3 по подключению");
           info.setDescription(
               ":first_place: Первое место: " + first[0] + " | " + first[1] + GetEndingWord(
                   Integer.parseInt(first[1]))
