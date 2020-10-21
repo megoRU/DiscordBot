@@ -5,9 +5,6 @@ import java.lang.management.RuntimeMXBean;
 
 public class UptimeBot {
 
-  public UptimeBot() {
-  }
-
   public String uptimeBot() {
     RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
     long uptime = runtimeMXBean.getUptime();
