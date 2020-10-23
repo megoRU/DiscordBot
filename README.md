@@ -4,6 +4,8 @@
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=coverage)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)     [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=bugs)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)     [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=code_smells)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)     [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)     [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=ncloc)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)     [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=megoRU_DiscordBot&metric=sqale_index)](https://sonarcloud.io/dashboard?id=megoRU_DiscordBot)
 
+#### [LICENSE CC BY-NC-SA 4.0](https://github.com/megoRU/DiscordBot/blob/master/LICENSE)
+
 ## What the bot can do:
 
 1.  [Delete messages](#delete-messages)
