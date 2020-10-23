@@ -27,19 +27,19 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
           ||message.matches(YOUTUBE_LINKS_MIN)) {
 
         if (message.matches(YOUTUBE_LINKS_MIN_SEC)) {
-          youtubeLinksMiniMinSec(event, idUser, message, "2", "=");
+          youtubeLinks(event, idUser, message, "2", "=");
           return;
         }
         if (message.matches(YOUTUBE_LINKS_MIN)) {
-          youtubeLinksMiniMin(event, idUser, message,"1", "=");
+          youtubeLinks(event, idUser, message,"1", "=");
           return;
         }
         if (message.matches(YOUTUBE_MINI_MIN)) {
-          youtubeLinksMiniMin(event, idUser, message,"1", "/");
+          youtubeLinks(event, idUser, message,"1", "/");
           return;
         }
         if (message.matches(YOUTUBE_MINI_MIN_SEC)) {
-          youtubeLinksMiniMinSec(event, idUser, message,"2", "/");
+          youtubeLinks(event, idUser, message,"2", "/");
         }
       }
     } catch (Exception exception) {
@@ -52,36 +52,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
     }
   }
 
-  public void youtubeLinksMiniMinSec(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
-    String[] text = message.split(" ");
-    String slash = "/";
-    String equal = "=";
-    int indexFirst = 0;
-    if (slash.equals(argument)) {
-      indexFirst = text[0].lastIndexOf(slash);
-    }
-    if (equal.equals(argument)) {
-      indexFirst = text[0].lastIndexOf(equal);
-    }
-    int length = text[0].length();
-    int timeMinutes = Integer.parseInt(text[1]);
-    int results = 0;
-    String one = "1";
-    String two = "2";
-    if (one.equals(count)) {
-      results = timeMinutes * 60;
-    }
-    if (two.equals(count)) {
-      results = (timeMinutes * 60) + Integer.parseInt(text[2]);
-    }
-    String resultsUrl = text[0].substring(indexFirst + 1, length);
-    String lastMessage = event.getChannel().getLatestMessageId();
-    event.getChannel().deleteMessageById(lastMessage).queue();
-    event.getChannel().sendMessage("<@" + idUser + ">! " + "прислал сообщение:" + "\n"
-        + "https://youtu.be/" + resultsUrl + "?t=" + results).queue();
-  }
-
-  public void youtubeLinksMiniMin(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
+  public void youtubeLinks(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
     String[] text = message.split(" ");
     String slash = "/";
     String equal = "=";

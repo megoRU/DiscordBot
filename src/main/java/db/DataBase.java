@@ -41,7 +41,7 @@ public class DataBase {
 
   public Set<String> topThree() {
     try {
-      String query = "SELECT userName, countConn FROM Discord Group By countConn Order By countConn DESC LIMIT 3";
+      String query = "SELECT userName, countConn FROM " + TABLE + " Group By countConn Order By countConn DESC LIMIT 3";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
         String name = resultSet.getString("userName");
@@ -88,7 +88,7 @@ public class DataBase {
 
   public void createUser(String userLongId, String userName) throws SQLException {
     try {
-      String query = "INSERT INTO " + TABLE + "(userLongId, userName, countConn) values (?, ?, ?)";
+      String query = "INSERT INTO " + TABLE + " (userLongId, userName, countConn) values (?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, userLongId);
       preparedStatement.setString(2, userName);
