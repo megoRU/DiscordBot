@@ -19,6 +19,16 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   //bottestchannel //botchat
   private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
+  private final ArrayList<String> whoLastEnter = new ArrayList<>();
+
+  public Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) {
+    if (whoLastEnter.size() > 0) {
+      String user = whoLastEnter.get(0);
+      String idEnterUser = event.getMember().getId();
+      return idEnterUser.contains(user);
+    }
+    return false;
+  }
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -27,13 +37,20 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameEnterUser = event.getMember().getUser().getName();
     DataBase dataBase = new DataBase();
     String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
+    boolean lastWhoEnter = whoLastEnter(event);
+
+    //TODO: Нужно тестировать!
     if (!userFromBD.contains(idEnterUser)) {
       dataBase.createUser(idEnterUser, nameEnterUser);
       dataBase.setCount(idEnterUser);
     }
     if (userFromBD.contains(idEnterUser)) {
+      if (!lastWhoEnter) {
+        whoLastEnter.add(0, idEnterUser);
         dataBase.setCount(idEnterUser);
+      }
     }
+
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
@@ -187,6 +204,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   public void deleteList() {
     for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
       listUsersInChannelsForMeshiva.remove(i);
+    }
+    for (int i = 0; i < whoLastEnter.size(); i++) {
+      whoLastEnter.remove(i);
     }
   }
 
