@@ -44,11 +44,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       dataBase.createUser(idEnterUser, nameEnterUser);
       dataBase.setCount(idEnterUser);
     }
-    if (userFromBD.contains(idEnterUser)) {
-      if (!lastWhoEnter) {
+    if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
         whoLastEnter.add(0, idEnterUser);
         dataBase.setCount(idEnterUser);
-      }
     }
 
     String nameChannelEnterUser = event.getChannelJoined().getName();
