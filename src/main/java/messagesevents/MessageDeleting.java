@@ -14,10 +14,10 @@ public class MessageDeleting extends ListenerAdapter {
   public final String DELETE_INDEXES = "clear\\s+\\d+";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw().toLowerCase();
+    String message = event.getMessage().getContentRaw().toLowerCase().trim();
     boolean boolPermissionAdmin = Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR);
-
     if (message.matches(DELETE_INDEXES) & !boolPermissionAdmin) {
+      event.getMessage().addReaction("\u26D4").queue();
       EmbedBuilder errorClear = new EmbedBuilder();
       errorClear.setColor(0xff3923);
       errorClear.setTitle("🔴 Error: You are not Admin");
@@ -30,15 +30,9 @@ public class MessageDeleting extends ListenerAdapter {
         String[] commandArray = message.split("\\s+", 2);
         String index = commandArray[1];
         int indexParseInt = Integer.parseInt(index);
-        if (indexParseInt == 1 || indexParseInt == 0) {
-          EmbedBuilder error = new EmbedBuilder();
-          error.setColor(0xff3923);
-          error.setTitle("🔴 Error: Index cannot be 0-1");
-          error.setDescription("Between 0-1 index can be deleted.");
-          event.getChannel().sendMessage(error.build()).queue();
-          error.clear();
-        }
-        if (indexParseInt > 1 & indexParseInt <= 99) {
+
+        if (indexParseInt >= 2 && indexParseInt <= 100) {
+          event.getMessage().addReaction("\u2705").queue();
           List<Message> messages = event.getChannel().getHistory().retrievePast(indexParseInt)
               .complete();
           event.getChannel().deleteMessages(messages).queue();
@@ -51,21 +45,22 @@ public class MessageDeleting extends ListenerAdapter {
               .flatMap(Message::delete).submit();
           error.clear();
         }
-        if (indexParseInt < 1 || indexParseInt >= 100) {
+        if (indexParseInt < 2 || indexParseInt > 100) {
+          event.getMessage().addReaction("\u26D4").queue();
           EmbedBuilder error = new EmbedBuilder();
           error.setColor(0xff3923);
-          error.setTitle("🔴 Error: Too many messages selected");
-          error.setDescription("Between 1-100 messages can be deleted at one time.");
+          error.setTitle("🔴 Error");
+          error.setDescription("Between 2-100 messages can be deleted at one time.");
           event.getChannel().sendMessage(error.build()).queue();
           error.clear();
         }
       }
     } catch (Exception e) {
-      // Messages too old
+      event.getMessage().addReaction("\u26D4").queue();
       EmbedBuilder error = new EmbedBuilder();
       error.setColor(0xff3923);
-      error.setTitle("🔴 Error: Selected messages are older than 2 weeks");
-      error.setDescription("Messages older than 2 weeks cannot be deleted.");
+      error.setTitle("🔴 Error");
+      error.setDescription("The error is not related to the index!");
       event.getChannel().sendMessage(error.build()).queue();
       error.clear();
     }

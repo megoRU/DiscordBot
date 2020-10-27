@@ -13,15 +13,16 @@ import org.jsoup.select.Elements;
 
 public class ExchangeRates extends ListenerAdapter {
 
-  private final static String URL = "https://www.cbr.ru/key-indicators/";
-  private final String[] values = {"курс доллара","курс доллора","курс евро","курс", "евро", "доллар"};
-  private String[] elements;
+  private static final String URL = "https://www.cbr.ru/key-indicators/";
+  private static final String[] values = {"курс доллара", "курс доллора", "курс евро", "курс", "евро", "доллар"};
+  private static String[] elements;
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
     boolean contains = Arrays.asList(values).contains(message);
     if (contains) {
+      event.getMessage().addReaction("\u2705").queue();
       event.getChannel().sendTyping().queue();
       parserSBR();
       DecimalFormat formatter = new DecimalFormat("#0.00");
@@ -45,7 +46,7 @@ public class ExchangeRates extends ListenerAdapter {
     }
   }
 
-  public void parserSBR() {
+  public static void parserSBR() {
     Document doc = null;
     try {
       doc = Jsoup.connect(URL)
@@ -61,11 +62,11 @@ public class ExchangeRates extends ListenerAdapter {
     elements = values.text().split(" ");
   }
 
-  public void getParser() {
+  public static void getParser() {
     parserSBR();
   }
 
-  public String[] getElements() {
+  public static String[] getElements() {
     return elements;
   }
 }

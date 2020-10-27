@@ -21,7 +21,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
   private final ArrayList<String> whoLastEnter = new ArrayList<>();
 
-  public Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) {
+  private Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) {
     if (whoLastEnter.size() > 0) {
       String user = whoLastEnter.get(0);
       String idEnterUser = event.getMember().getId();
@@ -39,12 +39,13 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser));
     boolean lastWhoEnter = whoLastEnter(event);
 
-    //TODO: Нужно тестировать!
+    //TODO: Нужно тестировать! Особенно deleteListWhoLast()!
     if (!userFromBD.contains(idEnterUser)) {
       dataBase.createUser(idEnterUser, nameEnterUser);
       dataBase.setCount(idEnterUser);
     }
     if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
+        deleteListWhoLast();
         whoLastEnter.add(0, idEnterUser);
         dataBase.setCount(idEnterUser);
     }
@@ -191,24 +192,23 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
   }
 
-  public boolean isInChannelMeshiva() {
+  private boolean isInChannelMeshiva() {
     return inChannelMeshiva;
   }
 
-  public void setInChannelMeshiva(boolean inChannelMeshiva) {
+  private void setInChannelMeshiva(boolean inChannelMeshiva) {
     this.inChannelMeshiva = inChannelMeshiva;
   }
 
-  public void deleteList() {
+  private void deleteList() {
     for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
       listUsersInChannelsForMeshiva.remove(i);
     }
+  }
+
+  private void deleteListWhoLast() {
     for (int i = 0; i < whoLastEnter.size(); i++) {
       whoLastEnter.remove(i);
     }
-  }
-
-  public int sizeList() {
-    return listUsersInChannelsForMeshiva.size();
   }
 }
