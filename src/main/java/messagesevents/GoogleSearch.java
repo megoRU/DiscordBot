@@ -15,10 +15,15 @@ public class GoogleSearch extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase();
     String[] messages = message.split(" ");
 
-    if(messages[0].matches(SEARCH) || messages[0].matches(SEARCH2)) {
-      String messageForReplace = message.replace(" ", "%20");
-      int length = messageForReplace.length();
-      event.getChannel().sendMessage(URL + messageForReplace.substring(3, length)).queue();
+    if (messages[0].matches(SEARCH)) {
+      String messageForReplase = message.replace(" ", "%20");
+      int length = messageForReplase.length();
+      event.getChannel().sendMessage(URL + messageForReplase.substring(4, length)).queue();
+    }
+    if (messages[0].matches(SEARCH2)) {
+      String messageForReplase = message.replace(" ", "%20");
+      int length = messageForReplase.length();
+      event.getChannel().sendMessage(URL + messageForReplase.substring(3, length)).queue();
     }
   }
 }
