@@ -33,7 +33,7 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     }
 
     if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(96000).queue();
+      event.getNewValue().getManager().setBitrate(64000).queue();
       deleteList();
       return;
     }
@@ -69,7 +69,7 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     }
 
     if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(96000).queue();
+      event.getNewValue().getManager().setBitrate(64000).queue();
       deleteList();
       return;
     }
@@ -91,7 +91,7 @@ public class ChangeBitrateChannel extends ListenerAdapter {
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
 
     if (idUser.matches(userIdMeshiva)) {
-      event.getChannelLeft().getManager().setBitrate(96000).queue();
+      event.getChannelLeft().getManager().setBitrate(64000).queue();
     }
   }
 
