@@ -32,6 +32,7 @@ public class MessageDeleting extends ListenerAdapter {
         int indexParseInt = Integer.parseInt(index);
 
         if (indexParseInt >= 2 && indexParseInt <= 100) {
+          deletingLog(event, index);
           event.getMessage().addReaction("\u2705").queue();
           List<Message> messages = event.getChannel().getHistory().retrievePast(indexParseInt)
               .complete();
@@ -64,5 +65,19 @@ public class MessageDeleting extends ListenerAdapter {
       event.getChannel().sendMessage(error.build()).queue();
       error.clear();
     }
+  }
+
+  private void deletingLog(GuildMessageReceivedEvent event, String count) {
+    EmbedBuilder delete = new EmbedBuilder();
+    String userId = event.getAuthor().getId();
+    String channelId = event.getChannel().getId();
+    delete.setColor(0x00FF00);
+    delete.setTitle(":mega: Someone deleted messages!");
+    delete.addField("User", "<@" + userId + ">", false);
+    delete.addField("Channel", "<#" + channelId + ">", false);
+    delete.addField("Number of deleted messages", "Removed: `" + count + "` messages!", false);
+    event.getGuild().getTextChannelsByName("botlog", false)
+        .get(0).sendMessage(delete.build()).queue();
+    delete.clear();
   }
 }

@@ -11,12 +11,13 @@ public class BotShutDown extends ListenerAdapter {
 
   public final String SHUTDOWN = "!shutdown";
   public final String SHUTDOWN_WITH_OUT = "shutdown";
+  public final String SD = "sd";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
     boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
 
-    if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & !boolPermissionAdmin) {
+    if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) || message.matches(SD) & !boolPermissionAdmin) {
       EmbedBuilder errorShutDown = new EmbedBuilder();
       errorShutDown.setColor(0xff3923);
       errorShutDown.setTitle("🔴 Error: You are not Admin");
@@ -25,7 +26,7 @@ public class BotShutDown extends ListenerAdapter {
       event.getChannel().sendMessage(errorShutDown.build()).queue();
     }
 
-    if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) & boolPermissionAdmin) {
+    if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) || message.matches(SD) && boolPermissionAdmin) {
       EmbedBuilder info = new EmbedBuilder();
       info.setColor(0x00FF00);
       info.setTitle(":white_check_mark: Бот выключен!");
