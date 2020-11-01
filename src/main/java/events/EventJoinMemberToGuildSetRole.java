@@ -21,7 +21,7 @@ public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
       String nameEnterUser = event.getMember().getUser().getName();
       String userFromDB = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
       if (!userFromDB.contains(idEnterUser)) {
-        dataBase.createUser(idEnterUser, nameEnterUser, idGuild);
+        dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
       }
       if (userFromDB.contains(idEnterUser)) {
         System.out.println("Ничего не делать");

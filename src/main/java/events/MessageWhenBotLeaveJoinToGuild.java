@@ -12,6 +12,7 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
   @Override
   public void onGuildJoin(GuildJoinEvent event) {
     String idGuild = event.getGuild().getId();
+
     Objects.requireNonNull(event.getGuild().getDefaultChannel())
         .sendMessage("Thanks for adding " + "**mego**" + " to " + event.getGuild().getName() + "!"
             + "\nUse **!help** for a list of commands."
@@ -19,6 +20,8 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
     try {
       DataBase dataBase = new DataBase();
       dataBase.createTableWhenBotJoinGuild(idGuild);
+      dataBase.createTableVoiceWhenBotJoinGuild(idGuild);
+      dataBase.createTableForVoice("1", "1111111111111", idGuild);
     } catch (SQLException throwables) {
       throwables.printStackTrace();
     }

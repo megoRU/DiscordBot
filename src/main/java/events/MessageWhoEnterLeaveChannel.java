@@ -3,6 +3,7 @@ package events;
 import db.DataBase;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Set;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -19,13 +20,17 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   //bottestchannel //botchat
   private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
-  private final ArrayList<String> whoLastEnter = new ArrayList<>();
 
-  private Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) {
-    if (whoLastEnter.size() > 0) {
-      String user = whoLastEnter.get(0);
-      String idEnterUser = event.getMember().getId();
-      return idEnterUser.contains(user);
+  //TODO: Тестировать!
+  private Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) throws SQLException {
+    DataBase dataBase = new DataBase();
+    String idUser = event.getMember().getId();
+    String idGuild = event.getGuild().getId();
+    Set<String> whoLast = dataBase.whoLastEnter(idGuild);
+    ArrayList<String> dataFrom = new ArrayList<>(whoLast);
+    if (dataFrom.size() > 0) {
+      String id = dataFrom.get(0);
+      return id.contains(idUser);
     }
     return false;
   }
@@ -40,15 +45,14 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
     boolean lastWhoEnter = whoLastEnter(event);
 
-    //TODO: Так как мы нацелены на мульти сервера. Нужно сделать разделение на гильдии!
+    //TODO: Осталось тестировать!
     if (!userFromBD.contains(idEnterUser)) {
-      dataBase.createUser(idEnterUser, nameEnterUser, idGuild);
+      dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
       dataBase.setCount(idEnterUser, idGuild);
     }
     if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
-        deleteListWhoLast();
-        whoLastEnter.add(0, idEnterUser);
-        dataBase.setCount(idEnterUser, idGuild);
+      dataBase.setWhoLastEnter(1, idGuild, idEnterUser);
+      dataBase.setCount(idEnterUser, idGuild);
     }
 
     String nameChannelEnterUser = event.getChannelJoined().getName();
@@ -71,7 +75,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       //System.out.println(listLoop.matches("753218484455997491") + " " + listLoop);
     }
 
-      //TODO: Сделать проверку на нашу гильдию! GUILD_250700478520885248
       if (idGuild.contains("250700478520885248")) {
         if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches(userIdMeshiva)) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
@@ -213,12 +216,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private void deleteList() {
     for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
       listUsersInChannelsForMeshiva.remove(i);
-    }
-  }
-
-  private void deleteListWhoLast() {
-    for (int i = 0; i < whoLastEnter.size(); i++) {
-      whoLastEnter.remove(i);
     }
   }
 }
