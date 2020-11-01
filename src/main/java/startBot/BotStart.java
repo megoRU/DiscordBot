@@ -1,3 +1,5 @@
+package startBot;
+
 import config.Config;
 import events.ChangeBitrateChannel;
 import events.EventJoinMemberToGuildSetRole;
@@ -23,7 +25,7 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-public class RunBot {
+public class BotStart {
 
   private JDA jda;
   private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());

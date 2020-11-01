@@ -1,7 +1,6 @@
 package messagesevents;
 
 import db.DataBase;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Set;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,6 +20,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String idUser = event.getMember().getUser().getId();
     String idUserName = event.getMember().getUser().getName();
+    String idGuild = event.getGuild().getId();
 
     if (message.matches(COUNT)
         || message.matches(COUNT2)
@@ -29,11 +29,18 @@ public class CountConnectionsEvent extends ListenerAdapter {
       event.getChannel().sendTyping().queue();
       try {
         DataBase dataBase = new DataBase();
-        Set<String> topThreeUsers = dataBase.topThree();
+        Set<String> topThreeUsers = dataBase.topThree(idGuild);
         ArrayList<String> data = new ArrayList<>(topThreeUsers);
-
-        //TODO Сделать в нормальном виде
-        if (message.matches(COUNT4)) {
+        if (message.matches(COUNT4) && data.size() < 3) {
+          event.getMessage().addReaction("\u26D4").queue();
+          EmbedBuilder info = new EmbedBuilder();
+          info.setColor(0x00FF00);
+          info.setDescription("Not enough data!");
+          event.getChannel().sendMessage(info.build()).queue();
+          info.clear();
+        }
+        //TODO Сделать в нормальном виде //Сделать проверку на пустой список!
+        if (message.matches(COUNT4) && data.size() > 1) {
           String[] first = data.get(0).split(" ");
           String[] second = data.get(1).split(" ");
           String[] third = data.get(2).split(" ");
@@ -51,8 +58,8 @@ public class CountConnectionsEvent extends ListenerAdapter {
           info.clear();
           dataBase.deleteList();
         }
-        else {
-          int value = dataBase.countConn(idUser);
+        if (message.matches(COUNT) || message.matches(COUNT2) || message.matches(COUNT3) && data.size() < 3) {
+          int value = dataBase.countConn(idUser, idGuild);
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           // info.setTitle("У — " + idUserName);
@@ -60,7 +67,8 @@ public class CountConnectionsEvent extends ListenerAdapter {
           event.getChannel().sendMessage(info.build()).queue();
           info.clear();
         }
-      } catch (SQLException exception) {
+      } catch (Exception exception) {
+        event.getMessage().addReaction("\u26D4").queue();
         exception.printStackTrace();
       }
     }

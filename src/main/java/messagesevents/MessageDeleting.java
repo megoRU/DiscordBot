@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 public class MessageDeleting extends ListenerAdapter {
 
   public final String DELETE_INDEXES = "clear\\s+\\d+";
+  public final String DELETE_INDEXES2 = "!clear\\s+\\d+";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
@@ -26,7 +27,7 @@ public class MessageDeleting extends ListenerAdapter {
       errorClear.clear();
     }
     try {
-      if (message.matches(DELETE_INDEXES) & boolPermissionAdmin) {
+      if ((message.matches(DELETE_INDEXES) || message.matches(DELETE_INDEXES2)) && boolPermissionAdmin) {
         String[] commandArray = message.split("\\s+", 2);
         String index = commandArray[1];
         int indexParseInt = Integer.parseInt(index);

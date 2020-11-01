@@ -15,21 +15,19 @@ public class DataBase {
   //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   private static final String CONN = "jdbc:mysql://95.181.157.159:3306/DiscordBot?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
   private static final String USER = "DiscordBot";
-  private static final String TABLE = "Discord";
   private static final String PASS = "";
   private final Connection conn = DriverManager.getConnection(CONN, USER, PASS);
   private final Statement statement = conn.createStatement();
   private final ArrayList<String> data = new ArrayList<>();
-
   //userLongId | countConn
   public DataBase() throws SQLException {
   }
 
-  public void setCount(String userLongId) throws SQLException {
+  public void setCount(String userLongId, String guildId) throws SQLException {
     try {
-      String query = "UPDATE " + TABLE + " SET countConn = ? WHERE userLongId = ?";
+      String query = "UPDATE GUILD_" + guildId + " SET countConn = ? WHERE userLongId = ?";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
-      preparedStmt.setInt(1, countConn(userLongId) + 1);
+      preparedStmt.setInt(1, countConn(userLongId, guildId) + 1);
       preparedStmt.setLong(2, Long.parseLong(userLongId));
       preparedStmt.executeUpdate();
     } catch (Exception e) {
@@ -39,9 +37,21 @@ public class DataBase {
     }
   }
 
-  public Set<String> topThree() {
+  public void createTableWhenBotJoinGuild(String guildIdLong) throws SQLException {
     try {
-      String query = "SELECT userName, countConn FROM " + TABLE + " Group By countConn Order By countConn DESC LIMIT 3";
+      String query = "CREATE TABLE IF NOT EXISTS `GUILD_" + guildIdLong + "` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    } finally {
+      conn.isClosed();
+    }
+  }
+
+  public Set<String> topThree(String guildId) {
+    try {
+      String query = "SELECT userName, countConn FROM GUILD_" + guildId + " Group By countConn Order By countConn DESC LIMIT 3";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
         String name = resultSet.getString("userName");
@@ -55,10 +65,10 @@ public class DataBase {
     return null;
   }
 
-  public int countConn(String userLongId) throws SQLException {
+  public int countConn(String userLongId, String guildId) throws SQLException {
     try {
       ResultSet resultSet = statement
-          .executeQuery("SELECT countConn FROM " + TABLE + " WHERE userLongId = " + userLongId);
+          .executeQuery("SELECT countConn FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
         return resultSet.getInt(1);
       }
@@ -70,10 +80,10 @@ public class DataBase {
     return 0;
   }
 
-  public long getUserId(String userLongId) throws SQLException {
+  public long getUserId(String userLongId, String guildId) throws SQLException {
     try {
       ResultSet resultSet = statement
-          .executeQuery("SELECT userLongId FROM " + TABLE + " WHERE userLongId = " + userLongId);
+          .executeQuery("SELECT userLongId FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
         String user = String.valueOf(resultSet.getLong(1));
         return Long.parseLong(user);
@@ -86,9 +96,9 @@ public class DataBase {
     return Long.parseLong("0");
   }
 
-  public void createUser(String userLongId, String userName) throws SQLException {
+  public void createUser(String userLongId, String userName, String guildId) throws SQLException {
     try {
-      String query = "INSERT INTO " + TABLE + " (userLongId, userName, countConn) values (?, ?, ?)";
+      String query = "INSERT INTO GUILD_" + guildId + " (userLongId, userName, countConn) values (?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, userLongId);
       preparedStatement.setString(2, userName);
