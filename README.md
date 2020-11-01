@@ -8,10 +8,10 @@
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
-## Add bot to your server:
+## Add bot to your server
 <a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"><img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
 
-## What the bot can do:
+## What the bot can do
 
 1.  [Delete messages](#delete-messages)
 2.  Move a specific client
@@ -25,14 +25,14 @@
 
 ## TODO
 
-- [x]   Channel for logging movements, enters and deleting messages
-- [x]   Connection counter. Quantity output on command
-- [x]   Make a database to save data
-- [x]   Top 3 users connections to the channels
-- [x]   Rewrite support code for multi-servers
-- [ ]   Full english support for outputs
-- [ ]   Command usage counter. Quantity output on command
-- [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+-   [x]   Channel for logging movements, enters and deleting messages
+-   [x]   Connection counter. Quantity output on command
+-   [x]   Make a database to save data
+-   [x]   Top 3 users connections to the channels
+-   [x]   Rewrite support code for multi-servers
+-   [ ]   Full english support for outputs
+-   [ ]   Command usage counter. Quantity output on command
+-   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 
 ## Delete messages
 
