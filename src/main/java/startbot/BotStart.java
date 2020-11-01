@@ -1,4 +1,4 @@
-package startBot;
+package startbot;
 
 import config.Config;
 import events.ChangeBitrateChannel;
@@ -28,7 +28,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 public class BotStart {
 
   private JDA jda;
-  private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());
+  private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getToken());
 
   public void startBot() throws InterruptedException, LoginException {
     jdaBuilder.setAutoReconnect(true);

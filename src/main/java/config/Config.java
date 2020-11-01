@@ -4,7 +4,7 @@ public class Config {
 
   private static final String TOKEN = ""; //TOKEN CHANGED
 
-  public static String getTOKEN() {
+  public static String getToken() {
     return TOKEN;
   }
 }
