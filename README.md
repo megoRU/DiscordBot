@@ -25,14 +25,14 @@
 
 ## TODO
 
-- [x] Channel for logging movements, enters and deleting messages
-- [x] Connection counter. Quantity output on command
-- [x] Make a database to save data
-- [x] Top 3 users connections to the channels
-- [x] Rewrite support code for multi-servers
-- [ ] Full english support for outputs
-- [ ] Command usage counter. Quantity output on command
-- [ ] [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+- [x]   Channel for logging movements, enters and deleting messages
+- [x]   Connection counter. Quantity output on command
+- [x]   Make a database to save data
+- [x]   Top 3 users connections to the channels
+- [x]   Rewrite support code for multi-servers
+- [ ]   Full english support for outputs
+- [ ]   Command usage counter. Quantity output on command
+- [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 
 ## Delete messages
 
