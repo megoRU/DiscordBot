@@ -28,9 +28,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String idGuild = event.getGuild().getId();
     Set<String> whoLast = dataBase.whoLastEnter(idGuild);
     ArrayList<String> dataFrom = new ArrayList<>(whoLast);
+    dataBase.deleteListWhoLast();
     if (dataFrom.size() > 0) {
       String id = dataFrom.get(0);
       return id.contains(idUser);
+
     }
     return false;
   }

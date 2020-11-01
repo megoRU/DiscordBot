@@ -183,5 +183,10 @@ public class DataBase {
       data.remove(i);
     }
   }
+  public void deleteListWhoLast() {
+    for (int i = 0; i < data2.size(); i++) {
+      data2.remove(i);
+    }
+  }
 }
 
