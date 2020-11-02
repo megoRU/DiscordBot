@@ -21,7 +21,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
-  //TODO: Тестировать!
+  //TODO: Должно работать
   private Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) throws SQLException {
     DataBase dataBase = new DataBase();
     String idUser = event.getMember().getId();
@@ -29,12 +29,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     Set<String> whoLast = dataBase.whoLastEnter(idGuild);
     ArrayList<String> dataFrom = new ArrayList<>(whoLast);
     dataBase.deleteListWhoLast();
-    if (dataFrom.size() > 0) {
-      String id = dataFrom.get(0);
-      return id.contains(idUser);
-
+    if (dataFrom.isEmpty()) {
+      return false;
     }
-    return false;
+    String id = dataFrom.get(0);
+    return id.contains(idUser);
   }
 
   @Override

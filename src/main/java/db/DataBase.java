@@ -1,5 +1,6 @@
 package db;
 
+import config.Config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,10 +15,7 @@ public class DataBase {
 
   //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
   //CREATE TABLE IF NOT EXISTS VOICE_772388035944906793 (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  private static final String CONN = "jdbc:mysql://95.181.157.159:3306/DiscordBot?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-  private static final String USER = "DiscordBot";
-  private static final String PASS = "";
-  private final Connection conn = DriverManager.getConnection(CONN, USER, PASS);
+  private final Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());
   private final Statement statement = conn.createStatement();
   private final ArrayList<String> data = new ArrayList<>();
   private final ArrayList<String> data2 = new ArrayList<>();
@@ -26,7 +24,7 @@ public class DataBase {
   public DataBase() throws SQLException {
   }
 
-  public void setCount(String userLongId, String guildId) throws SQLException {
+  public void setCount(String userLongId, String guildId) {
     try {
       String query = "UPDATE GUILD_" + guildId + " SET countConn = ? WHERE userLongId = ?";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -35,20 +33,16 @@ public class DataBase {
       preparedStmt.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
-  public void createTableWhenBotJoinGuild(String guildIdLong) throws SQLException {
+  public void createTableWhenBotJoinGuild(String guildIdLong) {
     try {
       String query = "CREATE TABLE IF NOT EXISTS `GUILD_" + guildIdLong + "` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
       preparedStmt.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
@@ -62,13 +56,13 @@ public class DataBase {
         data.add(name + " " + countCon);
       }
       return new LinkedHashSet<>(data);
-    } catch (SQLException exception) {
+    } catch (Exception exception) {
       exception.printStackTrace();
     }
     return null;
   }
 
-  public int countConn(String userLongId, String guildId) throws SQLException {
+  public int countConn(String userLongId, String guildId) {
     try {
       ResultSet resultSet = statement
           .executeQuery("SELECT countConn FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
@@ -77,13 +71,11 @@ public class DataBase {
       }
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
     return 0;
   }
 
-  public long getUserId(String userLongId, String guildId) throws SQLException {
+  public long getUserId(String userLongId, String guildId) {
     try {
       ResultSet resultSet = statement
           .executeQuery("SELECT userLongId FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
@@ -91,15 +83,13 @@ public class DataBase {
         String user = String.valueOf(resultSet.getLong(1));
         return Long.parseLong(user);
       }
-    } catch (SQLException | NumberFormatException exception) {
-      exception.printStackTrace();
-    } finally {
-      conn.isClosed();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
     return Long.parseLong("0");
   }
 
-  public void setWhoLastEnter(int id, String voiceGuild, String userLongId) throws SQLException {
+  public void setWhoLastEnter(int id, String voiceGuild, String userLongId) {
     try {
       String query = "UPDATE VOICE_" + voiceGuild + " SET userLongId = ? WHERE id = ?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -108,12 +98,10 @@ public class DataBase {
       preparedStatement.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
-  public Set<String> whoLastEnter(String voiceGuild) throws SQLException {
+  public Set<String> whoLastEnter(String voiceGuild) {
     try {
       String query = "SELECT userLongId FROM VOICE_" + voiceGuild;
       ResultSet resultSet = statement.executeQuery(query);
@@ -122,24 +110,23 @@ public class DataBase {
         data2.add(userLongId);
       }
       return new LinkedHashSet<>(data2);
-    } finally {
-      conn.isClosed();
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+    return null;
   }
 
-  public void createTableVoiceWhenBotJoinGuild(String guildIdLong) throws SQLException {
+  public void createTableVoiceWhenBotJoinGuild(String guildIdLong) {
     try {
       String query = "CREATE TABLE IF NOT EXISTS VOICE_" + guildIdLong + " (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
       preparedStmt.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
-  public void createTableForVoice(String id, String userLongId, String guildId) throws SQLException {
+  public void createTableForVoice(String id, String userLongId, String guildId) {
     try {
       String query = "INSERT INTO VOICE_" + guildId + " (id, userLongId) values (?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -148,12 +135,10 @@ public class DataBase {
       preparedStatement.execute();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
-  public void createTableForGuild(String userLongId, String userName, String guildId) throws SQLException {
+  public void createTableForGuild(String userLongId, String userName, String guildId) {
     try {
       String query = "INSERT INTO VOICE_" + guildId + " (userLongId, userName, countConn) values (?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -163,18 +148,14 @@ public class DataBase {
       preparedStatement.execute();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
-  public void closeCon() throws SQLException {
+  public void closeCon() {
     try {
       conn.close();
     } catch (Exception e) {
       e.printStackTrace();
-    } finally {
-      conn.isClosed();
     }
   }
 
@@ -183,6 +164,7 @@ public class DataBase {
       data.remove(i);
     }
   }
+
   public void deleteListWhoLast() {
     for (int i = 0; i < data2.size(); i++) {
       data2.remove(i);
