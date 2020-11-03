@@ -31,6 +31,7 @@ public class RepeatMyMessage extends ListenerAdapter {
       event.getChannel().deleteMessages(messages).queue();
       event.getChannel().sendMessage(split[1]).queue();
       } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
         e.printStackTrace();
       }
     }
