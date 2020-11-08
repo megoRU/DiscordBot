@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class ExchangeValue extends ListenerAdapter {
 
   private final String[] RUB = {"рублей", "рубль", "рублях"};
-  private final String[] USD = {"долларах", "долларов", "доллоров"};
+  private final String[] USD = {"долларах", "долларов", "доллоров", "доллар"};
   private final String[] EUR = {"евро"};
 
   @Override
@@ -23,6 +23,7 @@ public class ExchangeValue extends ListenerAdapter {
         || message.contains(USD[0])
         || message.contains(USD[1])
         || message.contains(USD[2])
+        || message.contains(USD[3])
         || message.contains(EUR[0])) {
       if (!isBot) {
         event.getMessage().addReaction("\u2705").queue();
@@ -31,6 +32,7 @@ public class ExchangeValue extends ListenerAdapter {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         String[] text = ExchangeRates.getElements();
         int size = messages.length - 1;
+        //TODO: Может быть сделать это выше IF и тогда будет 3 проверки вместо 7
         boolean containsRUBFirst = Arrays.asList(RUB).contains(messages[1]);
         boolean containsEURFirst = Arrays.asList(EUR).contains(messages[1]);
         boolean containsUSDFirst = Arrays.asList(USD).contains(messages[1]);
@@ -42,7 +44,7 @@ public class ExchangeValue extends ListenerAdapter {
           if (containsRUBFirst && containsUSDLast) {
             double format = Double.parseDouble(text[7].replace(",", "."));
             double result = Double.parseDouble(messages[0]) / format;
-            event.getChannel().sendMessage(messages[0] + " рублей в долларах: "
+            event.getChannel().sendMessage(messages[0] + getEndingWord(Integer.parseInt(messages[0]), "RUB") + " в долларах: "
                 + "`" + formatter.format(result).replace(",", ".") + "`").queue();
             return;
           }
@@ -50,7 +52,7 @@ public class ExchangeValue extends ListenerAdapter {
           if (containsUSDFirst && containsRUBLast) {
             double format = Double.parseDouble(text[7].replace(",", "."));
             double result = Double.parseDouble(messages[0]) * format;
-            event.getChannel().sendMessage(messages[0] + " долларов в рублях: "
+            event.getChannel().sendMessage(messages[0] + getEndingWord(Integer.parseInt(messages[0]), "USD") +" в рублях: "
                 + "`" + formatter.format(result).replace(",", ".") + "`").queue();
             return;
           }
@@ -81,6 +83,25 @@ public class ExchangeValue extends ListenerAdapter {
           exception.printStackTrace();
         }
       }
+    }
+  }
+  private String getEndingWord(double num, String whatCurrency) {
+    int intValue = (int) num;
+
+    int preLastDigit = intValue % 100 / 10;
+    if (preLastDigit == 1) {
+      return whatCurrency.contains("USD") ? " долларов" : " рублей";
+    }
+    switch (intValue % 10) {
+      case 1:
+        return whatCurrency.contains("USD") ? " доллар" : " рубль";
+      case 2:
+      case 3:
+      case 4:
+        return whatCurrency.contains("USD") ? " доллара" : " рубля";
+      case 5:
+      default:
+        return whatCurrency.contains("USD") ? " долларов" : " рублей";
     }
   }
 }
