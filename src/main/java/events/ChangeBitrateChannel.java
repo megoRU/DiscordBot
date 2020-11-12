@@ -10,10 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChangeBitrateChannel extends ListenerAdapter {
 
-  private boolean inChannelMeshiva;
+  private static boolean inChannelMeshiva;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  private final String userIdMeshiva = "310364711587676161";
-  private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
+  private static final String userIdMeshiva = "310364711587676161";
+  private static final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {

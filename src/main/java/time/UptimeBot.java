@@ -9,9 +9,10 @@ public class UptimeBot {
     RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
     long uptime = runtimeMXBean.getUptime();
     long uptimeInSeconds = uptime / 1000;
+    long numberOfDays = uptimeInSeconds / (86400);
     long numberOfHours = uptimeInSeconds / (60 * 60);
     long numberOfMinutes = (uptimeInSeconds / 60) - (numberOfHours * 60);
     long numberOfSeconds = uptimeInSeconds % 60;
-    return String.valueOf(numberOfHours) + " " + String.valueOf(numberOfMinutes) + " " + String.valueOf(numberOfSeconds);
+    return numberOfDays + " " + numberOfHours + " " + numberOfMinutes + " " + numberOfSeconds;
   }
 }
