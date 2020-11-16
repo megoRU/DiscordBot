@@ -19,6 +19,7 @@ import messagesevents.MessageMoveUser;
 import messagesevents.MessagePing;
 import messagesevents.MessageUptimeBot;
 import messagesevents.RepeatMyMessage;
+import messagesevents.SendingMessagesToGuilds;
 import messagesevents.YoutubeUrlWithTime;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -55,6 +56,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new CountConnectionsEvent());
     jdaBuilder.addEventListeners(new LogWhoEnterLeaveMoveChannel());
     jdaBuilder.addEventListeners(new RepeatMyMessage());
+    jdaBuilder.addEventListeners(new SendingMessagesToGuilds());
     jda = jdaBuilder.build();
     jda.awaitReady();
   }
