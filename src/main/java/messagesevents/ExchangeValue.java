@@ -85,6 +85,7 @@ public class ExchangeValue extends ListenerAdapter {
       }
     }
   }
+
   private String getEndingWord(double num, String whatCurrency) {
     int intValue = (int) num;
 

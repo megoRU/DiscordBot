@@ -28,7 +28,7 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 
 public class BotStart {
 
-  private JDA jda;
+  public static JDA jda;
   private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());
 
   public void startBot() throws InterruptedException, LoginException {
