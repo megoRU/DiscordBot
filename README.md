@@ -9,7 +9,7 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## JETBRAINS
-<a href="https://www.jetbrains.com/?from=DiscordBot"><img width="377" height="128" src="https://megolox.ru/jetbrains1.png">
+<a href="https://www.jetbrains.com/?from=DiscordBot"><img width="377" height="128" src="jetbrains.png">
 
 ## Add bot to your server
 <a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"><img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
