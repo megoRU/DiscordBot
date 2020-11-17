@@ -1,0 +1,257 @@
+package games;
+
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
+
+import java.awt.*;
+import java.util.ArrayList;
+
+//TODO: It would be better if no one saw this.
+//
+public class GameOfDice extends ListenerAdapter {
+
+    private static final ArrayList<String> playerList = new ArrayList<>();
+    private static final ArrayList<Long> guild = new ArrayList<>();
+    private static final ArrayList<Long> chat = new ArrayList<>();
+
+    @Override
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        String message = event.getMessage().getContentDisplay().trim();
+        String idPlayer = event.getMessage().getAuthor().getName();
+
+        if (message.contains("!roll")) {
+            playerList.add(idPlayer);
+            guild.add(event.getGuild().getIdLong());
+            chat.add(event.getMessage().getChannel().getIdLong());
+
+            if (playerList.size() == 2 && guild.get(0).equals(guild.get(1))) {
+
+                int diceFirstPlayer = 1 + (int) (Math.random() * 6);
+                int diceSecondPlayer = 1 + (int) (Math.random() * 6);
+                long idChannel = event.getChannel().getIdLong();
+                EmbedBuilder gameOfDice = new EmbedBuilder();
+                gameOfDice.setTitle("Game of Dice");
+                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer + "**"
+                        + "\nPlayer 2: **" + diceSecondPlayer +
+                        "\n\n**Winner: **" +
+                        whoWin(diceFirstPlayer, playerList.get(0),
+                                diceSecondPlayer, playerList.get(1))
+                        + "**"
+                        + "\n\nRolled by: **" + playerList.get(0) + "**" + " & " + "**" + playerList.get(1) + "**");
+                gameOfDice.setColor(Color.WHITE);
+                gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
+                event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
+                // event.getChannel().sendMessage(gameOfDice.build()).queue();
+                playerList.clear();
+                guild.clear();
+                chat.clear();
+                return;
+            }
+
+            if (playerList.size() == 2 && !guild.get(0).equals(guild.get(1))) {
+                int diceFirstPlayer = 1 + (int) (Math.random() * 6);
+                int diceSecondPlayer = 1 + (int) (Math.random() * 6);
+                long idChannel = event.getChannel().getIdLong();
+
+                EmbedBuilder gameOfDice = new EmbedBuilder();
+                gameOfDice.setTitle("Game of Dice");
+                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer + "**"
+                        + "\nPlayer 2: **" + diceSecondPlayer +
+                        "\n\n**Winner: **" +
+                        whoWin(diceFirstPlayer, playerList.get(0),
+                                diceSecondPlayer, playerList.get(1))
+                        + "**"
+                        + "\n\nRolled by: **" + playerList.get(0) + "**" + " & " + "**" + playerList.get(1) + "**");
+                gameOfDice.setColor(Color.WHITE);
+                gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
+                event.getJDA().getGuildById(guild.get(0)).getTextChannelById(chat.get(0)).sendMessage(gameOfDice.build()).queue();
+                event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
+                // event.getChannel().sendMessage(gameOfDice.build()).queue();
+                playerList.clear();
+                guild.clear();
+                chat.clear();
+                return;
+            }
+
+            if (playerList.size() == 1) {
+                event.getChannel().sendMessage("Waiting for one more player!").queue();
+            }
+        }
+    }
+
+    private String whoWin(Integer first, String firstId, Integer second, String secondId) {
+        if (first > second) {
+            return firstId;
+        }
+        if (second > first) {
+            return secondId;
+        }
+        return "Draw!";
+    }
+
+    private String choiceOfSides(int diceFirstPlayer, int diceSecondPlayer) {
+        String first = String.valueOf(diceFirstPlayer);
+        String second = String.valueOf(diceSecondPlayer);
+
+        //1
+
+        if (first.contains("1") && second.contains("1")) {
+            return "https://megolox.ru/disImages/1-1.png";
+        }
+
+        if (first.contains("1") && second.contains("2")) {
+            return "https://megolox.ru/disImages/1-2.png";
+        }
+
+        if (first.contains("1") && second.contains("3")) {
+            return "https://megolox.ru/disImages/1-3.png";
+        }
+
+        if (first.contains("1") && second.contains("4")) {
+            return "https://megolox.ru/disImages/1-4.png";
+        }
+
+        if (first.contains("1") && second.contains("5")) {
+            return "https://megolox.ru/disImages/1-5.png";
+        }
+
+        if (first.contains("1") && second.contains("6")) {
+            return "https://megolox.ru/disImages/1-6.png";
+        }
+
+        //2
+
+        if (first.contains("2") && second.contains("1")) {
+            return "https://megolox.ru/disImages/2-1.png";
+        }
+
+        if (first.contains("2") && second.contains("2")) {
+            return "https://megolox.ru/disImages/2-2.png";
+        }
+
+        if (first.contains("2") && second.contains("3")) {
+            return "https://megolox.ru/disImages/2-3.png";
+        }
+
+        if (first.contains("2") && second.contains("4")) {
+            return "https://megolox.ru/disImages/2-4.png";
+        }
+
+        if (first.contains("2") && second.contains("5")) {
+            return "https://megolox.ru/disImages/2-5.png";
+        }
+
+        if (first.contains("2") && second.contains("6")) {
+            return "https://megolox.ru/disImages/2-6.png";
+        }
+
+        //3
+
+        if (first.contains("3") && second.contains("1")) {
+            return "https://megolox.ru/disImages/3-1.png";
+        }
+
+        if (first.contains("3") && second.contains("2")) {
+            return "https://megolox.ru/disImages/3-2.png";
+        }
+
+        if (first.contains("3") && second.contains("3")) {
+            return "https://megolox.ru/disImages/3-3.png";
+        }
+
+        if (first.contains("3") && second.contains("4")) {
+            return "https://megolox.ru/disImages/3-4.png";
+        }
+
+        if (first.contains("3") && second.contains("5")) {
+            return "https://megolox.ru/disImages/3-5.png";
+        }
+
+        if (first.contains("3") && second.contains("6")) {
+            return "https://megolox.ru/disImages/3-6.png";
+        }
+
+        //4
+
+        if (first.contains("4") && second.contains("1")) {
+            return "https://megolox.ru/disImages/4-1.png";
+        }
+
+        if (first.contains("4") && second.contains("2")) {
+            return "https://megolox.ru/disImages/4-2.png";
+        }
+
+        if (first.contains("4") && second.contains("3")) {
+            return "https://megolox.ru/disImages/4-3.png";
+        }
+
+        if (first.contains("4") && second.contains("4")) {
+            return "https://megolox.ru/disImages/4-4.png";
+        }
+
+        if (first.contains("4") && second.contains("5")) {
+            return "https://megolox.ru/disImages/4-5.png";
+        }
+
+        if (first.contains("4") && second.contains("6")) {
+            return "https://megolox.ru/disImages/4-6.png";
+        }
+
+        //
+
+        if (first.contains("5") && second.contains("1")) {
+            return "https://megolox.ru/disImages/5-1.png";
+        }
+
+        if (first.contains("5") && second.contains("2")) {
+            return "https://megolox.ru/disImages/5-2.png";
+        }
+
+        if (first.contains("5") && second.contains("3")) {
+            return "https://megolox.ru/disImages/5-3.png";
+        }
+
+        if (first.contains("5") && second.contains("4")) {
+            return "https://megolox.ru/disImages/5-4.png";
+        }
+
+        if (first.contains("5") && second.contains("5")) {
+            return "https://megolox.ru/disImages/5-5.png";
+        }
+
+        if (first.contains("5") && second.contains("6")) {
+            return "https://megolox.ru/disImages/5-6.png";
+        }
+
+        //
+
+        if (first.contains("6") && second.contains("1")) {
+            return "https://megolox.ru/disImages/6-1.png";
+        }
+
+        if (first.contains("6") && second.contains("2")) {
+            return "https://megolox.ru/disImages/6-2.png";
+        }
+
+        if (first.contains("6") && second.contains("3")) {
+            return "https://megolox.ru/disImages/6-3.png";
+        }
+
+        if (first.contains("6") && second.contains("4")) {
+            return "https://megolox.ru/disImages/6-4.png";
+        }
+
+        if (first.contains("6") && second.contains("5")) {
+            return "https://megolox.ru/disImages/6-5.png";
+        }
+
+        if (first.contains("6") && second.contains("6")) {
+            return "https://megolox.ru/disImages/6-6.png";
+        }
+
+        return "https://megolox.ru/dice.png";
+    }
+
+}

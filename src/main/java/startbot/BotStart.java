@@ -7,6 +7,7 @@ import events.LogWhoEnterLeaveMoveChannel;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import javax.security.auth.login.LoginException;
+import games.GameOfDice;
 import messagesevents.BotShutDown;
 import messagesevents.CountConnectionsEvent;
 import messagesevents.DrinkBoolean;
@@ -57,6 +58,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new LogWhoEnterLeaveMoveChannel());
     jdaBuilder.addEventListeners(new RepeatMyMessage());
     jdaBuilder.addEventListeners(new SendingMessagesToGuilds());
+    jdaBuilder.addEventListeners(new GameOfDice());
     jda = jdaBuilder.build();
     jda.awaitReady();
   }

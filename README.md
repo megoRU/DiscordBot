@@ -12,7 +12,7 @@
 <a href="https://www.jetbrains.com/?from=DiscordBot"><img width="377" height="128" src="jetbrains.png">
 
 ## Add bot to your server
-<a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"><img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
+<a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"> <img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
 
 ## What the bot can do
 
@@ -26,6 +26,7 @@
 8.  [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
 9.  [Exchange Values](#exchange-values)
 10. Repeat after me
+11. Game !roll
 
 ## TODO
 
@@ -34,6 +35,7 @@
 -   [x]   Make a database to save data
 -   [x]   Top 3 users connections to the channels
 -   [x]   Rewrite support code for multi-servers
+-   [x]   Make one game
 -   [ ]   Full english/russian support for outputs
 -   [ ]   Command usage counter. Quantity output on command
 -   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
