@@ -160,15 +160,11 @@ public class DataBase {
   }
 
   public void deleteList() {
-    for (int i = 0; i < data.size(); i++) {
-      data.remove(i);
-    }
+    data.clear();
   }
 
   public void deleteListWhoLast() {
-    for (int i = 0; i < data2.size(); i++) {
-      data2.remove(i);
-    }
+    data2.clear();
   }
 }
 

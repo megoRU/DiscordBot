@@ -13,70 +13,66 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
-  private boolean inChannelMeshiva;
+  private static boolean inChannelMeshiva;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
-  private final String userIdMeshiva = "310364711587676161";
-  private final String userIdMego = "250699265389625347";
+  private static final String userIdMeshiva = "310364711587676161";
+  //private static final String userIdMego = "250699265389625347";
+  public final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
   private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
-  //TODO: Должно работать
-  private Boolean whoLastEnter(@NotNull GuildVoiceJoinEvent event) throws SQLException {
+  private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
     DataBase dataBase = new DataBase();
-    String idUser = event.getMember().getId();
-    String idGuild = event.getGuild().getId();
     Set<String> whoLast = dataBase.whoLastEnter(idGuild);
     ArrayList<String> dataFrom = new ArrayList<>(whoLast);
     dataBase.deleteListWhoLast();
     if (dataFrom.isEmpty()) {
       return false;
     }
+    whoLast.clear();
     String id = dataFrom.get(0);
     return id.contains(idUser);
   }
 
+  //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     try {
-    String idEnterUser = event.getMember().getId();
-    String nameEnterUser = event.getMember().getUser().getName();
-    String idGuild = event.getGuild().getId();
-    DataBase dataBase = new DataBase();
-    String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
-    boolean lastWhoEnter = whoLastEnter(event);
+      String idEnterUser = event.getMember().getId();
+      String nameEnterUser = event.getMember().getUser().getName();
+      String idGuild = event.getGuild().getId();
+      DataBase dataBase = new DataBase();
+      String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
+      boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
 
-    //TODO: Осталось тестировать!
-    if (!userFromBD.contains(idEnterUser)) {
-      dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
-      dataBase.setCount(idEnterUser, idGuild);
-    }
-    if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
-      dataBase.setWhoLastEnter(1, idGuild, idEnterUser);
-      dataBase.setCount(idEnterUser, idGuild);
-    }
-
-    String nameChannelEnterUser = event.getChannelJoined().getName();
-    String nameUserWhoEnter = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
-    event.getVoiceState().inVoiceChannel();
-    event.getMember().getVoiceState();
-    event.getGuild().getVoiceChannels()
-        .forEach(e -> e.getMembers()
-        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
-
-    for (String listLoop : listUsersInChannelsForMeshiva) {
-      if (listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(true);
-        break;
+      if (!userFromBD.contains(idEnterUser)) {
+        dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
+        dataBase.setCount(idEnterUser, idGuild);
       }
-      if (!listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(false);
+      if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
+        dataBase.setWhoLastEnter(1, idGuild, idEnterUser);
+        dataBase.setCount(idEnterUser, idGuild);
       }
-      //System.out.println(listLoop.matches("753218484455997491") + " " + listLoop);
-    }
 
-      if (idGuild.contains("250700478520885248")) {
+      String nameChannelEnterUser = event.getChannelJoined().getName();
+      String nameUserWhoEnter = event.getMember().getUser().getName();
+      User user = event.getMember().getUser();
+
+      event.getGuild().getVoiceChannels()
+          .forEach(e -> e.getMembers()
+              .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+
+      for (String listLoop : listUsersInChannelsForMeshiva) {
+        if (listLoop.contains(userIdMeshiva)) {
+          inChannelMeshiva = true;
+          break;
+        }
+        if (!listLoop.contains(userIdMeshiva)) {
+          inChannelMeshiva = false;
+        }
+      }
+      if (idGuild.contains(MAIN_GUILD_ID)) {
         if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches(userIdMeshiva)) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
               .get(0);
@@ -141,19 +137,18 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     User user = event.getMember().getUser();
     event.getGuild().getVoiceChannels()
         .forEach(e -> e.getMembers()
-        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+            .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
     for (String listLoop : listUsersInChannelsForMeshiva) {
       if (listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(true);
+        inChannelMeshiva = true;
         break;
       }
       if (!listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(false);
+        inChannelMeshiva = false;
       }
-      //System.out.println(listLoop.matches("753218484455997491") + " " + listLoop);
     }
-    if (idGuild.contains("250700478520885248")) {
+    if (idGuild.contains(MAIN_GUILD_ID)) {
       if (!user.isBot() && idLeaveUser.matches(userIdMeshiva)) {
         TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
             .get(0);
@@ -210,13 +205,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     return inChannelMeshiva;
   }
 
-  private void setInChannelMeshiva(boolean inChannelMeshiva) {
-    this.inChannelMeshiva = inChannelMeshiva;
-  }
-
   private void deleteList() {
-    for (int i = 0; i < listUsersInChannelsForMeshiva.size(); i++) {
-      listUsersInChannelsForMeshiva.remove(i);
-    }
+    listUsersInChannelsForMeshiva.clear();
   }
 }
