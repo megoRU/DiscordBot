@@ -19,7 +19,8 @@ public class GameOfDice extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
-        String idPlayer = event.getMessage().getAuthor().getName();
+        String playerTag = event.getMessage().getAuthor().getId();
+        String idPlayer = event.getMessage().getAuthor().getName() + "_" + playerTag;
 
         if (message.contains("!roll")) {
             playerList.add(idPlayer);
@@ -28,18 +29,30 @@ public class GameOfDice extends ListenerAdapter {
 
             if (playerList.size() == 2 && guild.get(0).equals(guild.get(1))) {
 
+                if (playerList.get(0).contains(playerList.get(1))) {
+                    playerList.remove(1);
+                    event.getMessage().addReaction("\u26D4").queue();
+                    event.getChannel().sendMessage("You are already on the list!").queue();
+                    return;
+                }
+
                 int diceFirstPlayer = 1 + (int) (Math.random() * 6);
                 int diceSecondPlayer = 1 + (int) (Math.random() * 6);
                 long idChannel = event.getChannel().getIdLong();
+                int index = playerList.get(0).indexOf("_");
+                int index2 = playerList.get(1).indexOf("_");
+
                 EmbedBuilder gameOfDice = new EmbedBuilder();
                 gameOfDice.setTitle("Game of Dice");
-                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer + "**"
-                        + "\nPlayer 2: **" + diceSecondPlayer +
+                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer
+                        + "**" + "\nPlayer 2: **" + diceSecondPlayer +
                         "\n\n**Winner: **" +
                         whoWin(diceFirstPlayer, playerList.get(0),
                                 diceSecondPlayer, playerList.get(1))
                         + "**"
-                        + "\n\nRolled by: **" + playerList.get(0) + "**" + " & " + "**" + playerList.get(1) + "**");
+                        + "\n\nRolled by: **" + playerList.get(0).substring(0, index)
+                        + "**" + " & " + "**" + playerList.get(1).substring(0, index2)
+                        + "**");
                 gameOfDice.setColor(Color.WHITE);
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
                 event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
@@ -51,19 +64,31 @@ public class GameOfDice extends ListenerAdapter {
             }
 
             if (playerList.size() == 2 && !guild.get(0).equals(guild.get(1))) {
+
+                if (playerList.get(0).contains(playerList.get(1))) {
+                    playerList.remove(1);
+                    event.getMessage().addReaction("\u26D4").queue();
+                    event.getChannel().sendMessage("You are already on the list!").queue();
+                    return;
+                }
+
                 int diceFirstPlayer = 1 + (int) (Math.random() * 6);
                 int diceSecondPlayer = 1 + (int) (Math.random() * 6);
                 long idChannel = event.getChannel().getIdLong();
+                int index = playerList.get(0).indexOf("_");
+                int index2 = playerList.get(1).indexOf("_");
 
                 EmbedBuilder gameOfDice = new EmbedBuilder();
                 gameOfDice.setTitle("Game of Dice");
-                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer + "**"
-                        + "\nPlayer 2: **" + diceSecondPlayer +
+                gameOfDice.setDescription("Player 1: **" + diceFirstPlayer
+                        + "**" + "\nPlayer 2: **" + diceSecondPlayer +
                         "\n\n**Winner: **" +
                         whoWin(diceFirstPlayer, playerList.get(0),
                                 diceSecondPlayer, playerList.get(1))
                         + "**"
-                        + "\n\nRolled by: **" + playerList.get(0) + "**" + " & " + "**" + playerList.get(1) + "**");
+                        + "\n\nRolled by: **" + playerList.get(0).substring(0, index)
+                        + "**" + " & " + "**" + playerList.get(1).substring(0, index2)
+                        + "**");
                 gameOfDice.setColor(Color.WHITE);
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
                 event.getJDA().getGuildById(guild.get(0)).getTextChannelById(chat.get(0)).sendMessage(gameOfDice.build()).queue();
@@ -83,10 +108,12 @@ public class GameOfDice extends ListenerAdapter {
 
     private String whoWin(Integer first, String firstId, Integer second, String secondId) {
         if (first > second) {
-            return firstId;
+            int index = firstId.indexOf("_");
+            return firstId.substring(0, index);
         }
         if (second > first) {
-            return secondId;
+            int index = secondId.indexOf("_");
+            return secondId.substring(0, index);
         }
         return "Draw!";
     }
