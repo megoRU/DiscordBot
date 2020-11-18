@@ -96,159 +96,173 @@ public class GameOfDice extends ListenerAdapter {
         String second = String.valueOf(diceSecondPlayer);
 
         //1
+        if (first.contains("1")) {
 
-        if (first.contains("1") && second.contains("1")) {
-            return "https://megolox.ru/disImages/1-1.png";
-        }
+            if (first.contains("1") && second.contains("1")) {
+                return "https://megolox.ru/disImages/1-1.png";
+            }
 
-        if (first.contains("1") && second.contains("2")) {
-            return "https://megolox.ru/disImages/1-2.png";
-        }
+            if (first.contains("1") && second.contains("2")) {
+                return "https://megolox.ru/disImages/1-2.png";
+            }
 
-        if (first.contains("1") && second.contains("3")) {
-            return "https://megolox.ru/disImages/1-3.png";
-        }
+            if (first.contains("1") && second.contains("3")) {
+                return "https://megolox.ru/disImages/1-3.png";
+            }
 
-        if (first.contains("1") && second.contains("4")) {
-            return "https://megolox.ru/disImages/1-4.png";
-        }
+            if (first.contains("1") && second.contains("4")) {
+                return "https://megolox.ru/disImages/1-4.png";
+            }
 
-        if (first.contains("1") && second.contains("5")) {
-            return "https://megolox.ru/disImages/1-5.png";
-        }
+            if (first.contains("1") && second.contains("5")) {
+                return "https://megolox.ru/disImages/1-5.png";
+            }
 
-        if (first.contains("1") && second.contains("6")) {
-            return "https://megolox.ru/disImages/1-6.png";
+            if (first.contains("1") && second.contains("6")) {
+                return "https://megolox.ru/disImages/1-6.png";
+            }
         }
 
         //2
 
-        if (first.contains("2") && second.contains("1")) {
-            return "https://megolox.ru/disImages/2-1.png";
-        }
+        if (first.contains("2")) {
 
-        if (first.contains("2") && second.contains("2")) {
-            return "https://megolox.ru/disImages/2-2.png";
-        }
+            if (first.contains("2") && second.contains("1")) {
+                return "https://megolox.ru/disImages/2-1.png";
+            }
 
-        if (first.contains("2") && second.contains("3")) {
-            return "https://megolox.ru/disImages/2-3.png";
-        }
+            if (first.contains("2") && second.contains("2")) {
+                return "https://megolox.ru/disImages/2-2.png";
+            }
 
-        if (first.contains("2") && second.contains("4")) {
-            return "https://megolox.ru/disImages/2-4.png";
-        }
+            if (first.contains("2") && second.contains("3")) {
+                return "https://megolox.ru/disImages/2-3.png";
+            }
 
-        if (first.contains("2") && second.contains("5")) {
-            return "https://megolox.ru/disImages/2-5.png";
-        }
+            if (first.contains("2") && second.contains("4")) {
+                return "https://megolox.ru/disImages/2-4.png";
+            }
 
-        if (first.contains("2") && second.contains("6")) {
-            return "https://megolox.ru/disImages/2-6.png";
+            if (first.contains("2") && second.contains("5")) {
+                return "https://megolox.ru/disImages/2-5.png";
+            }
+
+            if (first.contains("2") && second.contains("6")) {
+                return "https://megolox.ru/disImages/2-6.png";
+            }
         }
 
         //3
+        if (first.contains("3")) {
 
-        if (first.contains("3") && second.contains("1")) {
-            return "https://megolox.ru/disImages/3-1.png";
-        }
 
-        if (first.contains("3") && second.contains("2")) {
-            return "https://megolox.ru/disImages/3-2.png";
-        }
+            if (first.contains("3") && second.contains("1")) {
+                return "https://megolox.ru/disImages/3-1.png";
+            }
 
-        if (first.contains("3") && second.contains("3")) {
-            return "https://megolox.ru/disImages/3-3.png";
-        }
+            if (first.contains("3") && second.contains("2")) {
+                return "https://megolox.ru/disImages/3-2.png";
+            }
 
-        if (first.contains("3") && second.contains("4")) {
-            return "https://megolox.ru/disImages/3-4.png";
-        }
+            if (first.contains("3") && second.contains("3")) {
+                return "https://megolox.ru/disImages/3-3.png";
+            }
 
-        if (first.contains("3") && second.contains("5")) {
-            return "https://megolox.ru/disImages/3-5.png";
-        }
+            if (first.contains("3") && second.contains("4")) {
+                return "https://megolox.ru/disImages/3-4.png";
+            }
 
-        if (first.contains("3") && second.contains("6")) {
-            return "https://megolox.ru/disImages/3-6.png";
+            if (first.contains("3") && second.contains("5")) {
+                return "https://megolox.ru/disImages/3-5.png";
+            }
+
+            if (first.contains("3") && second.contains("6")) {
+                return "https://megolox.ru/disImages/3-6.png";
+            }
         }
 
         //4
+        if (first.contains("4")) {
 
-        if (first.contains("4") && second.contains("1")) {
-            return "https://megolox.ru/disImages/4-1.png";
-        }
+            if (first.contains("4") && second.contains("1")) {
+                return "https://megolox.ru/disImages/4-1.png";
+            }
 
-        if (first.contains("4") && second.contains("2")) {
-            return "https://megolox.ru/disImages/4-2.png";
-        }
+            if (first.contains("4") && second.contains("2")) {
+                return "https://megolox.ru/disImages/4-2.png";
+            }
 
-        if (first.contains("4") && second.contains("3")) {
-            return "https://megolox.ru/disImages/4-3.png";
-        }
+            if (first.contains("4") && second.contains("3")) {
+                return "https://megolox.ru/disImages/4-3.png";
+            }
 
-        if (first.contains("4") && second.contains("4")) {
-            return "https://megolox.ru/disImages/4-4.png";
-        }
+            if (first.contains("4") && second.contains("4")) {
+                return "https://megolox.ru/disImages/4-4.png";
+            }
 
-        if (first.contains("4") && second.contains("5")) {
-            return "https://megolox.ru/disImages/4-5.png";
-        }
+            if (first.contains("4") && second.contains("5")) {
+                return "https://megolox.ru/disImages/4-5.png";
+            }
 
-        if (first.contains("4") && second.contains("6")) {
-            return "https://megolox.ru/disImages/4-6.png";
-        }
-
-        //
-
-        if (first.contains("5") && second.contains("1")) {
-            return "https://megolox.ru/disImages/5-1.png";
-        }
-
-        if (first.contains("5") && second.contains("2")) {
-            return "https://megolox.ru/disImages/5-2.png";
-        }
-
-        if (first.contains("5") && second.contains("3")) {
-            return "https://megolox.ru/disImages/5-3.png";
-        }
-
-        if (first.contains("5") && second.contains("4")) {
-            return "https://megolox.ru/disImages/5-4.png";
-        }
-
-        if (first.contains("5") && second.contains("5")) {
-            return "https://megolox.ru/disImages/5-5.png";
-        }
-
-        if (first.contains("5") && second.contains("6")) {
-            return "https://megolox.ru/disImages/5-6.png";
+            if (first.contains("4") && second.contains("6")) {
+                return "https://megolox.ru/disImages/4-6.png";
+            }
         }
 
         //
+        if (first.contains("5")) {
 
-        if (first.contains("6") && second.contains("1")) {
-            return "https://megolox.ru/disImages/6-1.png";
+            if (first.contains("5") && second.contains("1")) {
+                return "https://megolox.ru/disImages/5-1.png";
+            }
+
+            if (first.contains("5") && second.contains("2")) {
+                return "https://megolox.ru/disImages/5-2.png";
+            }
+
+            if (first.contains("5") && second.contains("3")) {
+                return "https://megolox.ru/disImages/5-3.png";
+            }
+
+            if (first.contains("5") && second.contains("4")) {
+                return "https://megolox.ru/disImages/5-4.png";
+            }
+
+            if (first.contains("5") && second.contains("5")) {
+                return "https://megolox.ru/disImages/5-5.png";
+            }
+
+            if (first.contains("5") && second.contains("6")) {
+                return "https://megolox.ru/disImages/5-6.png";
+            }
         }
 
-        if (first.contains("6") && second.contains("2")) {
-            return "https://megolox.ru/disImages/6-2.png";
-        }
+        //
+        if (first.contains("6")) {
 
-        if (first.contains("6") && second.contains("3")) {
-            return "https://megolox.ru/disImages/6-3.png";
-        }
+            if (first.contains("6") && second.contains("1")) {
+                return "https://megolox.ru/disImages/6-1.png";
+            }
 
-        if (first.contains("6") && second.contains("4")) {
-            return "https://megolox.ru/disImages/6-4.png";
-        }
+            if (first.contains("6") && second.contains("2")) {
+                return "https://megolox.ru/disImages/6-2.png";
+            }
 
-        if (first.contains("6") && second.contains("5")) {
-            return "https://megolox.ru/disImages/6-5.png";
-        }
+            if (first.contains("6") && second.contains("3")) {
+                return "https://megolox.ru/disImages/6-3.png";
+            }
 
-        if (first.contains("6") && second.contains("6")) {
-            return "https://megolox.ru/disImages/6-6.png";
+            if (first.contains("6") && second.contains("4")) {
+                return "https://megolox.ru/disImages/6-4.png";
+            }
+
+            if (first.contains("6") && second.contains("5")) {
+                return "https://megolox.ru/disImages/6-5.png";
+            }
+
+            if (first.contains("6") && second.contains("6")) {
+                return "https://megolox.ru/disImages/6-6.png";
+            }
         }
 
         return "https://megolox.ru/dice.png";
