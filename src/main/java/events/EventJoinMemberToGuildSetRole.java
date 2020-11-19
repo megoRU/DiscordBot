@@ -35,7 +35,7 @@ public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
   public static void setJoinRole(Member member) {
     Guild guild = member.getGuild();
     List<Role> roles = new ArrayList<>(member.getRoles()); // modifiable copy
-    List<Role> modRoles = guild.getRolesByName("Пользователи", true); // get roles with name "moderator"
+    List<Role> modRoles = guild.getRolesByName("DefaultRole", true); // get roles with name "moderator"
     roles.addAll(modRoles); // add new roles
     // update the member with new roles
     guild.modifyMemberRoles(member, roles).queue();

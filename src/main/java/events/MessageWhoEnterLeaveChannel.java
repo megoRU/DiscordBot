@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
-  private static boolean inChannelMeshiva;
+  private static boolean inChannelMeshiva = false;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
   private static final String userIdMeshiva = "310364711587676161";
   //private static final String userIdMego = "250699265389625347";
@@ -67,9 +67,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         if (listLoop.contains(userIdMeshiva)) {
           inChannelMeshiva = true;
           break;
-        }
-        if (!listLoop.contains(userIdMeshiva)) {
-          inChannelMeshiva = false;
         }
       }
       if (idGuild.contains(MAIN_GUILD_ID)) {
@@ -143,9 +140,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       if (listLoop.contains(userIdMeshiva)) {
         inChannelMeshiva = true;
         break;
-      }
-      if (!listLoop.contains(userIdMeshiva)) {
-        inChannelMeshiva = false;
       }
     }
     if (idGuild.contains(MAIN_GUILD_ID)) {

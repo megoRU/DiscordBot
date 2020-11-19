@@ -16,14 +16,15 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
     Objects.requireNonNull(event.getGuild().getDefaultChannel())
         .sendMessage("Thanks for adding " + "**mego**" + " to " + event.getGuild().getName() + "!"
             + "\nUse **!help** for a list of commands."
-            + "\nCreate text channel with name: `botlog`").queue();
+            + "\nCreate text channel with name: `botlog`"
+            + "\nIf you need to give users a Role when they join, make a Role with this name: `DefaultRole`" ).queue();
     try {
       DataBase dataBase = new DataBase();
       dataBase.createTableWhenBotJoinGuild(idGuild);
       dataBase.createTableVoiceWhenBotJoinGuild(idGuild);
       dataBase.createTableForVoice("1", "1111111111111", idGuild);
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
+    } catch (SQLException exception) {
+      exception.printStackTrace();
     }
   }
 }

@@ -128,7 +128,7 @@ public class DataBase {
 
   public void createTableForVoice(String id, String userLongId, String guildId) {
     try {
-      String query = "INSERT INTO VOICE_" + guildId + " (id, userLongId) values (?, ?)";
+      String query = "INSERT IGNORE INTO VOICE_" + guildId + " (id, userLongId) values (?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setInt(1, Integer.parseInt(id));
       preparedStatement.setString(2, userLongId);
