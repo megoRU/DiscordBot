@@ -29,9 +29,10 @@ public class MessageInfoHelp extends ListenerAdapter {
       EmbedBuilder info = new EmbedBuilder();
       info.setColor(0xa224db);
       info.setAuthor(event.getAuthor().getName(), null, avatarUrl);
-      info.setDescription("Команды: "
+      info.setDescription("Commands:"
           + "\n`[!help/!info/help/info]` - Information."
           + "\n`[!roll]` - The Game of Dice. "
+          + "\n`[!play]` - Game: Hangman/Виселица. "
           + "\n`[курс доллара, курс евро, курс, евро, доллар]` - Данные от ЦБ."
           + "\n`[!uptime/uptime]` - uptime bot."
           + "\n`[!shutdown/shutdown/sd]` - The bot is shutting down on the Linux server. (Only the bot creator can use!)"
@@ -43,11 +44,11 @@ public class MessageInfoHelp extends ListenerAdapter {
           + "\n`[!ищи/ищи]` - !ищи + пробел + какой-то запрос в google [g.zeos.in](https://g.zeos.in/) "
           + "\n`YouTube link + space + minutes + space + seconds if present` - converts to a short link with time"
       );
-      info.addField("Ссылки:", "Сайт: [megolox.ru](https://megolox.ru)"
-              + "\nTS3 Сервер: `ts3.megolox.ru`"
-              + "\nCS:GO Сервер: `176.96.238.167:27015`", false);
-      info.addField("Создатель бота", "[mego](https://steamcommunity.com/id/megoRU)", false);
-      info.addField("Лицензия", "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0)", false);
+      info.addField("Links:", "[megolox.ru](https://megolox.ru)", false);
+      info.addField("Bot creator", "[mego](https://steamcommunity.com/id/megoRU)", false);
+      info.addField("License", "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0)", false);
+      info.addField("Support Server", "[Click me](https://discord.com/invite/UrWG3R683d)", false);
+
       event.getChannel().sendMessage(info.build()).queue();
       info.clear();
     }

@@ -1,53 +1,55 @@
 package messagesevents;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessageMoveUser extends ListenerAdapter {
 
-  public final String MOVE = "move";
+    public final String MOVE = "!move\\s.+";
 
-  public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw().toLowerCase();
-    String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
-    boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
+    //TODO: Исправить ошибку с выбрасыванием эксепшина по поводу если юзер в том же канале что и тот кто просит
+    // Либо сделать вообще всех перемещать
+    public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+        String message = event.getMessage().getContentRaw().toLowerCase();
+        String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
+        User user = event.getMember().getUser();
+        boolean boolPermissionAdmin = event.getGuild().getMember(user).hasPermission(Permission.VOICE_MOVE_OTHERS);
+        // VoiceChannel voiceChannel = event.getGuild().getVoiceStates().get(0);
 
-    if (message.matches(MOVE)
-        & !event.getMember().getUser().isBot()
-        & idUser.equals("310364711587676161")
-        & boolPermissionAdmin) {
-      List<Member> memberList = new ArrayList<>();
-      memberList.add(event.getMember());
+        if (message.matches(MOVE) && !user.isBot() && boolPermissionAdmin) {
+            String[] messages = message.split(" ", 2);
+            List<Member> memberId = event.getGuild().getMembersByName(messages[1], true);
+            System.out.println(messages[1]);
+            if (memberId.size() > 0) {
+                if (memberId.get(0) != null) {
+                    event.getGuild().moveVoiceMember(memberId.get(0),
+                    Objects.requireNonNull(
+                    Objects.requireNonNull(
+                    event.getGuild().getMember(user)).getVoiceState()).getChannel()).queue();
+                    memberId.clear();
+                    return;
+                }
+            }
+            if (memberId.size() == 0) {
+                event.getChannel().sendMessage("User not found in Voice Channels").queue();
+            }
+        }
 
-      event.getGuild().moveVoiceMember(memberList.get(0),
-          event.getGuild().getVoiceChannels().get(1))
-          .queue();
-      try {
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-        e.printStackTrace();
-      }
-      event.getGuild().moveVoiceMember(memberList.get(0),
-          event.getGuild().getVoiceChannels().get(0))
-          .queue();
+        if (message.matches(MOVE) & !boolPermissionAdmin) {
+            EmbedBuilder error = new EmbedBuilder();
+            error.setColor(0xff3923);
+            error.setTitle("🔴 Error: You cannot move users");
+            error.setDescription("You need Permission.VOICE_MOVE_OTHERS"
+                    + "\n-> MessageMoveUser.java");
+            event.getChannel().sendMessage(error.build()).queue();
+            error.clear();
+        }
     }
-
-    if (message.matches(MOVE) & !boolPermissionAdmin) {
-      EmbedBuilder error = new EmbedBuilder();
-      error.setColor(0xff3923);
-      error.setTitle("🔴 Error: You are not Admin");
-      error.setDescription("You need Permission.ADMINISTRATOR"
-          + "\n-> MessageMoveUser.java");
-      event.getChannel().sendMessage(error.build()).queue();
-      error.clear();
-    }
-  }
 }

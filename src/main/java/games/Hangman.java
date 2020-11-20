@@ -41,15 +41,12 @@ public class Hangman {
     }
 
     public void logic(Guild guild, TextChannel channel, User user, String inputs) {
-        System.out.println(WORD);
         if(WORD == null) {
             int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
             WORD = ALL_WORDS[randomWord];
-            System.out.println(WORD);
             strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
             hideWord(WORD.length());
         }
-        System.out.println(WORD);
 
         if (WORD_HIDDEN.contains("_")) {
 
@@ -71,7 +68,8 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы проиграли!\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                            + "\n Слово которое было: `" + WORD + "`");
 
                     BotStart.jda.getGuildById(guild.getId())
                             .getTextChannelById(channel.getId())
