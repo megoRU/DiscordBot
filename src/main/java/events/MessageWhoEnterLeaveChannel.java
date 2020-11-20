@@ -15,7 +15,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   private static boolean inChannelMeshiva = false;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
-  private static final String userIdMeshiva = "310364711587676161";
+  private final String userIdMeshiva = "310364711587676161";
   //private static final String userIdMego = "250699265389625347";
   public final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
@@ -32,7 +32,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     }
     whoLast.clear();
     String id = dataFrom.get(0);
-    return id.contains(idUser);
+    return id.equals(idUser);
   }
 
   //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
@@ -46,11 +46,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
       boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
 
-      if (!userFromBD.contains(idEnterUser)) {
+      if (!userFromBD.equals(idEnterUser)) {
         dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
         dataBase.setCount(idEnterUser, idGuild);
       }
-      if (userFromBD.contains(idEnterUser) && !lastWhoEnter) {
+      if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {
         dataBase.setWhoLastEnter(1, idGuild, idEnterUser);
         dataBase.setCount(idEnterUser, idGuild);
       }
@@ -64,13 +64,15 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
               .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
 
       for (String listLoop : listUsersInChannelsForMeshiva) {
-        if (listLoop.contains(userIdMeshiva)) {
+        if (listLoop.equals(userIdMeshiva)) {
           inChannelMeshiva = true;
           break;
         }
+        inChannelMeshiva = false;
       }
-      if (idGuild.contains(MAIN_GUILD_ID)) {
-        if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.matches(userIdMeshiva)) {
+
+      if (idGuild.equals(MAIN_GUILD_ID)) {
+        if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.equals(userIdMeshiva)) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
               .get(0);
           textChannel.sendMessage(
@@ -80,7 +82,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           return;
         }
 
-        if (!user.isBot() && isInChannelMeshiva() && idEnterUser.matches(userIdMeshiva)) {
+        if (!user.isBot() && isInChannelMeshiva() && idEnterUser.equals(userIdMeshiva)) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
               .get(0);
           textChannel.sendMessage(
@@ -90,7 +92,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           return;
         }
 
-        if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.matches("250699265389625347")) {
+        if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.equals("250699265389625347")) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
               .get(0);
           textChannel.sendMessage(
@@ -100,7 +102,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           return;
         }
 
-        if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.matches("335466800793911298")) {
+        if (!user.isBot() && !isInChannelMeshiva() && idEnterUser.equals("335466800793911298")) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
               .get(0);
           textChannel.sendMessage(
@@ -141,9 +143,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         inChannelMeshiva = true;
         break;
       }
+      inChannelMeshiva = false;
     }
-    if (idGuild.contains(MAIN_GUILD_ID)) {
-      if (!user.isBot() && idLeaveUser.matches(userIdMeshiva)) {
+
+    if (idGuild.equals(MAIN_GUILD_ID)) {
+      if (!user.isBot() && idLeaveUser.equals(userIdMeshiva)) {
         TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
             .get(0);
         textChannel.sendMessage(
@@ -163,7 +167,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         return;
       }
 
-      if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("250699265389625347")) {
+      if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.equals("250699265389625347")) {
         TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
             .get(0);
         textChannel.sendMessage(
@@ -173,7 +177,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         return;
       }
 
-      if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.matches("335466800793911298")) {
+      if (!user.isBot() && !isInChannelMeshiva() && idLeaveUser.equals("335466800793911298")) {
         TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
             .get(0);
         textChannel.sendMessage(

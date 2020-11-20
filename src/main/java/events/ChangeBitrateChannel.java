@@ -10,88 +10,96 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChangeBitrateChannel extends ListenerAdapter {
 
-  private static boolean inChannelMeshiva;
+  private boolean inChannelMeshiva;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST
-  private static final String userIdMeshiva = "310364711587676161";
-  private static final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
+  private final String userIdMeshiva = "310364711587676161";
+  private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
+  public final String MAIN_GUILD_ID = "250700478520885248";
+
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     String idUser = event.getMember().getUser().getId();
-    event.getGuild().getVoiceChannels()
-        .forEach(e -> e.getMembers()
-        .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+    String idGuild = event.getGuild().getId();
 
-    for (String listLoop : listUsersInChannelsForMeshiva) {
-      if (listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(true);
-        break;
+    if (idGuild.equals(MAIN_GUILD_ID)) {
+      event.getGuild().getVoiceChannels()
+              .forEach(e -> e.getMembers()
+                      .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+      for (String listLoop : listUsersInChannelsForMeshiva) {
+        if (listLoop.equals(userIdMeshiva)) {
+          inChannelMeshiva = true;
+          break;
+        }
+        inChannelMeshiva = false;
       }
-      if (!listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(false);
+
+      if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
+        event.getNewValue().getManager().setBitrate(64000).queue();
+        deleteList();
+        return;
       }
-    }
 
-    if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(64000).queue();
-      deleteList();
-      return;
-    }
+      if (!idUser.equals(userIdMeshiva) && isInChannelMeshiva()) {
+        event.getNewValue().getManager().setBitrate(45000).queue();
+        deleteList();
+        return;
+      }
 
-    if (!idUser.equals(userIdMeshiva) && isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(45000).queue();
-      deleteList();
-      return;
-    }
-
-    if (idUser.equals(userIdMeshiva)) {
-      event.getNewValue().getManager().setBitrate(45000).queue();
-      deleteList();
+      if (idUser.equals(userIdMeshiva)) {
+        event.getNewValue().getManager().setBitrate(45000).queue();
+        deleteList();
+      }
     }
   }
 
-  //TODO need test:
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     String idUser = event.getMember().getUser().getId();
-    event.getGuild().getVoiceChannels()
-        .forEach(e -> e.getMembers()
-            .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+    String idGuild = event.getGuild().getId();
 
-    for (String listLoop : listUsersInChannelsForMeshiva) {
-      if (listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(true);
-        break;
+    if (idGuild.equals(MAIN_GUILD_ID)) {
+      event.getGuild().getVoiceChannels()
+              .forEach(e -> e.getMembers()
+                      .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
+
+      for (String listLoop : listUsersInChannelsForMeshiva) {
+        if (listLoop.equals(userIdMeshiva)) {
+          inChannelMeshiva = true;
+          break;
+        }
+        inChannelMeshiva = false;
       }
-      if (!listLoop.contains(userIdMeshiva)) {
-        setInChannelMeshiva(false);
+
+      if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
+        event.getNewValue().getManager().setBitrate(64000).queue();
+        deleteList();
+        return;
       }
-    }
 
-    if (!idUser.equals(userIdMeshiva) && !isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(64000).queue();
-      deleteList();
-      return;
-    }
+      if (!idUser.equals(userIdMeshiva) && isInChannelMeshiva()) {
+        event.getNewValue().getManager().setBitrate(45000).queue();
+        deleteList();
+        return;
+      }
 
-    if (!idUser.equals(userIdMeshiva) && isInChannelMeshiva()) {
-      event.getNewValue().getManager().setBitrate(45000).queue();
-      deleteList();
-      return;
-    }
-
-    if (idUser.equals(userIdMeshiva)) {
-      event.getNewValue().getManager().setBitrate(45000).queue();
-      deleteList();
+      if (idUser.equals(userIdMeshiva)) {
+        event.getNewValue().getManager().setBitrate(45000).queue();
+        deleteList();
+      }
     }
   }
 
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
     String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
+    String idGuild = event.getGuild().getId();
 
-    if (idUser.matches(userIdMeshiva)) {
-      event.getChannelLeft().getManager().setBitrate(64000).queue();
+    if (idGuild.equals(MAIN_GUILD_ID)) {
+
+      if (idUser.equals(userIdMeshiva)) {
+        event.getChannelLeft().getManager().setBitrate(64000).queue();
+      }
     }
   }
 
@@ -103,9 +111,5 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
   public boolean isInChannelMeshiva() {
     return inChannelMeshiva;
-  }
-
-  public void setInChannelMeshiva(boolean inChannelMeshiva) {
-    this.inChannelMeshiva = inChannelMeshiva;
   }
 }
