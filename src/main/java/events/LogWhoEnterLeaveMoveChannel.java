@@ -7,14 +7,11 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import java.util.ArrayList;
 
 public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   //bottestchannel //botchat //botlog
-  private static String botChannelLogs = "botlog";
-  private final ArrayList<String> channelBotlog = new ArrayList<>();
-  private static boolean isChannelBotLog = false;
+  private final String botChannelLogs = "botlog";
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
@@ -22,25 +19,11 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     String nameUserWhoEnter = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
 
-    event.getGuild().getTextChannels().forEach(textChannel -> channelBotlog.add(textChannel.getName()));
-
-    for (String listLoop : channelBotlog) {
-      if (listLoop.contains(botChannelLogs)) {
-        isChannelBotLog = true;
-        break;
-      }
-    }
-
-    if (!user.isBot() && isChannelBotLog) {
+    if (!user.isBot()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
-          "User: **" + nameUserWhoEnter
-              + "** entered the channel: " + nameChannelEnterUser).queue();
-    }
-
-    if (!user.isBot() && !isChannelBotLog) {
-      TextChannel textChannel = event.getGuild().getDefaultChannel();
-      textChannel.sendMessage("You have not created a channel with this name: `botlog`").queue();
+          "Пользователь: **" + nameUserWhoEnter
+              + "** зашёл в канал: " + nameChannelEnterUser).queue();
     }
   }
 
@@ -50,24 +33,12 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     String nameUserWhoMove = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
 
-    for (String listLoop : channelBotlog) {
-      if (listLoop.contains(botChannelLogs)) {
-        isChannelBotLog = true;
-        break;
-      }
-    }
-
-    if (!user.isBot() && isChannelBotLog) {
+    if (!user.isBot()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "User: **" + nameUserWhoMove
-              + "** moved to channel: " + nameChannelMoveUser).queue();
-    }
-
-    if (!user.isBot() && !isChannelBotLog) {
-      TextChannel textChannel = event.getGuild().getDefaultChannel();
-      textChannel.sendMessage("You have not created a channel with this name: `botlog`").queue();
+          "Пользователь: **" + nameUserWhoMove
+              + "** переместился в канал: " + nameChannelMoveUser).queue();
     }
   }
 
@@ -77,23 +48,12 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     String nameUserWhoLeave = event.getMember().getUser().getName();
     User user = event.getMember().getUser();
 
-    for (String listLoop : channelBotlog) {
-      if (listLoop.contains(botChannelLogs)) {
-        isChannelBotLog = true;
-        break;
-      }
-    }
-
-    if (!user.isBot() && isChannelBotLog) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+    if (!user.isBot()) {
+      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
+          .get(0);
       textChannel.sendMessage(
-          "User: **" + nameUserWhoLeave
-              + "** left the channel: " + nameChannelLeaveUser).queue();
-    }
-
-    if (!user.isBot() && !isChannelBotLog) {
-      TextChannel textChannel = event.getGuild().getDefaultChannel();
-      textChannel.sendMessage("You have not created a channel with this name: `botlog`").queue();
+          "Пользователь: **" + nameUserWhoLeave
+              + "** вышел из канала: " + nameChannelLeaveUser).queue();
     }
   }
 }
