@@ -89,8 +89,8 @@ public class Hangman {
                     info.setDescription("Вы уже использовали эту букву!\n"
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
 
-                    BotStart.jda.getGuildById(getGuild().getId())
-                            .getTextChannelById(getChannel().getId())
+                    BotStart.jda.getGuildById(guild.getId())
+                            .getTextChannelById(channel.getId())
                             .sendMessage(info.build()).queue();
                     info.clear();
 
@@ -111,8 +111,8 @@ public class Hangman {
                     info.setDescription("Вы угадали букву!\n"
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
 
-                    BotStart.jda.getGuildById(getGuild().getId())
-                            .getTextChannelById(getChannel().getId())
+                    BotStart.jda.getGuildById(guild.getId())
+                            .getTextChannelById(channel.getId())
                             .sendMessage(info.build()).queue();
                     info.clear();
 
@@ -124,9 +124,9 @@ public class Hangman {
                         infof.setDescription("Игра завершена, вы победили!\n"
                                 + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
 
-                        BotStart.jda.getGuildById(getGuild().getId())
-                                .getTextChannelById(getChannel().getId())
-                                .sendMessage(infof.build()).queue();
+                        BotStart.jda.getGuildById(guild.getId())
+                                .getTextChannelById(channel.getId())
+                                .sendMessage(info.build()).queue();
                         infof.clear();
                         //System.out.println("Игра завершена, вы победили!");
                         wordList.clear();
@@ -146,8 +146,8 @@ public class Hangman {
                             + "Осталось попыток: `" + (6 - count2) + "`\n"
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
 
-                    BotStart.jda.getGuildById(getGuild().getId())
-                            .getTextChannelById(getChannel().getId())
+                    BotStart.jda.getGuildById(guild.getId())
+                            .getTextChannelById(channel.getId())
                             .sendMessage(info.build()).queue();
                     info.clear();
                     return;
@@ -162,8 +162,8 @@ public class Hangman {
                 info.setDescription("Нужна 1 буква!\n"
                         + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
 
-                BotStart.jda.getGuildById(getGuild().getId())
-                        .getTextChannelById(getChannel().getId())
+                BotStart.jda.getGuildById(guild.getId())
+                        .getTextChannelById(channel.getId())
                         .sendMessage(info.build()).queue();
                 info.clear();
 
