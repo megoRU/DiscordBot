@@ -69,7 +69,8 @@ public class Hangman {
                     info.setTitle("Виселица");
                     info.setDescription("Вы проиграли!\n"
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
-                            + "\n Слово которое было: `" + WORD + "`");
+                            + "\n Слово которое было: `" + WORD + "`"
+                            + "\nИгрок: <@" + user.getIdLong() + ">");
 
                     BotStart.jda.getGuildById(guild.getId())
                             .getTextChannelById(channel.getId())
@@ -87,7 +88,8 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы уже использовали эту букву!\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                            + "\nИгрок: <@" + user.getIdLong() + ">");
 
                     BotStart.jda.getGuildById(guild.getId())
                             .getTextChannelById(channel.getId())
@@ -109,7 +111,8 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы угадали букву!\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                            + "\nИгрок: <@" + user.getIdLong() + ">");
 
                     BotStart.jda.getGuildById(guild.getId())
                             .getTextChannelById(channel.getId())
@@ -122,7 +125,8 @@ public class Hangman {
                         infof.setColor(0x00FF00);
                         infof.setTitle("Виселица");
                         infof.setDescription("Игра завершена, вы победили!\n"
-                                + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                                + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                                + "\nИгрок: <@" + user.getIdLong() + ">");
 
                         BotStart.jda.getGuildById(guild.getId())
                                 .getTextChannelById(channel.getId())
@@ -144,7 +148,8 @@ public class Hangman {
                     info.setTitle("Виселица");
                     info.setDescription("Такой буквы нет!\n"
                             + "Осталось попыток: `" + (6 - count2) + "`\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                            + "\nИгрок: <@" + user.getIdLong() + ">");
 
                     BotStart.jda.getGuildById(guild.getId())
                             .getTextChannelById(channel.getId())
@@ -160,7 +165,8 @@ public class Hangman {
                 info.setColor(0x00FF00);
                 info.setTitle("Виселица");
                 info.setDescription("Нужна 1 буква!\n"
-                        + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`");
+                        + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                        + "\nИгрок: <@" + user.getIdLong() + ">");
 
                 BotStart.jda.getGuildById(guild.getId())
                         .getTextChannelById(channel.getId())
