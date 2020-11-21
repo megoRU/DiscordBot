@@ -11,7 +11,7 @@ public class MessagePing extends ListenerAdapter {
   public final String HELP_WITH_OUT = "ping";
 
   public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentDisplay().toLowerCase();
+    String message = event.getMessage().getContentDisplay().toLowerCase().trim();
     if (message.matches(HELP) || message.matches(HELP_WITH_OUT)) {
       MessageChannel channels = event.getChannel();
       long time = System.currentTimeMillis();

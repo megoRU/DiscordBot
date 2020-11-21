@@ -126,7 +126,7 @@ public class Hangman {
 
                         BotStart.jda.getGuildById(guild.getId())
                                 .getTextChannelById(channel.getId())
-                                .sendMessage(info.build()).queue();
+                                .sendMessage(infof.build()).queue();
                         infof.clear();
                         //System.out.println("Игра завершена, вы победили!");
                         wordList.clear();
