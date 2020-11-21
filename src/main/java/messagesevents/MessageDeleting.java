@@ -34,15 +34,14 @@ public class MessageDeleting extends ListenerAdapter {
 
         if (indexParseInt >= 2 && indexParseInt <= 100) {
           deletingLog(event, index);
-          event.getMessage().addReaction("\u2705").queue();
           List<Message> messages = event.getChannel().getHistory().retrievePast(indexParseInt)
               .complete();
           event.getChannel().deleteMessages(messages).queue();
-
+          event.getMessage().addReaction("\u2705").queue();
           EmbedBuilder error = new EmbedBuilder();
           error.setColor(0x00FF00);
-          error.setTitle(":white_check_mark: Удалено: " + indexParseInt + " сообщений!");
-          error.setDescription("Это сообщение удалится через 5 секунд");
+          error.setTitle(":white_check_mark: Removed: " + indexParseInt + " messages!");
+          error.setDescription("This message will be deleted after 5 seconds");
           event.getChannel().sendMessage(error.build()).delay(5, TimeUnit.SECONDS)
               .flatMap(Message::delete).submit();
           error.clear();
@@ -62,7 +61,7 @@ public class MessageDeleting extends ListenerAdapter {
       EmbedBuilder error = new EmbedBuilder();
       error.setColor(0xff3923);
       error.setTitle("🔴 Error");
-      error.setDescription("The error is not related to the index!");
+      error.setDescription("Message Id provided was older than 2 weeks.");
       event.getChannel().sendMessage(error.build()).queue();
       error.clear();
     }
