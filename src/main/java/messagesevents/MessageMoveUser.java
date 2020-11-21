@@ -2,7 +2,6 @@ package messagesevents;
 
 import java.util.List;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;

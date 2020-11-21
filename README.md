@@ -27,20 +27,13 @@
 9.  [Exchange Values](#exchange-values)
 10. Repeat after me
 11. Game !roll
-11. Game !hg (Exclusive for Russian players)
-
+12. Game !hg (Exclusive for Russian players)
 
 ## TODO
 
--   [x]   Channel for logging movements, enters and deleting messages
--   [x]   Connection counter. Quantity output on command
--   [x]   Make a database to save data
--   [x]   Top 3 users connections to the channels
--   [x]   Rewrite support code for multi-servers
--   [x]   Make two games
--   [ ]   Full english/russian support for outputs
--   [ ]   Command usage counter. Quantity output on command
--   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+- [ ] Full english/russian support for outputs
+- [ ] Command usage counter. Quantity output on command
+- [ ] [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
 
 ## Games
 
