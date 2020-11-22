@@ -41,7 +41,7 @@ public class Hangman {
     }
 
     public void logic(Guild guild, TextChannel channel, User user, String inputs) {
-        if(WORD == null) {
+        if (WORD == null) {
             int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
             WORD = ALL_WORDS[randomWord];
             strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
@@ -59,28 +59,8 @@ public class Hangman {
                     isLetterPresent = false;
                 }
             }
-            //System.out.println();
 
             if (inputs.length() == 1) {
-
-                if (count2 > 5) {
-                    EmbedBuilder info = new EmbedBuilder();
-                    info.setColor(0x00FF00);
-                    info.setTitle("Виселица");
-                    info.setDescription("Вы проиграли!\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
-                            + "\n Слово которое было: `" + WORD + "`"
-                            + "\nИгрок: <@" + user.getIdLong() + ">");
-
-                    BotStart.jda.getGuildById(guild.getId())
-                            .getTextChannelById(channel.getId())
-                            .sendMessage(info.build()).queue();
-                    info.clear();
-                    WORD = null;
-                    removeGame(user.getIdLong());
-
-                    return;
-                }
 
                 if (isIsLetterPresent()) {
 
@@ -95,8 +75,7 @@ public class Hangman {
                             .getTextChannelById(channel.getId())
                             .sendMessage(info.build()).queue();
                     info.clear();
-
-                    //  System.out.println("Вы уже использовали эту букву!");
+                    return;
                 }
 
                 if (!isIsLetterPresent()) {
@@ -106,49 +85,30 @@ public class Hangman {
                 if (!isIsLetterPresent() && WORD.contains(inputs)) {
                     char c = inputs.charAt(0);
                     checkMethod(strToArray, c);
-
-                    EmbedBuilder info = new EmbedBuilder();
-                    info.setColor(0x00FF00);
-                    info.setTitle("Виселица");
-                    info.setDescription("Вы угадали букву!\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
-                            + "\nИгрок: <@" + user.getIdLong() + ">");
-
-                    BotStart.jda.getGuildById(guild.getId())
-                            .getTextChannelById(channel.getId())
-                            .sendMessage(info.build()).queue();
-                    info.clear();
+                    String result = replacementLetters(WORD.indexOf(inputs));
 
                     if (!wordList.get(wordList.size() - 1).contains("_")) {
-
                         EmbedBuilder infof = new EmbedBuilder();
                         infof.setColor(0x00FF00);
                         infof.setTitle("Виселица");
                         infof.setDescription("Игра завершена, вы победили!\n"
-                                + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                                + "Текущее слово: `" + result + "`"
                                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
                         BotStart.jda.getGuildById(guild.getId())
                                 .getTextChannelById(channel.getId())
                                 .sendMessage(infof.build()).queue();
                         infof.clear();
-                        //System.out.println("Игра завершена, вы победили!");
-                        wordList.clear();
                         WORD = null;
                         removeGame(user.getIdLong());
                         return;
                     }
-                    return;
-                }
 
-                if (!WORD.contains(inputs)) {
-                    count2++;
                     EmbedBuilder info = new EmbedBuilder();
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
-                    info.setDescription("Такой буквы нет!\n"
-                            + "Осталось попыток: `" + (6 - count2) + "`\n"
-                            + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                    info.setDescription("Вы угадали букву!\n"
+                            + "Текущее слово: `" + result + "`"
                             + "\nИгрок: <@" + user.getIdLong() + ">");
 
                     BotStart.jda.getGuildById(guild.getId())
@@ -156,26 +116,82 @@ public class Hangman {
                             .sendMessage(info.build()).queue();
                     info.clear();
                     return;
+                }
+
+                if (!WORD.contains(inputs)) {
+                    count2++;
+
+                    if (count2 > 5) {
+                        EmbedBuilder info = new EmbedBuilder();
+                        info.setColor(0x00FF00);
+                        info.setTitle("Виселица");
+                        info.setDescription("Вы проиграли!\n"
+                                + getDescription(count2)
+                                + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                                + "\n Слово которое было: `" + WORD + "`"
+                                + "\nИгрок: <@" + user.getIdLong() + ">");
+
+                        BotStart.jda.getGuildById(guild.getId())
+                                .getTextChannelById(channel.getId())
+                                .sendMessage(info.build()).queue();
+                        info.clear();
+                        WORD = null;
+                        removeGame(user.getIdLong());
+                        return;
+                    }
+
+                    if (count2 <= 5) {
+                        EmbedBuilder wordNotFound = new EmbedBuilder();
+                        wordNotFound.setColor(0x00FF00);
+                        wordNotFound.setTitle("Виселица");
+                        wordNotFound.setDescription("Такой буквы нет!\n"
+                                + "Осталось попыток: `" + (6 - count2) + "`\n"
+                                + getDescription(count2)
+                                + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                                + "\nИгрок: <@" + user.getIdLong() + ">");
+
+                        BotStart.jda.getGuildById(guild.getId())
+                                .getTextChannelById(channel.getId())
+                                .sendMessage(wordNotFound.build()).queue();
+                        wordNotFound.clear();
+                        return;
+                    }
                     // System.out.println("Такой буквы нет!");
                 }
-            }
-            if (inputs.length() > 1) {
-
-                EmbedBuilder info = new EmbedBuilder();
-                info.setColor(0x00FF00);
-                info.setTitle("Виселица");
-                info.setDescription("Нужна 1 буква!\n"
-                        + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
-                        + "\nИгрок: <@" + user.getIdLong() + ">");
-
-                BotStart.jda.getGuildById(guild.getId())
-                        .getTextChannelById(channel.getId())
-                        .sendMessage(info.build()).queue();
-                info.clear();
-
-                //  System.out.println("Нужна 1 буква!");
+                return;
             }
         }
+        if (inputs.length() > 1) {
+            EmbedBuilder info = new EmbedBuilder();
+            info.setColor(0x00FF00);
+            info.setTitle("Виселица");
+            info.setDescription("Нужна 1 буква!\n"
+                    + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
+                    + "\nИгрок: <@" + user.getIdLong() + ">");
+
+            BotStart.jda.getGuildById(guild.getId())
+                    .getTextChannelById(channel.getId())
+                    .sendMessage(info.build()).queue();
+            info.clear();
+            //  System.out.println("Нужна 1 буква!");
+        }
+    }
+
+    private String getDescription(int count) {
+        return "```"
+                + (count > 0 ? "|‾‾‾‾‾‾|      " : " ")
+                + "   \n|     "
+                + (count > 1 ? "🎩" : " ")
+                + "   \n|     "
+                + (count > 2 ? "\uD83E\uDD75" : " ")
+                + "   \n|   "
+                + (count > 3 ? "👌👕\uD83E\uDD19" : " ")
+                + "   \n|     "
+                + (count > 4 ? "🩳" : " ")
+                + "   \n|    "
+                + (count > 5 ? "👞👞" : " ")
+                + "   \n|     \n|__________\n\n"
+                + "```";
     }
 
     protected HashMap<Long, Hangman> getGames() {

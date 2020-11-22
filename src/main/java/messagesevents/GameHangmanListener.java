@@ -25,7 +25,7 @@ public class GameHangmanListener extends ListenerAdapter {
 
         if (message.equals(HG)) {
             event.getChannel().sendMessage("To start playing write: `!hg [one Russian letter]`" +
-                    "\n To end the game write: `!hg stop`").queue();
+                    "\nTo end the game write: `!hg stop`").queue();
             return;
         }
 
