@@ -14,22 +14,33 @@ public class GameHangmanListener extends ListenerAdapter {
     public final String HG_REGEX = "!hg\\s+[A-Za-zА-Яа-я]+";
     public final String HG_REGEX_NO = "!hg\\s+[а-я]+";
     public final String HG_STOP = "!hg\\s+stop";
+    public final String HG_ONE_LETTER = "[а-я]";
+
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String message = event.getMessage().getContentRaw().toLowerCase().trim();
+        String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
         User user = Objects.requireNonNull(event.getMember()).getUser();
         TextChannel channel = event.getChannel();
         Guild guild = event.getGuild();
         Hangman hangman;
 
-        if (message.equals(HG)) {
-            event.getChannel().sendMessage("To start playing write: `!hg [one Russian letter]`" +
-                    "\nTo end the game write: `!hg stop`").queue();
+        if (message.matches(HG_ONE_LETTER) && message.length() == 1) {
+            hangman = new Hangman();
+
+            if (!hangman.hasGame(user.getIdLong())) {
+                hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
+            }
+            if (hangman.hasGame(user.getIdLong())) {
+
+                hangman = hangman.getGame(user.getIdLong());
+                hangman.logic(guild, channel, user, message);
+            }
+
             return;
         }
 
-        if (message.equals(HG) || message.matches(HG_REGEX)) {
+        if (message.equals(HG)) {
             String[] messages = message.split(" ", 2);
             hangman = new Hangman();
 
@@ -41,20 +52,19 @@ public class GameHangmanListener extends ListenerAdapter {
             if (message.matches(HG_STOP) && hangman.hasGame(user.getIdLong())) {
                 hangman.removeGame(user.getIdLong());
                 event.getChannel().sendMessage("You have completed the game.\n" +
-                        "To start a new game write: `!hg [one Russian letter]`").queue();
+                        "To start a new game write: `!hg`\n" +
+                        "When send Russian letters to chat").queue();
                 return;
             }
-            //Create game if !hangman.hasGame(user.getIdLong())
-            if (message.matches(HG_REGEX) && !hangman.hasGame(user.getIdLong()) && message.matches(HG_REGEX_NO)) {
+
+            if (!hangman.hasGame(user.getIdLong()) && message.matches(HG)) {
                 hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
-            }
-            //Transfers data to the desired instance of the class
-            if (hangman.hasGame(user.getIdLong()) && messages.length > 1 && message.matches(HG_REGEX_NO)) {
                 hangman = hangman.getGame(user.getIdLong());
-                hangman.logic(guild, channel, user, messages[1]);
+                hangman.startGame(guild, channel, user);
+            return;
             }
 
-            if (!message.matches(HG_REGEX_NO)){
+            if (!message.matches(HG_ONE_LETTER) && hangman.hasGame(user.getIdLong())){
                 event.getChannel().sendMessage("Only lower case and only one Russian letters!").queue();
             }
         }

@@ -32,7 +32,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setDescription("Commands:"
           + "\n`[!help/!info/help/info]` - Information."
           + "\n`[!roll]` - The Game of Dice."
-          + "\n`[!play]` - Game: Hangman/Виселица."
+          + "\n`[!hg]` - Game: Hangman/Виселица."
           + "\n`[!bitrate]` - Change the channel bitrate."
           + "\n`[курс доллара, курс евро, курс, евро, доллар]` - Данные от ЦБ."
           + "\n`[!uptime/uptime]` - uptime bot."

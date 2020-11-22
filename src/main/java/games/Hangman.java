@@ -40,6 +40,27 @@ public class Hangman {
     public Hangman() {
     }
 
+    public void startGame(Guild guild, TextChannel channel, User user) {
+        if (WORD == null) {
+            int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
+            WORD = ALL_WORDS[randomWord];
+            strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
+            hideWord(WORD.length());
+        }
+        EmbedBuilder start = new EmbedBuilder();
+        start.setColor(0x00FF00);
+        start.setTitle("Виселица");
+        start.setDescription("Игра началась!\n"
+                + getDescription(count2)
+                + "Текущее слово: `" + hideWord(WORD.length()) + "`"
+                + "\nИгрок: <@" + user.getIdLong() + ">");
+
+        BotStart.jda.getGuildById(guild.getId())
+                .getTextChannelById(channel.getId())
+                .sendMessage(start.build()).queue();
+        start.clear();
+    }
+
     public void logic(Guild guild, TextChannel channel, User user, String inputs) {
         if (WORD == null) {
             int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
@@ -239,12 +260,12 @@ public class Hangman {
     }
 
     //Создает скрытую линию из длины слова
-    private void hideWord(int length) {
+    private String hideWord(int length) {
         StringBuilder sb = new StringBuilder();
         while (sb.length() < length) {
             sb.append('_');
         }
-        WORD_HIDDEN = sb.toString();
+       return WORD_HIDDEN = sb.toString();
     }
 
     //заменяет "_" на букву которая есть в слове
