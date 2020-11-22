@@ -12,12 +12,12 @@ import java.util.HashMap;
 public class Hangman {
 
     private String WORD = null;
-    private final String[] ALL_WORDS = {"копирайтер", "деятельность", "любопытность", "выхохолощенный",
-            "йогурт", "галлюциноген", "перпендикуляр", "скоросшиватель", "толерантность", "эксгумация",
-            "чехословакия", "либерализм", "экспонат", "пышность", "скабрёзность", "шаловливость",
-            "экспозиция", "индульгенция", "контрацептив", "шкворень", "эпиграф", "эпитафия", "барбекю",
-            "жульен", "энцефалопатия", "парашютист", "импозантность", "индифферент", "демультипликатор",
-            "педикулёз", "выхухоль", "россомаха", "сущность", "поэтапность", "напыщенность", "возвышенность"};
+    private final String[] ALL_WORDS = {"копирайтер", "деятельность", "любопытность", "",
+            "всласть", "лесопромышленность", "психология", "скоросшиватель", "толерантность", "эксгумация",
+            "астрономия", "либерализм", "экспонат", "пышность", "бодибилдинг", "шаловливость",
+            "экспозиция", "индульгенция", "контрацептив", "безмятежность", "барбекю",
+            "кулинария", "энцефалопатия", "парашютист", "сущность", "поэтапность", "напыщенность",
+            "возвышенность"};
     private char[] strToArray;
     private String WORD_HIDDEN = "";
     protected ArrayList<String> wordList = new ArrayList<>();
@@ -68,6 +68,7 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы уже использовали эту букву!\n"
+                            + getDescription(count2)
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                             + "\nИгрок: <@" + user.getIdLong() + ">");
 
@@ -92,6 +93,7 @@ public class Hangman {
                         infof.setColor(0x00FF00);
                         infof.setTitle("Виселица");
                         infof.setDescription("Игра завершена, вы победили!\n"
+                                + getDescription(count2)
                                 + "Текущее слово: `" + result + "`"
                                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
@@ -108,6 +110,7 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы угадали букву!\n"
+                            + getDescription(count2)
                             + "Текущее слово: `" + result + "`"
                             + "\nИгрок: <@" + user.getIdLong() + ">");
 
@@ -166,6 +169,7 @@ public class Hangman {
             info.setColor(0x00FF00);
             info.setTitle("Виселица");
             info.setDescription("Нужна 1 буква!\n"
+                    + getDescription(count2)
                     + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                     + "\nИгрок: <@" + user.getIdLong() + ">");
 
