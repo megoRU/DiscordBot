@@ -31,8 +31,9 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setAuthor(event.getAuthor().getName(), null, avatarUrl);
       info.setDescription("Commands:"
           + "\n`[!help/!info/help/info]` - Information."
-          + "\n`[!roll]` - The Game of Dice. "
-          + "\n`[!play]` - Game: Hangman/Виселица. "
+          + "\n`[!roll]` - The Game of Dice."
+          + "\n`[!play]` - Game: Hangman/Виселица."
+          + "\n`[!bitrate]` - Change the channel bitrate."
           + "\n`[курс доллара, курс евро, курс, евро, доллар]` - Данные от ЦБ."
           + "\n`[!uptime/uptime]` - uptime bot."
           + "\n`[!shutdown/shutdown/sd]` - The bot is shutting down on the Linux server. (Only the bot creator can use!)"

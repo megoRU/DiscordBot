@@ -76,3 +76,9 @@ So far, only the dollar, the euro against the ruble.
 | 100 рублей в долларах          | 100 долларов в рублях           |
 | ------------------------------ | ------------------------------- |
 | ![](images/ExchangeValues.png) | ![](images/ExchangeValues2.png) |
+
+## Change channel bitrate
+
+| !bitrate 64                    |
+| ------------------------------ |
+| ![](images/bitrateChannel.png) |

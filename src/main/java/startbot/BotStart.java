@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import java.util.Objects;
 
 public class BotStart {
 
@@ -47,12 +48,13 @@ public class BotStart {
     jdaBuilder.addEventListeners(new SendingMessagesToGuilds());
     jdaBuilder.addEventListeners(new GameOfDice());
     jdaBuilder.addEventListeners(new GameHangmanListener());
+    jdaBuilder.addEventListeners(new MessageChangeBitrate());
     jda = jdaBuilder.build();
     jda.awaitReady();
   }
 
   public void sendMessage(String channelId, String message) {
-    jda.getTextChannelById(channelId).sendMessage(message).queue();
+    Objects.requireNonNull(jda.getTextChannelById(channelId)).sendMessage(message).queue();
   }
 
   public JDA getJda() {
