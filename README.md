@@ -9,7 +9,7 @@
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
 
 ## JETBRAINS
-<a href="https://www.jetbrains.com/?from=DiscordBot"><img width="377" height="128" src="jetbrains.png">
+[<img src="https://github.com/megoRU/DiscordBot/blob/master/images/jetbrains.png?raw=true">](https://www.jetbrains.com/?from=DiscordBot)
 
 ## Add bot to your server
 <a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"> <img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
@@ -17,9 +17,9 @@
 ## What the bot can do
 
 1.  [Delete messages](#delete-messages)
-2.  Move a specific client
+2.  Move user to you voice channel | Beta
 3.  [Available Commands](#available-commands)
-4.  [Write to the special channel when someone entered/left]()
+4.  [Write to the special channel when someone entered/left](#bot-log)
 5.  Converts YouTube links to timecode links
 6.  Bot welcome msg when Bot join Guild
 7.  [Change channel bitrate](#change-channel-bitrate)
@@ -37,36 +37,42 @@
 
 ## Games
 
-| Виселица (!hg)                                   | Game of dice (!roll)                                |
-| ------------------------------------------------ | --------------------------------------------------- |
-| ![](https://megolox.ru/gitResources/hangman.jpg) | ![](https://megolox.ru/gitResources/gameofdice.png) |
+| Виселица (!hg)          | Game of dice (!roll)       |
+| ----------------------- | -------------------------- |
+| ![](images/hangman.jpg) | ![](images/gameofdice.png) |
 
 ## Delete messages
 
-| Deleting multiple messages (clear 10)                      | Checking Administrator's rights to delete messages          |
-| ---------------------------------------------------------- | ----------------------------------------------------------- |
-| ![](https://megolox.ru/gitResources/deleteTenMessages.png) | ![](https://megolox.ru/gitResources/PrivilegesDeliting.png) |
+| Deleting multiple messages (!clear 10) | Checking Administrator's rights to delete messages |
+| -------------------------------------- | -------------------------------------------------- |
+| ![](images/deleteTenMessages.png)      | ![](images/PrivilegesDeliting.png)                 |
 
 ## Available Commands
 
-| info/help/!help                                |  ping/!ping                                   |  uptime/!uptime                                 |
-| ---------------------------------------------- | --------------------------------------------- | ----------------------------------------------- |
-| ![](https://megolox.ru/gitResources/info2.png) | ![](https://megolox.ru/gitResources/ping.png) | ![](https://megolox.ru/gitResources/uptime.png) |
+| info/help/!help       |  
+| --------------------- |
+| ![](images/info2.png) | 
 
-## Change channel bitrate
+| !ping/ping                                    | !uptime/uptime         |
+| --------------------------------------------- | ---------------------- |
+| ![](images/ping.png)                          | ![](images/uptime.png) |
 
-Changes the bitrate of the channel, when a specific user enters. Optimization for the mobile user.
+## Bot log
+
+| !ping/ping                                    |
+| --------------------------------------------- |
+| ![bot-log](images/botlog.png)                 |
 
 ## Exchange Rates
 
 So far, only the dollar, the euro against the ruble.
 
-| курс доллара                                           |
-| ------------------------------------------------------ |
-| ![](https://megolox.ru/gitResources/ExchangeRates.png) |
+| курс доллара                  |
+| ----------------------------- |
+| ![](images/ExchangeRates.png) |
 
 ## Exchange Values
 
-| 100 рублей в долларах                                   | 100 долларов в рублях                                    |
-| ------------------------------------------------------- | -------------------------------------------------------- |
-| ![](https://megolox.ru/gitResources/ExchangeValues.png) | ![](https://megolox.ru/gitResources/ExchangeValues2.png) |
+| 100 рублей в долларах          | 100 долларов в рублях           |
+| ------------------------------ | ------------------------------- |
+| ![](images/ExchangeValues.png) | ![](images/ExchangeValues2.png) |

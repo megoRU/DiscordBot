@@ -22,8 +22,8 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     if (!user.isBot()) {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
       textChannel.sendMessage(
-          "Пользователь: **" + nameUserWhoEnter
-              + "** зашёл в канал: " + nameChannelEnterUser).queue();
+          "User: **" + nameUserWhoEnter
+              + "** entered the channel: " + nameChannelEnterUser).queue();
     }
   }
 
@@ -37,8 +37,8 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Пользователь: **" + nameUserWhoMove
-              + "** переместился в канал: " + nameChannelMoveUser).queue();
+          "User: **" + nameUserWhoMove
+              + "** moved to channel: " + nameChannelMoveUser).queue();
     }
   }
 
@@ -52,8 +52,8 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
       TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
           .get(0);
       textChannel.sendMessage(
-          "Пользователь: **" + nameUserWhoLeave
-              + "** вышел из канала: " + nameChannelLeaveUser).queue();
+          "User: **" + nameUserWhoLeave
+              + "** left the channel: " + nameChannelLeaveUser).queue();
     }
   }
 }
