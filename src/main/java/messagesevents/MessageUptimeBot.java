@@ -1,7 +1,6 @@
 package messagesevents;
 
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import time.UptimeBot;
@@ -13,9 +12,8 @@ public class MessageUptimeBot extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    User user = event.getMember().getUser();
 
-    if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT) && !user.isBot()) {
+    if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT)) {
       TextChannel textChannel = event.getChannel();
       UptimeBot ub = new UptimeBot();
       String[] messageFromHandle = ub.uptimeBot().split(" ");

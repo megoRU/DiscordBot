@@ -18,12 +18,11 @@ public class BotShutDown extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    boolean boolPermissionAdmin = Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR);
-    String idGuild = event.getGuild().getId();
-    String idUser = event.getAuthor().getId();
 
     if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) || message.matches(SD)) {
-
+      boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
+      String idGuild = event.getGuild().getId();
+      String idUser = event.getAuthor().getId();
       if (!idGuild.contains(MAIN_GUILD_ID)) {
         EmbedBuilder errorShutDown = new EmbedBuilder();
         errorShutDown.setColor(0xff3923);
