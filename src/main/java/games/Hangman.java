@@ -51,7 +51,7 @@ public class Hangman {
         start.setColor(0x00FF00);
         start.setTitle("Виселица");
         start.setDescription("Игра началась!\n"
-                + "Теперь просто отправлять по одной букве в чат **без**" + " `!` " + "и любых других символов"
+                + "Теперь просто отправлять по одной букве в чат\n **без**" + " `!` " + "и любых других символов"
                 + getDescription(count2)
                 + "Текущее слово: `" + hideWord(WORD.length()) + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
