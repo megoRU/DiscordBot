@@ -25,7 +25,7 @@ public class Hangman {
     protected ArrayList<String> usedLetters = new ArrayList<>();
     private boolean isLetterPresent;
     private Integer count = 0;
-    private Integer count2 = 0;
+    private Integer count2 = 1;
     private static final HashMap<Long, Hangman> games = new HashMap<>();
     private User user;
     private Guild guild;
@@ -51,6 +51,7 @@ public class Hangman {
         start.setColor(0x00FF00);
         start.setTitle("Виселица");
         start.setDescription("Игра началась!\n"
+                + "Теперь просто отправлять по одной букве в чат **без**" + " `!` " + "и любых других символов"
                 + getDescription(count2)
                 + "Текущее слово: `" + hideWord(WORD.length()) + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");

@@ -11,26 +11,49 @@ import java.util.Objects;
 
 public class GameHangmanListener extends ListenerAdapter {
     public final String HG = "!hg";
-    public final String HG_REGEX = "!hg\\s+[A-Za-zА-Яа-я]+";
-    public final String HG_REGEX_NO = "!hg\\s+[а-я]+";
     public final String HG_STOP = "!hg\\s+stop";
-    public final String HG_ONE_LETTER = "[а-я]";
-
+    public final String HG_ONE_LETTER = "[А-Яа-я]";
+    public final String HG_ONE_LETTER_ENG = "[A-Za-z]";
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
 
-        if (message.matches(HG_ONE_LETTER) && message.length() == 1) {
-            User user = Objects.requireNonNull(event.getMember()).getUser();
+        if (message.length() == 1) {
+            User user = event.getMember().getUser();
             TextChannel channel = event.getChannel();
             Guild guild = event.getGuild();
             Hangman hangman;
             hangman = new Hangman();
 
             if (!hangman.hasGame(user.getIdLong())) {
+
+            }
+
+            if (hangman.hasGame(user.getIdLong())) {
+
+                hangman = hangman.getGame(user.getIdLong());
+                hangman.logic(guild, channel, user, message);
+            }
+            return;
+        }
+        //TODO
+        if (message.equals(HG)) {
+            User user = event.getMember().getUser();
+            TextChannel channel = event.getChannel();
+            Guild guild = event.getGuild();
+            Hangman hangman;
+            hangman = new Hangman();
+
+            if (message.matches(HG) && hangman.hasGame(user.getIdLong())) {
+                event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.").queue();
+                return;
+            }
+
+            if (!hangman.hasGame(user.getIdLong())) {
                 hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
             }
+
             if (hangman.hasGame(user.getIdLong())) {
 
                 hangman = hangman.getGame(user.getIdLong());
@@ -40,23 +63,47 @@ public class GameHangmanListener extends ListenerAdapter {
             return;
         }
 
-        if (message.equals(HG)) {
-            User user = Objects.requireNonNull(event.getMember()).getUser();
+        if (message.matches(HG_ONE_LETTER) || message.matches(HG_ONE_LETTER_ENG)) {
+            User user = event.getMember().getUser();
+            TextChannel channel = event.getChannel();
+            Guild guild = event.getGuild();
+            Hangman hangman;
+            hangman = new Hangman();
+
+            if (message.matches(HG_ONE_LETTER_ENG) && hangman.hasGame(user.getIdLong())) {
+                event.getChannel().sendMessage("Поддерживается только кириллица!").queue();
+                return;
+            }
+
+            if (!hangman.hasGame(user.getIdLong())) {
+                return;
+            }
+
+            if (hangman.hasGame(user.getIdLong())) {
+                hangman = hangman.getGame(user.getIdLong());
+                hangman.logic(guild, channel, user, message);
+            }
+
+            return;
+        }
+
+        if (message.equals(HG) || message.matches(HG_STOP)) {
+            User user = event.getMember().getUser();
             TextChannel channel = event.getChannel();
             Guild guild = event.getGuild();
             Hangman hangman;
             hangman = new Hangman();
 
             if (message.matches(HG_STOP) && !hangman.hasGame(user.getIdLong())) {
-                event.getChannel().sendMessage("You are not playing now.\n").queue();
+                event.getChannel().sendMessage("Вы сейчас не играете.\n").queue();
                 return;
             }
 
             if (message.matches(HG_STOP) && hangman.hasGame(user.getIdLong())) {
                 hangman.removeGame(user.getIdLong());
-                event.getChannel().sendMessage("You have completed the game.\n" +
-                        "To start a new game write: `!hg`\n" +
-                        "When send Russian letters to chat").queue();
+                event.getChannel().sendMessage("Вы завершили игру.\n" +
+                        "Чтобы начать новую игру напишите: `!hg`\n" +
+                        "Далее присылайте в чат по одной букве.").queue();
                 return;
             }
 
@@ -73,6 +120,3 @@ public class GameHangmanListener extends ListenerAdapter {
         }
     }
 }
-
-
-
