@@ -19,10 +19,10 @@ public class GameOfDice extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
-        String playerTag = event.getMessage().getAuthor().getId();
-        String idPlayer = event.getMessage().getAuthor().getName() + "_" + playerTag;
 
         if (message.contains("!roll")) {
+            String playerTag = event.getMessage().getAuthor().getId();
+            String idPlayer = event.getMessage().getAuthor().getName() + "_" + playerTag;
             playerList.add(idPlayer);
             guild.add(event.getGuild().getIdLong());
             chat.add(event.getMessage().getChannel().getIdLong());

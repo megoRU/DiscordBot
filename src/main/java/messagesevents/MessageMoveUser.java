@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class MessageMoveUser extends ListenerAdapter {
 
@@ -15,15 +16,14 @@ public class MessageMoveUser extends ListenerAdapter {
 
     //TODO: Исправить ошибку с выбрасыванием эксепшина по поводу если юзер в том же канале что и тот кто просит
     // Либо сделать вообще всех перемещать
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase();
-        String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
-        User user = event.getMember().getUser();
-        if (!user.isBot()) {
+
+        if (message.matches(MOVE)) {
+            User user = event.getMember().getUser();
             boolean boolPermission = event.getMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
 
-            if (message.matches(MOVE) && !user.isBot() && boolPermission) {
+            if (!user.isBot() && boolPermission) {
                 String[] messages = message.split(" ", 2);
                 List<Member> memberId = event.getGuild().getMembersByName(messages[1], true);
                 System.out.println(messages[1]);
@@ -42,7 +42,7 @@ public class MessageMoveUser extends ListenerAdapter {
                 }
             }
 
-            if (message.matches(MOVE) & !boolPermission) {
+            if (!boolPermission) {
                 EmbedBuilder error = new EmbedBuilder();
                 error.setColor(0xff3923);
                 error.setTitle("🔴 Error: You cannot move users");

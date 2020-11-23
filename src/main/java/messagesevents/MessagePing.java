@@ -7,12 +7,12 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class MessagePing extends ListenerAdapter {
 
-  public final String HELP = "!ping";
-  public final String HELP_WITH_OUT = "ping";
+  public final String PING = "!ping";
+  public final String PING_WITH_OUT = "ping";
 
   public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentDisplay().toLowerCase().trim();
-    if (message.matches(HELP) || message.matches(HELP_WITH_OUT)) {
+    if (message.matches(PING) || message.matches(PING_WITH_OUT)) {
       MessageChannel channels = event.getChannel();
       long time = System.currentTimeMillis();
       channels.sendMessage("Pong!") /* => RestAction<Message> */

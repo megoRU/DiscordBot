@@ -38,10 +38,10 @@ public class MessageInfoHelp extends ListenerAdapter {
           + "\n`[!uptime/uptime]` - uptime bot."
           + "\n`[!shutdown/shutdown/sd]` - The bot is shutting down on the Linux server. (Only the bot creator can use!)"
           + "\n`[!ping/ping]` - API response."
-          + "\n`[!колличество/колво/колличество]` - How many times have you connected to channels."
-          + "\n`[колво топ]` - Top 3 by connection."
+          + "\n`[!amount/!колличество/колво/колличество]` - How many times have you connected to channels."
+          + "\n`[top 3/колво топ]` - Top 3 by connection."
           + "\n`!clear + number: >= 2 & <= 100` - Deletes messages."
-          + "\n`[бухать/бухнем/бухаем/бухаем?]` - Бот точно решит за Вас!"
+          + "\n`[!flip/flip]` - flip a coin."
           + "\n`[!ищи/ищи]` - !ищи + пробел + какой-то запрос в google [g.zeos.in](https://g.zeos.in/) "
           + "\n`YouTube link + space + minutes + space + seconds if present` - converts to a short link with time"
       );

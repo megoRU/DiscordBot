@@ -11,8 +11,8 @@ import startbot.BotStart;
 
 public class SendingMessagesToGuilds extends ListenerAdapter {
 
-  private static final ArrayList<String> listGuilds = new ArrayList<>();
-  private static final ArrayList<String> listGuilds2 = new ArrayList<>();
+  private final ArrayList<String> listGuilds = new ArrayList<>();
+  private final ArrayList<String> listGuilds2 = new ArrayList<>();
   protected final String MAIN_GUILD_ID = "250700478520885248";
   protected final String MAIN_USER_ID = "250699265389625347";
   protected final String MSG = "!msg";

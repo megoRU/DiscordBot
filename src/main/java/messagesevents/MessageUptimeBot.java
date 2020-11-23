@@ -1,6 +1,5 @@
 package messagesevents;
 
-import java.util.Objects;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -14,7 +13,7 @@ public class MessageUptimeBot extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    User user = Objects.requireNonNull(event.getMember()).getUser();
+    User user = event.getMember().getUser();
 
     if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT) && !user.isBot()) {
       TextChannel textChannel = event.getChannel();
@@ -22,32 +21,32 @@ public class MessageUptimeBot extends ListenerAdapter {
       String[] messageFromHandle = ub.uptimeBot().split(" ");
 
       if (Integer.parseInt(messageFromHandle[0]) > 0) {
-        textChannel.sendMessage("Бот работает непрерывно: `"
-            + messageFromHandle[0] + " д., "
-            + messageFromHandle[1] + " ч., "
-            + messageFromHandle[2] + " мин., "
-            + messageFromHandle[3] + " сек.`").queue();
+        textChannel.sendMessage("Bot duration: `"
+            + messageFromHandle[0] + " d., "
+            + messageFromHandle[1] + " h., "
+            + messageFromHandle[2] + " min., "
+            + messageFromHandle[3] + " sec.`").queue();
         return;
       }
 
       if (Integer.parseInt(messageFromHandle[1]) > 0) {
-        textChannel.sendMessage("Бот работает непрерывно: `"
-            + messageFromHandle[1] + " ч., "
-            + messageFromHandle[2] + " мин., "
-            + messageFromHandle[3] + " сек.`").queue();
+        textChannel.sendMessage("Bot duration: `"
+            + messageFromHandle[1] + " h., "
+            + messageFromHandle[2] + " min., "
+            + messageFromHandle[3] + " sec.`").queue();
         return;
       }
 
       if (Integer.parseInt(messageFromHandle[2]) > 0) {
-        textChannel.sendMessage("Бот работает непрерывно: `"
-            + messageFromHandle[2] + " мин., "
-            + messageFromHandle[3] + " сек.`").queue();
+        textChannel.sendMessage("Bot duration: `"
+            + messageFromHandle[2] + " min., "
+            + messageFromHandle[3] + " sec.`").queue();
         return;
       }
 
       if (Integer.parseInt(messageFromHandle[3]) > 0) {
-        textChannel.sendMessage("Бот работает непрерывно: `"
-            + messageFromHandle[3] + " сек.`").queue();
+        textChannel.sendMessage("Bot duration: `"
+            + messageFromHandle[3] + " sec.`").queue();
       }
     }
   }

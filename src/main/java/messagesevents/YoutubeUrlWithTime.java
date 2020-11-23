@@ -1,6 +1,5 @@
 package messagesevents;
 
-import java.util.Objects;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -24,7 +23,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
           || message.matches(YOUTUBE_MINI_MIN_SEC)
           || message.matches(YOUTUBE_MINI_MIN)
           || message.matches(YOUTUBE_LINKS_MIN)) {
-        String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
+        String idUser = event.getMember().getUser().getId();
 
         if (message.matches(YOUTUBE_LINKS_MIN_SEC)) {
           youtubeLinks(event, idUser, message, "2", "=");
@@ -45,7 +44,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
     } catch (Exception exception) {
       EmbedBuilder errorYoutube = new EmbedBuilder();
       errorYoutube.setColor(0xff3923);
-      errorYoutube.setTitle("🔴 Error: Произошла ошибка №хуй");
+      errorYoutube.setTitle("🔴 Error: unexpected error");
       errorYoutube.setDescription("-> YoutubeUrlWithTime.java");
       event.getChannel().sendMessage(errorYoutube.build()).queue();
       errorYoutube.clear();
@@ -77,7 +76,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
     String resultsUrl = text[0].substring(indexFirst + 1, length);
     String lastMessage = event.getChannel().getLatestMessageId();
     event.getChannel().deleteMessageById(lastMessage).queue();
-    event.getChannel().sendMessage("<@" + idUser + ">! " + "прислал сообщение:" + "\n"
+    event.getChannel().sendMessage("<@" + idUser + ">! " + "sent a message:" + "\n"
         + "https://youtu.be/" + resultsUrl + "?t=" + results).queue();
   }
 }

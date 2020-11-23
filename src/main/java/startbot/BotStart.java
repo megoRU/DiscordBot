@@ -39,7 +39,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new ChangeBitrateChannel());
     jdaBuilder.addEventListeners(new GoogleSearch());
     jdaBuilder.addEventListeners(new ExchangeRates());
-    jdaBuilder.addEventListeners(new DrinkBoolean());
+    jdaBuilder.addEventListeners(new FlipCoin());
     jdaBuilder.addEventListeners(new ExchangeValue());
     jdaBuilder.addEventListeners(new EventJoinMemberToGuildSetRole());
     jdaBuilder.addEventListeners(new CountConnectionsEvent());

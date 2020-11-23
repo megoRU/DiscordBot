@@ -1,7 +1,6 @@
 package messagesevents;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -16,7 +15,7 @@ public class MessageDeleting extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
-    boolean boolPermissionAdmin = Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR);
+    boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
     if (message.matches(DELETE_INDEXES) & !boolPermissionAdmin) {
       event.getMessage().addReaction("\u26D4").queue();
       EmbedBuilder errorClear = new EmbedBuilder();
