@@ -10,50 +10,57 @@ import org.jetbrains.annotations.NotNull;
 
 public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
-  //bottestchannel //botchat //botlog
-  private final String botChannelLogs = "botlog";
+    //bottestchannel //botchat //botlog
+    private final String botChannelLogs = "botlog";
 
-  @Override
-  public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-    String nameChannelEnterUser = event.getChannelJoined().getName();
-    String nameUserWhoEnter = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
-
-    if (!user.isBot()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
-      textChannel.sendMessage(
-          "User: **" + nameUserWhoEnter
-              + "** entered the channel: " + nameChannelEnterUser).queue();
+    @Override
+    public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+        String nameChannelEnterUser = event.getChannelJoined().getName();
+        String nameUserWhoEnter = event.getMember().getUser().getName();
+        User user = event.getMember().getUser();
+        try {
+            TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+            if (!user.isBot() && textChannel != null) {
+                textChannel.sendMessage(
+                        "User: **" + nameUserWhoEnter
+                                + "** entered the channel: " + nameChannelEnterUser).queue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  @Override
-  public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
-    String nameChannelMoveUser = event.getChannelLeft().getName();
-    String nameUserWhoMove = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
-
-    if (!user.isBot()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
-          .get(0);
-      textChannel.sendMessage(
-          "User: **" + nameUserWhoMove
-              + "** moved to channel: " + nameChannelMoveUser).queue();
+    @Override
+    public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
+        String nameChannelMoveUser = event.getChannelLeft().getName();
+        String nameUserWhoMove = event.getMember().getUser().getName();
+        User user = event.getMember().getUser();
+        try {
+            TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+            if (!user.isBot() && textChannel != null) {
+                textChannel.sendMessage(
+                        "User: **" + nameUserWhoMove
+                                + "** moved to channel: " + nameChannelMoveUser).queue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 
-  @Override
-  public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-    String nameChannelLeaveUser = event.getChannelLeft().getName();
-    String nameUserWhoLeave = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
-
-    if (!user.isBot()) {
-      TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true)
-          .get(0);
-      textChannel.sendMessage(
-          "User: **" + nameUserWhoLeave
-              + "** left the channel: " + nameChannelLeaveUser).queue();
+    @Override
+    public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+        String nameChannelLeaveUser = event.getChannelLeft().getName();
+        String nameUserWhoLeave = event.getMember().getUser().getName();
+        User user = event.getMember().getUser();
+        try {
+            TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+            if (!user.isBot() && textChannel != null) {
+                textChannel.sendMessage(
+                        "User: **" + nameUserWhoLeave
+                                + "** left the channel: " + nameChannelLeaveUser).queue();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 }

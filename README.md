@@ -12,7 +12,10 @@
 [<img src="https://github.com/megoRU/DiscordBot/blob/master/images/jetbrains.png?raw=true">](https://www.jetbrains.com/?from=DiscordBot)
 
 ## Add bot to your server
-<a href="https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8"> <img src="https://megolox.ru/gitResources/addtoserver.png" alt="Пример"></a>
+[![Discord Bots](https://top.gg/api/widget/servers/754093698681274369.svg)](https://top.gg/bot/754093698681274369)
+
+[![Discord Bots](https://top.gg/api/widget/754093698681274369.svg)](https://top.gg/bot/754093698681274369)
+
 
 ## What the bot can do
 

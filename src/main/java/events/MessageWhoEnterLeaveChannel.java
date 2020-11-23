@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
-  private static boolean inChannelMeshiva = false;
+  private boolean inChannelMeshiva = false;
   //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
   private final String userIdMeshiva = "310364711587676161";
   //private static final String userIdMego = "250699265389625347";
@@ -22,6 +22,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private final String botChannelLogs = "botchat";
   private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
+  //TODO: Сделать ООП
   private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
     DataBase dataBase = new DataBase();
     Set<String> whoLast = dataBase.whoLastEnter(idGuild);
@@ -37,7 +38,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
   @Override
-  public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
+   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     try {
       String idEnterUser = event.getMember().getId();
       String nameEnterUser = event.getMember().getUser().getName();

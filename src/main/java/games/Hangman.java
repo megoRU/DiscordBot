@@ -89,6 +89,7 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы уже использовали эту букву!\n"
+                            + "У вас попыток: `" + (6 - count2) + "`\n"
                             + getDescription(count2)
                             + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                             + "\nИгрок: <@" + user.getIdLong() + ">");
@@ -131,6 +132,7 @@ public class Hangman {
                     info.setColor(0x00FF00);
                     info.setTitle("Виселица");
                     info.setDescription("Вы угадали букву!\n"
+                            + "У вас попыток: `" + (6 - count2) + "`\n"
                             + getDescription(count2)
                             + "Текущее слово: `" + result + "`"
                             + "\nИгрок: <@" + user.getIdLong() + ">");
@@ -190,6 +192,7 @@ public class Hangman {
             info.setColor(0x00FF00);
             info.setTitle("Виселица");
             info.setDescription("Нужна 1 буква!\n"
+                    + "Осталось попыток: `" + (6 - count2) + "`\n"
                     + getDescription(count2)
                     + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                     + "\nИгрок: <@" + user.getIdLong() + ">");
