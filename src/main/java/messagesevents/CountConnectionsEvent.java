@@ -18,14 +18,14 @@ public class CountConnectionsEvent extends ListenerAdapter {
   @Override
   public void onMessageReceived(@NotNull MessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
-    String idUser = event.getMember().getUser().getId();
-    String idUserName = event.getMember().getUser().getName();
-    String idGuild = event.getGuild().getId();
 
     if (message.matches(COUNT)
         || message.matches(COUNT2)
         || message.matches(COUNT3)
         || message.matches(COUNT4)) {
+      String idUser = event.getMember().getUser().getId();
+      String idUserName = event.getMember().getUser().getName();
+      String idGuild = event.getGuild().getId();
       event.getChannel().sendTyping().queue();
       try {
         DataBase dataBase = new DataBase();

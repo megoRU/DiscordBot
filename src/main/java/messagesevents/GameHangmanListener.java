@@ -20,12 +20,12 @@ public class GameHangmanListener extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
-        User user = Objects.requireNonNull(event.getMember()).getUser();
-        TextChannel channel = event.getChannel();
-        Guild guild = event.getGuild();
-        Hangman hangman;
 
         if (message.matches(HG_ONE_LETTER) && message.length() == 1) {
+            User user = Objects.requireNonNull(event.getMember()).getUser();
+            TextChannel channel = event.getChannel();
+            Guild guild = event.getGuild();
+            Hangman hangman;
             hangman = new Hangman();
 
             if (!hangman.hasGame(user.getIdLong())) {
@@ -41,7 +41,10 @@ public class GameHangmanListener extends ListenerAdapter {
         }
 
         if (message.equals(HG)) {
-            String[] messages = message.split(" ", 2);
+            User user = Objects.requireNonNull(event.getMember()).getUser();
+            TextChannel channel = event.getChannel();
+            Guild guild = event.getGuild();
+            Hangman hangman;
             hangman = new Hangman();
 
             if (message.matches(HG_STOP) && !hangman.hasGame(user.getIdLong())) {

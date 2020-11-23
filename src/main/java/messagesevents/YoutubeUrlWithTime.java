@@ -18,13 +18,13 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw();
-    String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
 
     try {
       if (message.matches(YOUTUBE_LINKS_MIN_SEC)
           || message.matches(YOUTUBE_MINI_MIN_SEC)
           || message.matches(YOUTUBE_MINI_MIN)
-          ||message.matches(YOUTUBE_LINKS_MIN)) {
+          || message.matches(YOUTUBE_LINKS_MIN)) {
+        String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
 
         if (message.matches(YOUTUBE_LINKS_MIN_SEC)) {
           youtubeLinks(event, idUser, message, "2", "=");
