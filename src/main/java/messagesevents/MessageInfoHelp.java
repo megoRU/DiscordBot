@@ -34,6 +34,7 @@ public class MessageInfoHelp extends ListenerAdapter {
           + "\n`[!roll]` - The Game of Dice."
           + "\n`[!hg]` - Game: Hangman/Виселица."
           + "\n`[!kick]` - Example: !kick @user/!kick @user reason"
+          + "\n`[!ban]` - Example: !ban @user days/!ban @user days reason"
           + "\n`[!bitrate]` - Change the channel bitrate."
           + "\n`[курс доллара, курс евро, курс, евро, доллар]` - Данные от ЦБ."
           + "\n`[!uptime/uptime]` - uptime bot."
