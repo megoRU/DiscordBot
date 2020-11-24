@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class CountConnectionsEvent extends ListenerAdapter {
 
-  public final String COUNT_RU = "!колличество";
-  public final String COUNT2_RU = "колличество";
-  public final String COUNT3 = "колво";
-  public final String COUNT4 = "колво топ";
-  public final String COUNT_TOP_THREE = "top 3";
-  public final String COUNT_EN = "!amount";
+  private static final String COUNT_RU = "!колличество";
+  private static final String COUNT2_RU = "колличество";
+  private static final String COUNT3 = "колво";
+  private static final String COUNT4 = "колво топ";
+  private static final String COUNT_TOP_THREE = "top 3";
+  private static final String COUNT_EN = "!amount";
 
   @Override
   public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -39,7 +39,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
           int value = dataBase.countConn(idUser, idGuild);
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
-          info.setDescription(idUserName + " подключался в канал: " + value + getEndingWord(value));
+          info.setDescription(idUserName + " connected to the channel: " + value + getEndingWord(value));
           event.getChannel().sendMessage(info.build()).queue();
           info.clear();
         }

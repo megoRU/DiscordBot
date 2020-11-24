@@ -16,6 +16,7 @@ public class MessageMoveUser extends ListenerAdapter {
 
     //TODO: Исправить ошибку с выбрасыванием эксепшина по поводу если юзер в том же канале что и тот кто просит
     // Либо сделать вообще всех перемещать
+    // Сделать на подобее с !kick
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase();
 

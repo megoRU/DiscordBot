@@ -13,17 +13,17 @@ import java.util.List;
 public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
 
   //bottestchannel //botchat //botlog
-  private final String botChannelLogs = "botlog";
+  private final String BOT_CHANNEL_LOGS = "botlog";
 
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     String nameChannelEnterUser = event.getChannelJoined().getName();
     String nameUserWhoEnter = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
     try {
-      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(botChannelLogs, true);
+      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
       if (textChannels.size() >= 1) {
-        TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+        User user = event.getMember().getUser();
+        TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0);
         if (!user.isBot() && textChannel != null) {
           textChannel.sendMessage(
                   "User: **" + nameUserWhoEnter
@@ -39,11 +39,11 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     String nameChannelMoveUser = event.getChannelJoined().getName();
     String nameUserWhoMove = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
     try {
-      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(botChannelLogs, true);
+      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
       if (textChannels.size() >= 1) {
-        TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+        User user = event.getMember().getUser();
+        TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0);
         if (!user.isBot() && textChannel != null) {
           textChannel.sendMessage(
                   "User: **" + nameUserWhoMove
@@ -59,11 +59,11 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
     String nameChannelLeaveUser = event.getChannelLeft().getName();
     String nameUserWhoLeave = event.getMember().getUser().getName();
-    User user = event.getMember().getUser();
     try {
-      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(botChannelLogs, true);
+      User user = event.getMember().getUser();
+      List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
       if (textChannels.size() >= 1) {
-        TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+        TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0);
         if (!user.isBot() && textChannel != null) {
           textChannel.sendMessage(
                   "User: **" + nameUserWhoLeave

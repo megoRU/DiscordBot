@@ -6,6 +6,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class GameHangmanListener extends ListenerAdapter {
     public final String HG = "!hg";
@@ -14,7 +15,7 @@ public class GameHangmanListener extends ListenerAdapter {
     public final String HG_ONE_LETTER_ENG = "[A-Za-z]";
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
 
         if (message.length() == 1) {

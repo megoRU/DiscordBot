@@ -26,7 +26,7 @@ public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
       if (userFromDB.contains(idEnterUser)) {
         System.out.println("Ничего не делать");
       }
-      setJoinRole(event.getMember());
+      //setJoinRole(event.getMember());
     } catch (Exception e) {
       e.printStackTrace();
     }

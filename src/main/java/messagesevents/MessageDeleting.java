@@ -5,23 +5,24 @@ import java.util.concurrent.TimeUnit;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class MessageDeleting extends ListenerAdapter {
 
-    public final String DELETE_INDEXES = "clear\\s+\\d+";
-    public final String DELETE_INDEXES2 = "!clear\\s+\\d+";
-    private final String botChannelLogs = "botchat";
+    private static final String DELETE_INDEXES = "clear\\s+\\d+";
+    private static final String DELETE_INDEXES2 = "!clear\\s+\\d+";
+    private static final String BOT_CHANNEL_LOG = "botchat";
 
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         try {
             if (message.matches(DELETE_INDEXES)) {
-                boolean boolPermissionAdmin = event.getMessage().getMember().hasPermission(Permission.ADMINISTRATOR);
-                if (!boolPermissionAdmin) {
+                if (!permCheck(event.getMessage().getMember())) {
                     event.getMessage().addReaction("\u26D4").queue();
                     EmbedBuilder errorClear = new EmbedBuilder();
                     errorClear.setColor(0xff3923);
@@ -34,8 +35,7 @@ public class MessageDeleting extends ListenerAdapter {
             }
 
             if ((message.matches(DELETE_INDEXES) || message.matches(DELETE_INDEXES2))) {
-                boolean boolPermissionAdmin = event.getMessage().getMember().hasPermission(Permission.ADMINISTRATOR);
-                if (boolPermissionAdmin) {
+                if (permCheck(event.getMessage().getMember())) {
                     String[] commandArray = message.split("\\s+", 2);
                     String index = commandArray[1];
                     int indexParseInt = Integer.parseInt(index);
@@ -45,7 +45,6 @@ public class MessageDeleting extends ListenerAdapter {
                         List<Message> messages = event.getChannel()
                                 .getHistory().retrievePast(indexParseInt).complete();
                         event.getChannel().deleteMessages(messages).queue();
-                        event.getMessage().addReaction("\u2705").queue();
                         EmbedBuilder error = new EmbedBuilder();
                         error.setColor(0x00FF00);
                         error.setTitle(":white_check_mark: Removed: " + indexParseInt + " messages!");
@@ -77,9 +76,9 @@ public class MessageDeleting extends ListenerAdapter {
     }
 
     private void deletingLog(GuildMessageReceivedEvent event, String count) {
-        List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(botChannelLogs, true);
+        List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOG, true);
         if (textChannels.size() >= 1) {
-            TextChannel textChannel = event.getGuild().getTextChannelsByName(botChannelLogs, true).get(0);
+            TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOG, true).get(0);
             if (textChannel != null) {
                 EmbedBuilder delete = new EmbedBuilder();
                 String userId = event.getAuthor().getId();
@@ -94,5 +93,9 @@ public class MessageDeleting extends ListenerAdapter {
                 delete.clear();
             }
         }
+    }
+
+    public boolean permCheck(Member member) {
+        return member.hasPermission(Permission.ADMINISTRATOR);
     }
 }

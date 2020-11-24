@@ -49,6 +49,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new GameOfDice());
     jdaBuilder.addEventListeners(new GameHangmanListener());
     jdaBuilder.addEventListeners(new MessageChangeBitrate());
+    jdaBuilder.addEventListeners(new MessageKick());
     jda = jdaBuilder.build();
     jda.awaitReady();
   }

@@ -140,7 +140,7 @@ public class DataBase {
 
   public void createTableForGuild(String userLongId, String userName, String guildId) {
     try {
-      String query = "INSERT INTO GUILD_" + guildId + " (userLongId, userName, countConn) values (?, ?, ?)";
+      String query = "INSERT IGNORE INTO GUILD_" + guildId + " (userLongId, userName, countConn) values (?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, userLongId);
       preparedStatement.setString(2, userName);
