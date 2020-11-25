@@ -21,7 +21,7 @@ public class MessageDeleting extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         try {
-            if (message.matches(DELETE_INDEXES)) {
+            if (message.matches(DELETE_INDEXES) || message.matches(DELETE_INDEXES2)) {
                 if (!permCheck(event.getMessage().getMember())) {
                     event.getMessage().addReaction("\u26D4").queue();
                     EmbedBuilder errorClear = new EmbedBuilder();
