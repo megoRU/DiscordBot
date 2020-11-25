@@ -35,7 +35,7 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
 
     try {
       DataBase dataBase = new DataBase();
-      dataBase.Guild(idGuildJoin);
+      dataBase.createTableGuildWhenBotJoinGuild(idGuildJoin);
       dataBase.createTableVoiceWhenBotJoinGuild(idGuildJoin);
       dataBase.createDefaultUserInVoice("1", "1111111111111", idGuildJoin);
     } catch (SQLException exception) {

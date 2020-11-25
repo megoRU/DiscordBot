@@ -106,7 +106,7 @@ public class DataBase {
     return null;
   }
 
-  public void Guild(String guildIdLong) {
+  public void createTableGuildWhenBotJoinGuild(String guildIdLong) {
     try {
       String query = "CREATE TABLE IF NOT EXISTS `GUILD_" + guildIdLong + "` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
@@ -132,7 +132,7 @@ public class DataBase {
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setInt(1, Integer.parseInt(id));
       preparedStatement.setString(2, userLongId);
-      preparedStatement.execute();
+      preparedStatement.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -145,7 +145,7 @@ public class DataBase {
       preparedStatement.setString(1, userLongId);
       preparedStatement.setString(2, userName);
       preparedStatement.setString(3, "0");
-      preparedStatement.execute();
+      preparedStatement.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
     }
