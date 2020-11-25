@@ -34,9 +34,8 @@
 
 ## TODO
 
--   [ ]   Full english/russian support for outputs
--   [ ]   Command usage counter. Quantity output on command
--   [ ]   [Exchange Rates](#exchange-rates) Do it through xml parsing, not through jsoup
+-   [ ]   Change the guild prefix.
+-   [ ]   Fix exceptions that occurred in the work.
 
 ## Games
 
