@@ -13,7 +13,7 @@ public class FlipCoin extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    if (message.matches(FLIP_WITH) || message.matches(FLIP)) {
+    if (message.equals(FLIP_WITH) || message.equals(FLIP)) {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {

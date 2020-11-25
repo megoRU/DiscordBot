@@ -15,7 +15,7 @@ public class MessageChangeBitrate extends ListenerAdapter {
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
 
-        if (message.matches(BITRATE) || message.matches(BITRATE_INFO)) {
+        if (message.matches(BITRATE) || message.equals(BITRATE_INFO)) {
             try {
                 User user = event.getMember().getUser();
                 VoiceChannel voiceChannel = event.getGuild().getMember(user).getVoiceState().getChannel();
@@ -27,7 +27,7 @@ public class MessageChangeBitrate extends ListenerAdapter {
                     return;
                 }
 
-                if (message.matches(BITRATE_INFO)) {
+                if (message.equals(BITRATE_INFO)) {
                     event.getChannel().sendMessage("!bitrate [64] - without square brackets").queue();
                     return;
                 }

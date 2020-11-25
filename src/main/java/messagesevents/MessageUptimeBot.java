@@ -13,7 +13,7 @@ public class MessageUptimeBot extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
 
-    if (message.matches(UPTIME) || message.matches(UPTIME_WITH_OUT)) {
+    if (message.equals(UPTIME) || message.equals(UPTIME_WITH_OUT)) {
       TextChannel textChannel = event.getChannel();
       UptimeBot ub = new UptimeBot();
       String[] messageFromHandle = ub.uptimeBot().split(" ");

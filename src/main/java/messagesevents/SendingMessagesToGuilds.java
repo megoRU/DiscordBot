@@ -24,7 +24,7 @@ public class SendingMessagesToGuilds extends ListenerAdapter {
     String idGuild = event.getGuild().getId();
     String idUser = event.getAuthor().getId();
 
-    if (messages[0].contains(MSG) && !idGuild.contains(MAIN_GUILD_ID) && !idUser.contains(MAIN_USER_ID)) {
+    if (messages[0].equals(MSG) && !idGuild.equals(MAIN_GUILD_ID) && !idUser.equals(MAIN_USER_ID)) {
       EmbedBuilder errorShutDown = new EmbedBuilder();
       errorShutDown.setColor(0xff3923);
       errorShutDown.setTitle("🔴 Error: Your guild has no access");
@@ -34,7 +34,7 @@ public class SendingMessagesToGuilds extends ListenerAdapter {
       return;
     }
 
-    if (messages[0].contains(MSG) && idGuild.contains(MAIN_GUILD_ID) && !idUser.contains(MAIN_USER_ID)) {
+    if (messages[0].equals(MSG) && idGuild.equals(MAIN_GUILD_ID) && !idUser.equals(MAIN_USER_ID)) {
       EmbedBuilder errorShutDown = new EmbedBuilder();
       errorShutDown.setColor(0xff3923);
       errorShutDown.setTitle("🔴 Error: This command is not available to you!");
@@ -44,7 +44,7 @@ public class SendingMessagesToGuilds extends ListenerAdapter {
       return;
     }
 
-    if (messages[0].contains(MSG) && idGuild.contains(MAIN_GUILD_ID) && idUser.contains(MAIN_USER_ID)) {
+    if (messages[0].equals(MSG) && idGuild.equals(MAIN_GUILD_ID) && idUser.equals(MAIN_USER_ID)) {
       BotStart.jda.getGuilds().forEach(guild -> listGuilds.add(guild.getId()));
       HashSet<String> integerHashSet = new HashSet<>(listGuilds);
       listGuilds2.addAll(integerHashSet);

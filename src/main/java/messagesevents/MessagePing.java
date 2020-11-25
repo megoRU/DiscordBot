@@ -12,7 +12,7 @@ public class MessagePing extends ListenerAdapter {
 
   public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentDisplay().toLowerCase().trim();
-    if (message.matches(PING) || message.matches(PING_WITH_OUT)) {
+    if (message.equals(PING) || message.equals(PING_WITH_OUT)) {
       MessageChannel channels = event.getChannel();
       long time = System.currentTimeMillis();
       channels.sendMessage("Pong!") /* => RestAction<Message> */

@@ -10,14 +10,13 @@ public class MessageInfoHelp extends ListenerAdapter {
   public final String HELP_WITH_OUT = "help";
   public final String INFO_WITH_OUT = "info";
   public final String INFO = "!info";
-
   public final String INFO_RU = "инфо";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
 
-    if (message.matches(HELP) || message.matches(HELP_WITH_OUT) || message.matches(INFO_WITH_OUT)
-            || message.matches(INFO) || message.matches(INFO_RU)) {
+    if (message.equals(HELP) || message.equals(HELP_WITH_OUT) || message.equals(INFO_WITH_OUT)
+            || message.equals(INFO) || message.equals(INFO_RU)) {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {
@@ -32,6 +31,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setDescription("Commands:"
           + "\n`[!help/!info/help/info]` - Information."
           + "\n`[!roll]` - The Game of Dice."
+          + "\n`[!poll <text>]` - Create a poll."
           + "\n`[!hg]` - Game: Hangman/Виселица."
           + "\n`[!kick]` - Example: !kick @user/!kick @user reason"
           + "\n`[!ban]` - Example: !ban @user days/!ban @user days reason"

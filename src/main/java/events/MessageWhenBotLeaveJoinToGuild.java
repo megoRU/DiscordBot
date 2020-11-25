@@ -2,7 +2,6 @@ package events;
 
 import db.DataBase;
 import java.sql.SQLException;
-import java.util.Objects;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -18,12 +17,12 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
     String nameGuild = event.getGuild().getName();
     String regionGuild = event.getGuild().getRegion().getName();
 
-    Objects.requireNonNull(event.getGuild().getDefaultChannel())
+    event.getGuild().getDefaultChannel()
         .sendMessage("Thanks for adding " + "**mego**" + " to " + event.getGuild().getName() + "!"
-            + "\nUse **!help** for a list of commands."
+            + "\nUse **!help/help/info** for a list of commands."
             + "\nCreate text channel with name: `botlog`"
-            + "\nIf you need to give users a Role when they join, make a Role with this name: `DefaultRole`" ).queue();
-
+            ).queue();
+//+ "\nIf you need to give users a Role when they join, make a Role with this name: `DefaultRole`"
     EmbedBuilder botAddToGuild = new EmbedBuilder();
     botAddToGuild.setColor(0xa224db);
     botAddToGuild.setTitle("Guild added a bot");
@@ -36,9 +35,9 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
 
     try {
       DataBase dataBase = new DataBase();
-      dataBase.createTableWhenBotJoinGuild(idGuildJoin);
+      dataBase.Guild(idGuildJoin);
       dataBase.createTableVoiceWhenBotJoinGuild(idGuildJoin);
-      dataBase.createTableForVoice("1", "1111111111111", idGuildJoin);
+      dataBase.createDefaultUserInVoice("1", "1111111111111", idGuildJoin);
     } catch (SQLException exception) {
       exception.printStackTrace();
     }

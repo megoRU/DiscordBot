@@ -18,13 +18,13 @@ public class ExchangeValue extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ");
     boolean isBot = event.getAuthor().isBot();
-    if (message.contains(RUB[0])
-        || message.contains(RUB[1])
-        || message.contains(USD[0])
-        || message.contains(USD[1])
-        || message.contains(USD[2])
-        || message.contains(USD[3])
-        || message.contains(EUR[0])) {
+    if (message.equals(RUB[0])
+        || message.equals(RUB[1])
+        || message.equals(USD[0])
+        || message.equals(USD[1])
+        || message.equals(USD[2])
+        || message.equals(USD[3])
+        || message.equals(EUR[0])) {
       if (!isBot) {
         event.getMessage().addReaction("\u2705").queue();
         event.getChannel().sendTyping().queue();
@@ -91,18 +91,18 @@ public class ExchangeValue extends ListenerAdapter {
 
     int preLastDigit = intValue % 100 / 10;
     if (preLastDigit == 1) {
-      return whatCurrency.contains("USD") ? " долларов" : " рублей";
+      return whatCurrency.equals("USD") ? " долларов" : " рублей";
     }
     switch (intValue % 10) {
       case 1:
-        return whatCurrency.contains("USD") ? " доллар" : " рубль";
+        return whatCurrency.equals("USD") ? " доллар" : " рубль";
       case 2:
       case 3:
       case 4:
-        return whatCurrency.contains("USD") ? " доллара" : " рубля";
+        return whatCurrency.equals("USD") ? " доллара" : " рубля";
       case 5:
       default:
-        return whatCurrency.contains("USD") ? " долларов" : " рублей";
+        return whatCurrency.equals("USD") ? " долларов" : " рублей";
     }
   }
 }

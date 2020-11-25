@@ -19,11 +19,11 @@ public class BotShutDown extends ListenerAdapter {
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
 
-    if (message.matches(SHUTDOWN) || message.matches(SHUTDOWN_WITH_OUT) || message.matches(SD)) {
+    if (message.equals(SHUTDOWN) || message.equals(SHUTDOWN_WITH_OUT) || message.equals(SD)) {
       boolean boolPermissionAdmin = event.getMember().hasPermission(Permission.ADMINISTRATOR);
       String idGuild = event.getGuild().getId();
       String idUser = event.getAuthor().getId();
-      if (!idGuild.contains(MAIN_GUILD_ID)) {
+      if (!idGuild.equals(MAIN_GUILD_ID)) {
         EmbedBuilder errorShutDown = new EmbedBuilder();
         errorShutDown.setColor(0xff3923);
         errorShutDown.setTitle("🔴 Error: Your guild has no access");
@@ -33,7 +33,7 @@ public class BotShutDown extends ListenerAdapter {
         return;
       }
 
-      if (!boolPermissionAdmin && !idUser.contains(MAIN_USER_ID) && (!idGuild.contains(MAIN_GUILD_ID) || idGuild.contains(MAIN_GUILD_ID))) {
+      if (!boolPermissionAdmin && !idUser.equals(MAIN_USER_ID) && (!idGuild.equals(MAIN_GUILD_ID) || idGuild.equals(MAIN_GUILD_ID))) {
         EmbedBuilder errorShutDown = new EmbedBuilder();
         errorShutDown.setColor(0xff3923);
         errorShutDown.setTitle("🔴 Error: This command is not available to you!");
@@ -43,7 +43,7 @@ public class BotShutDown extends ListenerAdapter {
         return;
       }
 
-      if (idGuild.contains(MAIN_GUILD_ID) && boolPermissionAdmin && idUser.contains(MAIN_USER_ID)) {
+      if (idGuild.equals(MAIN_GUILD_ID) && boolPermissionAdmin && idUser.equals(MAIN_USER_ID)) {
         EmbedBuilder info = new EmbedBuilder();
         info.setColor(0x00FF00);
         info.setTitle(":white_check_mark: Бот выключен!");

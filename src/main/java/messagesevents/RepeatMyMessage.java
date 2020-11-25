@@ -18,10 +18,10 @@ public class RepeatMyMessage extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] split = message.split(" ", 2);
 
-    if (split[0].matches(REPEAT)
-        || split[0].matches(REPEAT2)
-        || split[0].matches(REPEAT_RU)
-        || split[0].matches(REPEAT_RU2)) {
+    if (split[0].equals(REPEAT)
+        || split[0].equals(REPEAT2)
+        || split[0].equals(REPEAT_RU)
+        || split[0].equals(REPEAT_RU2)) {
       event.getChannel().sendMessage("✅").queue();
 
       try {

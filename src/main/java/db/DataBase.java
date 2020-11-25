@@ -13,8 +13,8 @@ import java.util.Set;
 
 public class DataBase {
 
-  //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-  //CREATE TABLE IF NOT EXISTS VOICE_772388035944906793 (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  //CREATE TABLE `Discord` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  //CREATE TABLE IF NOT EXISTS VOICE_772388035944906793 (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
   private final Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());
   private final Statement statement = conn.createStatement();
   private final ArrayList<String> data = new ArrayList<>();
@@ -26,20 +26,10 @@ public class DataBase {
 
   public void setCount(String userLongId, String guildId) {
     try {
-      String query = "UPDATE GUILD_" + guildId + " SET countConn = ? WHERE userLongId = ?";
+      String query = "UPDATE `GUILD_" + guildId + "` SET countConn = ? WHERE userLongId = ?";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
-      preparedStmt.setInt(1, countConn(userLongId, guildId) + 1);
+      preparedStmt.setInt(1, getCountConn(userLongId, guildId) + 1);
       preparedStmt.setLong(2, Long.parseLong(userLongId));
-      preparedStmt.executeUpdate();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void createTableWhenBotJoinGuild(String guildIdLong) {
-    try {
-      String query = "CREATE TABLE IF NOT EXISTS `GUILD_" + guildIdLong + "` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
-      PreparedStatement preparedStmt = conn.prepareStatement(query);
       preparedStmt.executeUpdate();
     } catch (Exception e) {
       e.printStackTrace();
@@ -48,7 +38,7 @@ public class DataBase {
 
   public Set<String> topThree(String guildId) {
     try {
-      String query = "SELECT userName, countConn FROM GUILD_" + guildId + " Group By countConn Order By countConn DESC LIMIT 3";
+      String query = "SELECT userName, countConn FROM `GUILD_" + guildId + "` Group By countConn Order By countConn DESC LIMIT 3";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
         String name = resultSet.getString("userName");
@@ -62,10 +52,10 @@ public class DataBase {
     return null;
   }
 
-  public int countConn(String userLongId, String guildId) {
+  public int getCountConn(String userLongId, String guildId) {
     try {
       ResultSet resultSet = statement
-          .executeQuery("SELECT countConn FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
+          .executeQuery("SELECT countConn FROM `GUILD_" + guildId + "` WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
         return resultSet.getInt(1);
       }
@@ -78,7 +68,7 @@ public class DataBase {
   public long getUserId(String userLongId, String guildId) {
     try {
       ResultSet resultSet = statement
-          .executeQuery("SELECT userLongId FROM GUILD_" + guildId + " WHERE userLongId = " + userLongId);
+          .executeQuery("SELECT userLongId FROM `GUILD_" + guildId + "` WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
         String user = String.valueOf(resultSet.getLong(1));
         return Long.parseLong(user);
@@ -91,7 +81,7 @@ public class DataBase {
 
   public void setWhoLastEnter(int id, String voiceGuild, String userLongId) {
     try {
-      String query = "UPDATE VOICE_" + voiceGuild + " SET userLongId = ? WHERE id = ?";
+      String query = "UPDATE `VOICE_" + voiceGuild + "` SET userLongId = ? WHERE id = ?";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setInt(2, id);
       preparedStatement.setString(1, userLongId);
@@ -103,7 +93,7 @@ public class DataBase {
 
   public Set<String> whoLastEnter(String voiceGuild) {
     try {
-      String query = "SELECT userLongId FROM VOICE_" + voiceGuild;
+      String query = "SELECT userLongId FROM `VOICE_" + voiceGuild + "`";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
         String userLongId = resultSet.getString("userLongId");
@@ -116,9 +106,9 @@ public class DataBase {
     return null;
   }
 
-  public void createTableVoiceWhenBotJoinGuild(String guildIdLong) {
+  public void Guild(String guildIdLong) {
     try {
-      String query = "CREATE TABLE IF NOT EXISTS VOICE_" + guildIdLong + " (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+      String query = "CREATE TABLE IF NOT EXISTS `GUILD_" + guildIdLong + "` (`userLongId` bigint(30) NOT NULL, `userName` varchar(255) NOT NULL, `countConn` bigint(30) NOT NULL, PRIMARY KEY (`userLongId`), UNIQUE KEY `userLongId` (`userLongId`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
       PreparedStatement preparedStmt = conn.prepareStatement(query);
       preparedStmt.executeUpdate();
     } catch (Exception e) {
@@ -126,9 +116,19 @@ public class DataBase {
     }
   }
 
-  public void createTableForVoice(String id, String userLongId, String guildId) {
+  public void createTableVoiceWhenBotJoinGuild(String guildIdLong) {
     try {
-      String query = "INSERT IGNORE INTO VOICE_" + guildId + " (id, userLongId) values (?, ?)";
+      String query = "CREATE TABLE IF NOT EXISTS `VOICE_" + guildIdLong + "` (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;";
+      PreparedStatement preparedStmt = conn.prepareStatement(query);
+      preparedStmt.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void createDefaultUserInVoice(String id, String userLongId, String guildId) {
+    try {
+      String query = "INSERT IGNORE INTO `VOICE_" + guildId + "` (id, userLongId) values (?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setInt(1, Integer.parseInt(id));
       preparedStatement.setString(2, userLongId);
@@ -138,9 +138,9 @@ public class DataBase {
     }
   }
 
-  public void createTableForGuild(String userLongId, String userName, String guildId) {
+  public void createDefaultUserInGuild(String userLongId, String userName, String guildId) {
     try {
-      String query = "INSERT IGNORE INTO GUILD_" + guildId + " (userLongId, userName, countConn) values (?, ?, ?)";
+      String query = "INSERT IGNORE INTO `GUILD_" + guildId + "` (userLongId, userName, countConn) values (?, ?, ?)";
       PreparedStatement preparedStatement = conn.prepareStatement(query);
       preparedStatement.setString(1, userLongId);
       preparedStatement.setString(2, userName);

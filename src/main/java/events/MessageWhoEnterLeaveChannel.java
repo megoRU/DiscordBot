@@ -10,7 +10,6 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-import startbot.BotStart;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
@@ -49,7 +48,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
 
       if (!userFromBD.equals(idEnterUser)) {
-        dataBase.createTableForGuild(idEnterUser, nameEnterUser, idGuild);
+        dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
         dataBase.setCount(idEnterUser, idGuild);
       }
       if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {

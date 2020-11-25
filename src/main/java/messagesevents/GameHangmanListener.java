@@ -48,7 +48,7 @@ public class GameHangmanListener extends ListenerAdapter {
             Hangman hangman;
             hangman = new Hangman();
 
-            if (message.matches(HG) && hangman.hasGame(user.getIdLong())) {
+            if (message.equals(HG) && hangman.hasGame(user.getIdLong())) {
                 event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.").queue();
                 return;
             }

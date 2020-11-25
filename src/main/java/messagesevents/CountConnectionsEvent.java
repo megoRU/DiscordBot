@@ -36,7 +36,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
         Set<String> topThreeUsers = dataBase.topThree(idGuild);
         ArrayList<String> data = new ArrayList<>(topThreeUsers);
         if (!message.equals(COUNT4) && !message.equals(COUNT_TOP_THREE)) {
-          int value = dataBase.countConn(idUser, idGuild);
+          int value = dataBase.getCountConn(idUser, idGuild);
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           info.setDescription(idUserName + " connected to the channel: " + value + getEndingWord(value));
