@@ -10,7 +10,7 @@ public class UptimeBot {
   private static final long SECONDS_IN_MINUTES = 60;
   private static final long SECONDS = 1;
 
-  public String uptimeBot() {
+  public static String uptimeBot() {
     RuntimeMXBean runtimeMXBean = ManagementFactory.getRuntimeMXBean();
     long uptime = runtimeMXBean.getUptime();
     long uptimeInSeconds = uptime / 1000;

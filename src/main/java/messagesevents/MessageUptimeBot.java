@@ -3,6 +3,7 @@ package messagesevents;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import time.UptimeBot;
 
 public class MessageUptimeBot extends ListenerAdapter {
@@ -10,13 +11,13 @@ public class MessageUptimeBot extends ListenerAdapter {
   public final String UPTIME = "!uptime";
   public final String UPTIME_WITH_OUT = "uptime";
 
-  public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw().toLowerCase();
+  public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    String message = event.getMessage().getContentRaw().toLowerCase().trim();
 
     if (message.equals(UPTIME) || message.equals(UPTIME_WITH_OUT)) {
       TextChannel textChannel = event.getChannel();
-      UptimeBot ub = new UptimeBot();
-      String[] messageFromHandle = ub.uptimeBot().split(" ");
+
+      String[] messageFromHandle = UptimeBot.uptimeBot().split(" ");
 
       if (Integer.parseInt(messageFromHandle[0]) > 0) {
         textChannel.sendMessage("Bot duration: `"

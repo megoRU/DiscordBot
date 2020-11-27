@@ -14,9 +14,6 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.utils.ChunkingFilter;
-import net.dv8tion.jda.api.utils.MemberCachePolicy;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import java.util.Objects;
 
 public class BotStart {
@@ -26,14 +23,7 @@ public class BotStart {
 
   public void startBot() throws InterruptedException, LoginException {
     jdaBuilder.setAutoReconnect(true);
-    jdaBuilder.enableIntents(
-            GatewayIntent.GUILD_MEMBERS,
-            GatewayIntent.GUILD_MESSAGES,
-            GatewayIntent.GUILD_MESSAGE_REACTIONS,
-            GatewayIntent.DIRECT_MESSAGES)
-            .setChunkingFilter(ChunkingFilter.NONE)
-            .setMemberCachePolicy(MemberCachePolicy.NONE);
-    jdaBuilder.disableCache(CacheFlag.ACTIVITY, CacheFlag.VOICE_STATE, CacheFlag.EMOTE, CacheFlag.CLIENT_STATUS);
+    jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
     jdaBuilder.setActivity(Activity.playing("—> !help"));
     jdaBuilder.setBulkDeleteSplittingEnabled(false);
