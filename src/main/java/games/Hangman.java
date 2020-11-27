@@ -17,7 +17,7 @@ public class Hangman {
             "астрономия", "либерализм", "экспонат", "пышность", "бодибилдинг", "шаловливость",
             "экспозиция", "индульгенция", "контрацептив", "безмятежность", "барбекю",
             "кулинария", "энцефалопатия", "парашютист", "сущность", "поэтапность", "напыщенность",
-            "возвышенность"};
+            "возвышенность", "интерпретация", "термометр", "градусник", "", "", "", "", "", "", "",};
     private char[] strToArray;
     private String WORD_HIDDEN = "";
     protected ArrayList<String> wordList = new ArrayList<>();
@@ -223,6 +223,42 @@ public class Hangman {
                 + "```";
     }
 
+    //Создает скрытую линию из длины слова
+    private String hideWord(int length) {
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < length) {
+            sb.append('_');
+        }
+       return WORD_HIDDEN = sb.toString();
+    }
+
+    //заменяет "_" на букву которая есть в слове
+    private String replacementLetters(int length) {
+        if (count < 1) {
+            wordList.add(WORD_HIDDEN);
+            count++;
+        }
+        int size = wordList.size() - 1;
+        StringBuilder sb = new StringBuilder(wordList.get(size));
+        for (int i = 0; i < index.size(); i++) {
+            sb.replace(index.get(i), index.get(i) + 1, String.valueOf(strToArray[length]));
+        }
+        wordList.add(sb.toString());
+        index.clear();
+        return sb.toString();
+    }
+
+    //Ищет все одинаковые буквы и записывает в коллекцию
+    private void checkMethod(char[] checkArray, char letter) {
+        for (int i = 0; i < checkArray.length; i++) {
+            if (checkArray[i] == letter) {
+                checkArray[i] = letter;
+                index.add(i);
+                //System.out.println(checkArray[i]);
+            }
+        }
+    }
+
     protected HashMap<Long, Hangman> getGames() {
         return games;
     }
@@ -261,42 +297,6 @@ public class Hangman {
 
     public TextChannel getChannel() {
         return channel;
-    }
-
-    //Создает скрытую линию из длины слова
-    private String hideWord(int length) {
-        StringBuilder sb = new StringBuilder();
-        while (sb.length() < length) {
-            sb.append('_');
-        }
-       return WORD_HIDDEN = sb.toString();
-    }
-
-    //заменяет "_" на букву которая есть в слове
-    private String replacementLetters(int length) {
-        if (count < 1) {
-            wordList.add(WORD_HIDDEN);
-            count++;
-        }
-        int size = wordList.size() - 1;
-        StringBuilder sb = new StringBuilder(wordList.get(size));
-        for (int i = 0; i < index.size(); i++) {
-            sb.replace(index.get(i), index.get(i) + 1, String.valueOf(strToArray[length]));
-        }
-        wordList.add(sb.toString());
-        index.clear();
-        return sb.toString();
-    }
-
-    //Ищет все одинаковые буквы и записывает в коллекцию
-    private void checkMethod(char[] checkArray, char letter) {
-        for (int i = 0; i < checkArray.length; i++) {
-            if (checkArray[i] == letter) {
-                checkArray[i] = letter;
-                index.add(i);
-                //System.out.println(checkArray[i]);
-            }
-        }
     }
 
     private boolean isIsLetterPresent() {
