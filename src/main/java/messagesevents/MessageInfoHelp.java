@@ -47,7 +47,8 @@ public class MessageInfoHelp extends ListenerAdapter {
           + "\n`[!ищи/ищи]` - !ищи + пробел + какой-то запрос в google [g.zeos.in](https://g.zeos.in/) "
           + "\n`YouTube link + space + minutes + space + seconds if present` - converts to a short link with time"
       );
-      info.addField("Links:", "[megolox.ru](https://megolox.ru)", false);
+      info.addField("Links:", "[megolox.ru](https://megolox.ru)\n" +
+      "[Add me to other guilds](https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8)", false);
       info.addField("Bot creator", "[mego](https://steamcommunity.com/id/megoRU)", false);
       info.addField("License", "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0)", false);
       info.addField("Support Server", "[Click me](https://discord.com/invite/UrWG3R683d)", false);

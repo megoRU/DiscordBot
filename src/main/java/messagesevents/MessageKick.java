@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,55 +22,59 @@ public class MessageKick extends ListenerAdapter {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ");
 
-        if (message.matches(KICK) || message.matches(KICK2)) {
-            if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
-                if (messages.length == 3 || messages.length == 2) {
-                    List<Member> toKick = new ArrayList<>(1);
-                    toKick.addAll(event.getMessage().getMentionedMembers());
+        try {
+            if (message.matches(KICK) || message.matches(KICK2)) {
+                if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
+                    if (messages.length == 3 || messages.length == 2) {
+                        List<Member> toKick = new ArrayList<>(1);
+                        toKick.addAll(event.getMessage().getMentionedMembers());
 
-                    if (toKick.size() >= 1 && messages.length == 3) {
-                        event.getGuild().kick(toKick.get(0)).reason(messages[2]).queue();
-                        EmbedBuilder kickRsn = new EmbedBuilder();
-                        kickRsn.setColor(3913034);
-                        kickRsn.setTitle("Kick success");
-                        kickRsn.setDescription("Kicked member: " + messages[1] + " with reason: " + (messages[2]));
-                        event.getChannel().sendMessage(kickRsn.build()).queue();
-                        kickRsn.clear();
-                        logKickToChat(event, messages[1], "reason: " + messages[2]);
-                        return;
+                        if (toKick.size() >= 1 && messages.length == 3) {
+                            event.getGuild().kick(toKick.get(0)).reason(messages[2]).queue();
+                            EmbedBuilder kickRsn = new EmbedBuilder();
+                            kickRsn.setColor(3913034);
+                            kickRsn.setTitle("Kick success");
+                            kickRsn.setDescription("Kicked member: " + messages[1] + " with reason: " + (messages[2]));
+                            event.getChannel().sendMessage(kickRsn.build()).queue();
+                            kickRsn.clear();
+                            logKickToChat(event, messages[1], "reason: " + messages[2]);
+                            return;
+                        }
+
+                        if (toKick.size() >= 1 && messages.length == 2) {
+                            event.getGuild().kick(toKick.get(0)).queue();
+                            EmbedBuilder kickRsn = new EmbedBuilder();
+                            kickRsn.setColor(3913034);
+                            kickRsn.setTitle("Kick success");
+                            kickRsn.setDescription("Kicked member: " + messages[1]);
+                            event.getChannel().sendMessage(kickRsn.build()).queue();
+                            kickRsn.clear();
+                            logKickToChat(event, messages[1], "without a reason");
+                            return;
+                        } else {
+                            EmbedBuilder kickRsn = new EmbedBuilder();
+                            kickRsn.setColor(0xFF0000);
+                            kickRsn.setTitle("Error");
+                            kickRsn.setDescription("We didn't find a user");
+                            event.getChannel().sendMessage(kickRsn.build()).queue();
+                            kickRsn.clear();
+
+                        }
+
                     }
+                }
 
-                    if (toKick.size() >= 1 && messages.length == 2) {
-                        event.getGuild().kick(toKick.get(0)).queue();
-                        EmbedBuilder kickRsn = new EmbedBuilder();
-                        kickRsn.setColor(3913034);
-                        kickRsn.setTitle("Kick success");
-                        kickRsn.setDescription("Kicked member: " + messages[1]);
-                        event.getChannel().sendMessage(kickRsn.build()).queue();
-                        kickRsn.clear();
-                        logKickToChat(event, messages[1], "without a reason");
-                        return;
-                    }
-                   else  {
-                        EmbedBuilder kickRsn = new EmbedBuilder();
-                        kickRsn.setColor(0xFF0000);
-                        kickRsn.setTitle("Error");
-                        kickRsn.setDescription("We didn't find a user");
-                        event.getChannel().sendMessage(kickRsn.build()).queue();
-                        kickRsn.clear();
-
-                    }
-
+                if (!event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
+                    EmbedBuilder kickRsn = new EmbedBuilder();
+                    kickRsn.setColor(0xFF0000);
+                    kickRsn.setTitle("Access denied");
+                    kickRsn.setDescription("You do not have permission to kick users");
+                    event.getChannel().sendMessage(kickRsn.build()).queue();
+                    kickRsn.clear();
                 }
             }
-            if (!event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
-                EmbedBuilder kickRsn = new EmbedBuilder();
-                kickRsn.setColor(0xFF0000);
-                kickRsn.setTitle("Access denied");
-                kickRsn.setDescription("You do not have permission to kick users");
-                event.getChannel().sendMessage(kickRsn.build()).queue();
-                kickRsn.clear();
-            }
+        } catch (Exception e) {
+            event.getChannel().sendMessage("Can't modify a member with higher or equal highest role than yourself!").queue();
         }
     }
 
