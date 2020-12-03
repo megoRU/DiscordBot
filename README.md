@@ -34,7 +34,7 @@
 
 ## TODO
 
--   [ ]   Change the guild prefix.
+-   [x]   Change the guild prefix.
 -   [ ]   Fix exceptions that occurred in the work.
 
 ## Games
