@@ -39,9 +39,7 @@ public class MessageDeleting extends ListenerAdapter {
                     errorClear.clear();
                     return;
                 }
-            }
 
-            if ((message.matches(DELETE_INDEXES) || message.matches(prefix))) {
                 if (permCheck(event.getMessage().getMember())) {
                     String[] commandArray = message.split("\\s+", 2);
                     String index = commandArray[1];

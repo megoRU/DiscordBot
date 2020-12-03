@@ -9,7 +9,7 @@ import startbot.BotStart;
 
 import java.sql.SQLException;
 
-public class prefixChange extends ListenerAdapter {
+public class PrefixChange extends ListenerAdapter {
 
     private static final String PREFIX = "\\*prefix\\s.{1}";
     private static final String PREFIX_RESET = "*prefix reset";

@@ -58,7 +58,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessageKick());
     jdaBuilder.addEventListeners(new MessageBan());
     jdaBuilder.addEventListeners(new MessagePoll());
-    jdaBuilder.addEventListeners(new prefixChange());
+    jdaBuilder.addEventListeners(new PrefixChange());
 
     jda = jdaBuilder.build();
     jda.awaitReady();
