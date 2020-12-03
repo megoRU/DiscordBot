@@ -1,7 +1,6 @@
 package startbot;
 
 import config.Config;
-import db.DataBase;
 import events.ChangeBitrateChannel;
 import events.EventJoinMemberToGuildSetRole;
 import events.LogWhoEnterLeaveMoveChannel;
@@ -16,7 +15,6 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.discordbots.api.client.DiscordBotListAPI;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +64,6 @@ public class BotStart {
     jda.awaitReady();
 
     try {
-      //DataBase dataBase = new DataBase();
       Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());
       Statement statement = conn.createStatement();
       String sql = "select * from prefixs";
@@ -81,8 +78,8 @@ public class BotStart {
     }
 
     TOP_GG_API = new DiscordBotListAPI.Builder()
-            .token(Config.topggAPIToken)
-            .botId(Config.botId)
+            .token(Config.getTopGgApiToken())
+            .botId(Config.getBotId())
             .build();
     int serverCount = (int) jda.getGuildCache().size();
     TOP_GG_API.setStats(serverCount);
