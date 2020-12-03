@@ -9,6 +9,7 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
 
 public class MessageMoveUser extends ListenerAdapter {
 
@@ -19,8 +20,13 @@ public class MessageMoveUser extends ListenerAdapter {
     // Сделать на подобее с !kick
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase();
+        String prefix = MOVE;
 
-        if (message.matches(MOVE)) {
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "move\\s.+";
+        }
+
+        if (message.matches(prefix)) {
             User user = event.getMember().getUser();
             boolean boolPermission = event.getMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
 

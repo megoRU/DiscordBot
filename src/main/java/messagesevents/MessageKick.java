@@ -8,6 +8,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +23,16 @@ public class MessageKick extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ");
+        String prefix = KICK;
+        String prefix2 = KICK2;
+
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "kick\\s.+\\s.+";
+            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "kick\\s.+";
+        }
 
         try {
-            if (message.matches(KICK) || message.matches(KICK2)) {
+            if (message.matches(prefix) || message.matches(prefix2)) {
                 if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
                     if (messages.length == 3 || messages.length == 2) {
                         List<Member> toKick = new ArrayList<>(1);

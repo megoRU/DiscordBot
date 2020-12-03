@@ -3,6 +3,7 @@ package messagesevents;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import startbot.BotStart;
 
 public class MessageInfoHelp extends ListenerAdapter {
 
@@ -14,9 +15,16 @@ public class MessageInfoHelp extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
+    String prefix = HELP;
+    String prefix2 = INFO;
 
-    if (message.equals(HELP) || message.equals(HELP_WITH_OUT) || message.equals(INFO_WITH_OUT)
-            || message.equals(INFO) || message.equals(INFO_RU)) {
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "help";
+      prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "info";
+    }
+
+    if (message.equals(prefix) || message.equals(HELP_WITH_OUT) || message.equals(INFO_WITH_OUT)
+            || message.equals(prefix2) || message.equals(INFO_RU)) {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {
@@ -29,6 +37,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setColor(0xa224db);
       info.setAuthor(event.getAuthor().getName(), null, avatarUrl);
       info.setDescription("Commands:"
+          + "\n`[*prefix <symbol>/*prefix reset]` - Changes the prefix."
           + "\n`[!help/!info/help/info]` - Information."
           + "\n`[!roll]` - The Game of Dice."
           + "\n`[!poll <text>]` - Create a poll."

@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
 import time.UptimeBot;
 
 public class MessageUptimeBot extends ListenerAdapter {
@@ -13,8 +14,13 @@ public class MessageUptimeBot extends ListenerAdapter {
 
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
+    String prefix = UPTIME;
 
-    if (message.equals(UPTIME) || message.equals(UPTIME_WITH_OUT)) {
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "uptime";
+    }
+
+    if (message.equals(prefix) || message.equals(UPTIME_WITH_OUT)) {
       TextChannel textChannel = event.getChannel();
 
       String[] messageFromHandle = UptimeBot.uptimeBot().split(" ");

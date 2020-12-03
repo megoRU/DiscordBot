@@ -2,7 +2,6 @@ package messagesevents;
 
 import db.DataBase;
 import java.sql.SQLException;
-import java.util.Objects;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;

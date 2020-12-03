@@ -11,6 +11,7 @@ import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
 
 public class MessageDeleting extends ListenerAdapter {
 
@@ -20,8 +21,14 @@ public class MessageDeleting extends ListenerAdapter {
 
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
+        String prefix = DELETE_INDEXES2;
+
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "clear\\s+\\d+";
+        }
+
         try {
-            if (message.matches(DELETE_INDEXES) || message.matches(DELETE_INDEXES2)) {
+            if (message.matches(DELETE_INDEXES) || message.matches(prefix)) {
                 if (!permCheck(event.getMessage().getMember())) {
                     event.getMessage().addReaction("\u26D4").queue();
                     EmbedBuilder errorClear = new EmbedBuilder();
@@ -34,7 +41,7 @@ public class MessageDeleting extends ListenerAdapter {
                 }
             }
 
-            if ((message.matches(DELETE_INDEXES) || message.matches(DELETE_INDEXES2))) {
+            if ((message.matches(DELETE_INDEXES) || message.matches(prefix))) {
                 if (permCheck(event.getMessage().getMember())) {
                     String[] commandArray = message.split("\\s+", 2);
                     String index = commandArray[1];

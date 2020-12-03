@@ -1,6 +1,7 @@
 package startbot;
 
 import config.Config;
+import db.DataBase;
 import events.ChangeBitrateChannel;
 import events.EventJoinMemberToGuildSetRole;
 import events.LogWhoEnterLeaveMoveChannel;
@@ -14,12 +15,19 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.discordbots.api.client.DiscordBotListAPI;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class BotStart {
 
   public static JDA jda;
   private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());
+  public static Map<String, String> mapPrefix = new HashMap<>();
+  public static DiscordBotListAPI TOP_GG_API;
 
   public void startBot() throws InterruptedException, LoginException {
     jdaBuilder.setAutoReconnect(true);
@@ -52,8 +60,33 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessageKick());
     jdaBuilder.addEventListeners(new MessageBan());
     jdaBuilder.addEventListeners(new MessagePoll());
+    jdaBuilder.addEventListeners(new prefixChange());
+
     jda = jdaBuilder.build();
     jda.awaitReady();
+
+    try {
+      //DataBase dataBase = new DataBase();
+      Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());
+      Statement statement = conn.createStatement();
+      String sql = "select * from prefixs";
+      ResultSet rs = statement.executeQuery(sql);
+
+      while (rs.next()) {
+        mapPrefix.put(rs.getString("serverId"), rs.getString("prefix"));
+      }
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    TOP_GG_API = new DiscordBotListAPI.Builder()
+            .token(Config.topggAPIToken)
+            .botId(Config.botId)
+            .build();
+    int serverCount = (int) jda.getGuildCache().size();
+    TOP_GG_API.setStats(serverCount);
+
   }
 
   public void sendMessage(String channelId, String message) {

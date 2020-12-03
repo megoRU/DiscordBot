@@ -4,23 +4,27 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
+import startbot.BotStart;
 import java.awt.*;
 import java.util.ArrayList;
 
-//TODO: It would be better if no one saw this.
-//
 public class GameOfDice extends ListenerAdapter {
 
     private static final ArrayList<String> playerList = new ArrayList<>();
     private static final ArrayList<Long> guild = new ArrayList<>();
     private static final ArrayList<Long> chat = new ArrayList<>();
+    private static final String ROLL = "!roll";
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
+        String prefix = ROLL;
 
-        if (message.contains("!roll")) {
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "roll";
+        }
+
+        if (message.equals(prefix)) {
             String playerTag = event.getMessage().getAuthor().getId();
             String idPlayer = event.getMessage().getAuthor().getName() + "_" + playerTag;
             playerList.add(idPlayer);

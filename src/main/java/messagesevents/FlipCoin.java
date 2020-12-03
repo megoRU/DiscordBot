@@ -4,6 +4,7 @@ import java.util.Random;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import startbot.BotStart;
 
 public class FlipCoin extends ListenerAdapter {
 
@@ -13,7 +14,13 @@ public class FlipCoin extends ListenerAdapter {
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase();
-    if (message.equals(FLIP_WITH) || message.equals(FLIP)) {
+    String prefix = FLIP_WITH;
+
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + FLIP;
+    }
+
+    if (message.equals(prefix) || message.equals(FLIP)) {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {

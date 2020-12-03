@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
 
 public class CountConnectionsEvent extends ListenerAdapter {
 
@@ -21,12 +22,20 @@ public class CountConnectionsEvent extends ListenerAdapter {
   public void onMessageReceived(@NotNull MessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
 
-    if (message.equals(COUNT_RU)
+    String prefix = COUNT_RU;
+    String prefix2 = COUNT_EN;
+
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "колличество";
+      prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "amount";
+    }
+
+    if (message.equals(prefix)
         || message.equals(COUNT2_RU)
         || message.equals(COUNT3)
         || message.equals(COUNT4)
         || message.equals(COUNT_TOP_THREE)
-        || message.equals(COUNT_EN)) {
+        || message.equals(prefix2)) {
       String idUser = event.getMember().getUser().getId();
       String idUserName = event.getMember().getUser().getName();
       String idGuild = event.getGuild().getId();

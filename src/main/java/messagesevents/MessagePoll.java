@@ -4,6 +4,7 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import startbot.BotStart;
 
 public class MessagePoll extends ListenerAdapter {
 
@@ -12,8 +13,13 @@ public class MessagePoll extends ListenerAdapter {
     @Override
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
+        String prefix = POLL;
 
-        if (message.matches(POLL)) {
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "poll\\s.+";
+        }
+
+        if (message.matches(prefix)) {
             String[] messages = message.split(" ", 2);
             EmbedBuilder emb = new EmbedBuilder();
             emb.setColor(event.getGuild().getMemberById(event.getMessage().getAuthor().getIdLong()).getColor());
