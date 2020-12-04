@@ -7,9 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 public class DataBase {
 
@@ -17,8 +15,9 @@ public class DataBase {
   //CREATE TABLE IF NOT EXISTS VOICE_772388035944906793 (`id` bigint(5) NOT NULL, `userLongId` bigint(30) NOT NULL, PRIMARY KEY (`id`), UNIQUE KEY `id` (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
   private final Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());
   private final Statement statement = conn.createStatement();
-  private final ArrayList<String> data = new ArrayList<>();
-  private final ArrayList<String> data2 = new ArrayList<>();
+  private final Map<Integer, String> topThree = new HashMap<>();
+  private final Map<Integer, String> whoLast = new HashMap<>();
+  private Integer count = -1;
 
   //userLongId | countConn
   public DataBase() throws SQLException {
@@ -36,16 +35,17 @@ public class DataBase {
     }
   }
 
-  public Set<String> topThree(String guildId) {
+  public Map<Integer, String> topThree(String guildId) {
     try {
       String query = "SELECT userName, countConn FROM `GUILD_" + guildId + "` Group By countConn Order By countConn DESC LIMIT 3";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
+        count++;
         String name = resultSet.getString("userName");
         String countCon = resultSet.getString("countConn");
-        data.add(name + " " + countCon);
+        topThree.put(count, name + " " + countCon);
       }
-      return new LinkedHashSet<>(data);
+      return topThree;
     } catch (Exception exception) {
       exception.printStackTrace();
     }
@@ -91,15 +91,15 @@ public class DataBase {
     }
   }
 
-  public Set<String> whoLastEnter(String voiceGuild) {
+  public Map<Integer, String> whoLastEnter(String voiceGuild) {
     try {
       String query = "SELECT userLongId FROM `VOICE_" + voiceGuild + "`";
       ResultSet resultSet = statement.executeQuery(query);
       while (resultSet.next()) {
         String userLongId = resultSet.getString("userLongId");
-        data2.add(userLongId);
+        whoLast.put(0, userLongId);
       }
-      return new LinkedHashSet<>(data2);
+      return whoLast;
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -183,12 +183,5 @@ public class DataBase {
     }
   }
 
-  public void deleteList() {
-    data.clear();
-  }
-
-  public void deleteListWhoLast() {
-    data2.clear();
-  }
 }
 

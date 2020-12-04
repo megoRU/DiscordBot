@@ -18,6 +18,7 @@ public class ExchangeValue extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ");
     boolean isBot = event.getAuthor().isBot();
+    if (!isBot) {
     if (messages[1].equals(RUB[0])
         || messages[1].equals(RUB[1])
         || messages[1].equals(USD[0])
@@ -25,7 +26,6 @@ public class ExchangeValue extends ListenerAdapter {
         || messages[1].equals(USD[2])
         || messages[1].equals(USD[3])
         || messages[1].equals(EUR[0])) {
-      if (!isBot) {
         event.getMessage().addReaction("\u2705").queue();
         event.getChannel().sendTyping().queue();
         ExchangeRates.parserSBR();

@@ -48,7 +48,7 @@ public class MessageInfoHelp extends ListenerAdapter {
           + "\n`[" + p + "ban]` - Example: " + p + "ban <@user> <days>/" + p + "ban <@user> <days> <reason>"
           + "\n`[" + p + "bitrate]` - Change the channel bitrate. Example: " + p + "bitrate 96"
           + "\n`[курс доллара, курс евро, курс, евро, доллар]` - Данные от ЦБ к рублю."
-          + "\n`[100 долларов в рублях]` - Переведет по курсу. Доступны валюты: USD, EUR, RUB"
+          + "\n`[100 долларов в рублях]` - Доступны валюты: USD, EUR, RUB"
           + "\n`[" + p +"uptime/uptime]` - uptime bot."
           + "\n`[" + p +"shutdown/shutdown/sd]` - The bot is shutting down on the Linux server. (Only the bot creator can use!)"
           + "\n`[" + p +"ping/ping]` - API response."

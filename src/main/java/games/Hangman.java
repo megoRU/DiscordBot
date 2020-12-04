@@ -20,9 +20,9 @@ public class Hangman {
             "возвышенность", "интерпретация", "термометр", "градусник"};
     private char[] strToArray;
     private String WORD_HIDDEN = "";
-    protected ArrayList<String> wordList = new ArrayList<>();
-    protected ArrayList<Integer> index = new ArrayList<>();
-    protected ArrayList<String> usedLetters = new ArrayList<>();
+    private final ArrayList<String> wordList = new ArrayList<>();
+    private final ArrayList<Integer> index = new ArrayList<>();
+    private final ArrayList<String> usedLetters = new ArrayList<>();
     private boolean isLetterPresent;
     private Integer count = 0;
     private Integer count2 = 1;
@@ -229,7 +229,7 @@ public class Hangman {
         while (sb.length() < length) {
             sb.append('_');
         }
-       return WORD_HIDDEN = sb.toString();
+        return WORD_HIDDEN = sb.toString();
     }
 
     //заменяет "_" на букву которая есть в слове

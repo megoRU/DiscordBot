@@ -2,8 +2,7 @@ package events;
 
 import db.DataBase;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Map;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
@@ -20,20 +19,12 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private static final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
   private static final String BOT_CHANNEL_LOGS = "botchat";
-  private final ArrayList<String> listUsersInChannelsForMeshiva = new ArrayList<>();
 
   //TODO: Сделать ООП
   private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
     DataBase dataBase = new DataBase();
-    Set<String> whoLast = dataBase.whoLastEnter(idGuild);
-    ArrayList<String> dataFrom = new ArrayList<>(whoLast);
-    dataBase.deleteListWhoLast();
-    if (dataFrom.isEmpty()) {
-      return false;
-    }
-    whoLast.clear();
-    String id = dataFrom.get(0);
-    return id.equals(idUser);
+    Map<Integer, String> whoLast = dataBase.whoLastEnter(idGuild);
+    return whoLast.get(0).equals(idUser);
   }
 
   //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
@@ -59,18 +50,14 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameChannelEnterUser = event.getChannelJoined().getName();
       String nameUserWhoEnter = event.getMember().getUser().getName();
       User user = event.getMember().getUser();
-
+      inChannelMeshiva = false;
       event.getGuild().getVoiceChannels()
-          .forEach(e -> e.getMembers()
-              .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
-
-      for (String listLoop : listUsersInChannelsForMeshiva) {
-        if (listLoop.equals(USER_ID_MESHIVA)) {
-          inChannelMeshiva = true;
-          break;
-        }
-        inChannelMeshiva = false;
-      }
+              .forEach(e -> e.getMembers()
+                      .forEach(f -> {
+                        if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+                          inChannelMeshiva = true;
+                        }
+                      }));
 
       if (idGuild.equals(MAIN_GUILD_ID)) {
         if (!user.isBot() && isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
@@ -79,7 +66,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           textChannel.sendMessage(
               "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
                   + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          deleteList();
           return;
         }
 
@@ -89,7 +75,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           textChannel.sendMessage(
               "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
                   + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          deleteList();
           return;
         }
 
@@ -99,7 +84,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           textChannel.sendMessage(
               "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
                   + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          deleteList();
           return;
         }
 
@@ -109,7 +93,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
           textChannel.sendMessage(
               "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
                   + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          deleteList();
           return;
         }
 
@@ -120,7 +103,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
               "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
                   + nameUserWhoEnter
                   + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          deleteList();
         }
       }
     } catch (SQLException exception) {
@@ -135,17 +117,14 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String nameUserWhoLeave = event.getMember().getUser().getName();
     String idGuild = event.getGuild().getId();
     User user = event.getMember().getUser();
+    inChannelMeshiva = false;
     event.getGuild().getVoiceChannels()
         .forEach(e -> e.getMembers()
-            .forEach(f -> listUsersInChannelsForMeshiva.add(f.getUser().getId())));
-
-    for (String listLoop : listUsersInChannelsForMeshiva) {
-      if (listLoop.contains(USER_ID_MESHIVA)) {
-        inChannelMeshiva = true;
-        break;
-      }
-      inChannelMeshiva = false;
-    }
+            .forEach(f -> {
+              if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+                inChannelMeshiva = true;
+              }
+            }));
 
     if (idGuild.equals(MAIN_GUILD_ID)) {
       if (!user.isBot() && idLeaveUser.equals(USER_ID_MESHIVA)) {
@@ -154,7 +133,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         textChannel.sendMessage(
             "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
                 + "** вышел из канала: " + nameChannelLeaveUser).queue();
-        deleteList();
         return;
       }
 
@@ -164,7 +142,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         textChannel.sendMessage(
             "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
                 + "** вышел из канала: " + nameChannelLeaveUser).queue();
-        deleteList();
         return;
       }
 
@@ -174,7 +151,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         textChannel.sendMessage(
             "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
                 + "** вышел из канала: " + nameChannelLeaveUser).queue();
-        deleteList();
         return;
       }
 
@@ -184,7 +160,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
         textChannel.sendMessage(
             "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
                 + "** вышел из канала: " + nameChannelLeaveUser).queue();
-        deleteList();
         return;
       }
 
@@ -195,16 +170,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
             "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
                 + nameUserWhoLeave
                 + "** вышел в канал: " + nameChannelLeaveUser).queue();
-        deleteList();
       }
     }
   }
 
   private boolean isInChannelMeshiva() {
     return inChannelMeshiva;
-  }
-
-  private void deleteList() {
-    listUsersInChannelsForMeshiva.clear();
   }
 }

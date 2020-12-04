@@ -1,8 +1,7 @@
 package messagesevents;
 
 import db.DataBase;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Map;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -21,7 +20,6 @@ public class CountConnectionsEvent extends ListenerAdapter {
   @Override
   public void onMessageReceived(@NotNull MessageReceivedEvent event) {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
-
     String prefix = COUNT_RU;
     String prefix2 = COUNT_EN;
 
@@ -42,8 +40,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
       event.getChannel().sendTyping().queue();
       try {
         DataBase dataBase = new DataBase();
-        Set<String> topThreeUsers = dataBase.topThree(idGuild);
-        ArrayList<String> data = new ArrayList<>(topThreeUsers);
+        Map<Integer, String> topThreeUsers = dataBase.topThree(idGuild);
         if (!message.equals(COUNT4) && !message.equals(COUNT_TOP_THREE)) {
           int value = dataBase.getCountConn(idUser, idGuild);
           EmbedBuilder info = new EmbedBuilder();
@@ -53,7 +50,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
           info.clear();
         }
 
-        if ((message.equals(COUNT4) || message.equals(COUNT_TOP_THREE)) && data.size() < 3) {
+        if ((message.equals(COUNT4) || message.equals(COUNT_TOP_THREE)) && topThreeUsers.size() < 3) {
           event.getMessage().addReaction("\u26D4").queue();
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
@@ -65,9 +62,9 @@ public class CountConnectionsEvent extends ListenerAdapter {
 
         //TODO Сделать в нормальном виде //Сделать проверку на пустой список!
         if (message.equals(COUNT_TOP_THREE) || message.equals(COUNT4)) {
-          String[] first = data.get(0).split(" ");
-          String[] second = data.get(1).split(" ");
-          String[] third = data.get(2).split(" ");
+          String[] first = topThreeUsers.get(0).split(" ");
+          String[] second = topThreeUsers.get(1).split(" ");
+          String[] third = topThreeUsers.get(2).split(" ");
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           info.setTitle("Top 3 by connection");
@@ -80,7 +77,6 @@ public class CountConnectionsEvent extends ListenerAdapter {
                   Integer.parseInt(third[1])));
           event.getChannel().sendMessage(info.build()).queue();
           info.clear();
-          dataBase.deleteList();
         }
       } catch (Exception exception) {
         event.getMessage().addReaction("\u26D4").queue();
