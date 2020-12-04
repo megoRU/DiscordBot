@@ -6,10 +6,9 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
-import net.dv8tion.jda.api.exceptions.ContextException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
-
+import startbot.BotStart;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +23,18 @@ public class MessageBan extends ListenerAdapter {
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 4);
-        //TODO сделать логи в чат
-        if (message.matches(UN_BAN)) {
+        String prefix = BAN;
+        String prefix2 = BAN2;
+        String prefix3 = UN_BAN;
+
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+\\s[0-9]+";
+            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+";
+            prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "unban\\s.+";
+
+        }
+
+        if (message.matches(prefix3)) {
             if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                 String result = message
                         .replaceAll("!unban <@!", "")
@@ -47,7 +56,7 @@ public class MessageBan extends ListenerAdapter {
             return;
         }
 
-        if (message.matches(BAN) || message.matches(BAN2)) {
+        if (message.matches(prefix) || message.matches(prefix2)) {
             if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                 if (messages.length == 4 || messages.length == 3) {
                     List<Member> toBan = new ArrayList<>(1);
@@ -61,7 +70,7 @@ public class MessageBan extends ListenerAdapter {
                         kickRsn.setDescription("Banned member: " + messages[1] + " with reason: " + (messages[3]));
                         event.getChannel().sendMessage(kickRsn.build()).queue();
                         kickRsn.clear();
-                        logKickToChat(event, messages[1], "reason: " + messages[3]);
+                        logBanToChat(event, messages[1], "reason: " + messages[3]);
                         return;
                     }
 
@@ -73,7 +82,7 @@ public class MessageBan extends ListenerAdapter {
                         ban.setDescription("Banned member: " + messages[1]);
                         event.getChannel().sendMessage(ban.build()).queue();
                         ban.clear();
-                        logKickToChat(event, messages[1], "without a reason");
+                        logBanToChat(event, messages[1], "without a reason");
                         return;
                     } else {
                         EmbedBuilder kickRsn = new EmbedBuilder();
@@ -97,7 +106,7 @@ public class MessageBan extends ListenerAdapter {
         }
     }
 
-    private void logKickToChat(@NotNull GuildMessageReceivedEvent event, String banUser, String reason) {
+    private void logBanToChat(@NotNull GuildMessageReceivedEvent event, String banUser, String reason) {
         try {
             List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
             if (textChannels.size() >= 1) {

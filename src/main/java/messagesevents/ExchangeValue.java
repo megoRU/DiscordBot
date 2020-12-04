@@ -18,13 +18,13 @@ public class ExchangeValue extends ListenerAdapter {
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ");
     boolean isBot = event.getAuthor().isBot();
-    if (message.equals(RUB[0])
-        || message.equals(RUB[1])
-        || message.equals(USD[0])
-        || message.equals(USD[1])
-        || message.equals(USD[2])
-        || message.equals(USD[3])
-        || message.equals(EUR[0])) {
+    if (messages[1].equals(RUB[0])
+        || messages[1].equals(RUB[1])
+        || messages[1].equals(USD[0])
+        || messages[1].equals(USD[1])
+        || messages[1].equals(USD[2])
+        || messages[1].equals(USD[3])
+        || messages[1].equals(EUR[0])) {
       if (!isBot) {
         event.getMessage().addReaction("\u2705").queue();
         event.getChannel().sendTyping().queue();
