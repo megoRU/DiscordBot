@@ -2,7 +2,7 @@ package messagesevents;
 
 import db.DataBase;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
@@ -15,7 +15,7 @@ public class PrefixChange extends ListenerAdapter {
     private static final String PREFIX_RESET = "*prefix reset";
 
     @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 2);
 
@@ -27,11 +27,11 @@ public class PrefixChange extends ListenerAdapter {
 
         if (message.matches(PREFIX) && event.getMember().hasPermission(Permission.MANAGE_SERVER)
                 && BotStart.mapPrefix.get(event.getMessage().getGuild().getId()) != null) {
-            BotStart.mapPrefix.put(event.getMessage().getGuild().getId(), messages[1]);
+            BotStart.mapPrefix.put(event.getGuild().getId(), messages[1]);
             try {
                 DataBase dataBase = new DataBase();
-                dataBase.removeDB(event.getMessage().getGuild().getId());
-                dataBase.addDB(event.getMessage().getGuild().getId(), messages[1]);
+                dataBase.removeDB(event.getGuild().getId());
+                dataBase.addDB(event.getGuild().getId(), messages[1]);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -40,10 +40,10 @@ public class PrefixChange extends ListenerAdapter {
         }
 
         if (message.matches(PREFIX) && event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
-            BotStart.mapPrefix.put(event.getMessage().getGuild().getId(), messages[1]);
+            BotStart.mapPrefix.put(event.getGuild().getId(), messages[1]);
             try {
                 DataBase dataBase = new DataBase();
-                dataBase.addDB(event.getMessage().getGuild().getId(), messages[1]);
+                dataBase.addDB(event.getGuild().getId(), messages[1]);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -52,10 +52,10 @@ public class PrefixChange extends ListenerAdapter {
         }
 
         if (message.equals(PREFIX_RESET) && event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
-            BotStart.mapPrefix.remove(event.getMessage().getGuild().getId());
+            BotStart.mapPrefix.remove(event.getGuild().getId());
             try {
                 DataBase dataBase = new DataBase();
-                dataBase.removeDB(event.getMessage().getGuild().getId());
+                dataBase.removeDB(event.getGuild().getId());
             } catch (SQLException e) {
                 e.printStackTrace();
             }

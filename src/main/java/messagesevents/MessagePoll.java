@@ -1,7 +1,7 @@
 package messagesevents;
 
 import net.dv8tion.jda.api.EmbedBuilder;
-import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
@@ -11,7 +11,7 @@ public class MessagePoll extends ListenerAdapter {
     private static final String POLL = "!poll\\s.+";
 
     @Override
-    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentDisplay().trim();
         String prefix = POLL;
 

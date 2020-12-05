@@ -11,7 +11,7 @@ import startbot.BotStart;
 
 public class GameHangmanListener extends ListenerAdapter {
     private static final String HG = "!hg";
-    private static final String HG_STOP = "!hg\\s+stop";
+    private static final String HG_STOP = "!hg stop";
     private static final String HG_ONE_LETTER = "[А-Яа-я]";
     private static final String HG_ONE_LETTER_ENG = "[A-Za-z]";
 
@@ -24,7 +24,7 @@ public class GameHangmanListener extends ListenerAdapter {
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "hg";
-            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "hg\\s+stop";
+            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "hg stop";
         }
 
         if (message.length() == 1) {
@@ -46,11 +46,13 @@ public class GameHangmanListener extends ListenerAdapter {
             if (hangman.hasGame(user.getIdLong())) {
                 hangman = hangman.getGame(user.getIdLong());
                 hangman.logic(guild, channel, user, message);
+                System.out.println("logic " + hangman);
+
             }
             return;
         }
 
-        if (message.equals(prefix) || message.matches(HG_ONE_LETTER) || message.matches(HG_ONE_LETTER_ENG) || message.matches(prefix2)) {
+        if (message.equals(prefix) || message.matches(HG_ONE_LETTER) || message.matches(HG_ONE_LETTER_ENG) || message.equals(prefix2)) {
             User user = event.getMember().getUser();
             TextChannel channel = event.getChannel();
             Guild guild = event.getGuild();
@@ -62,26 +64,31 @@ public class GameHangmanListener extends ListenerAdapter {
                 return;
             }
 
-            if (message.matches(prefix2) && hangman.hasGame(user.getIdLong())) {
+            if (message.equals(prefix2) && hangman.hasGame(user.getIdLong())) {
+                System.out.println("remove " + hangman);
+
                 hangman.removeGame(user.getIdLong());
                 event.getChannel().sendMessage("Вы завершили игру.\n" +
-                        "Чтобы начать новую игру напишите: `" + BotStart.mapPrefix.get(event.getGuild().getId()) + "hg`\n" +
+                        "Чтобы начать новую игру напишите: `" + prefix + "`\n" +
                         "Далее присылайте в чат по одной букве.").queue();
                 return;
             }
 
-            if (message.matches(prefix2) && !hangman.hasGame(user.getIdLong())) {
+            if (message.equals(prefix2) && !hangman.hasGame(user.getIdLong())) {
                 event.getChannel().sendMessage("Вы сейчас не играете.\n").queue();
                 return;
             }
 
             if (!hangman.hasGame(user.getIdLong())) {
                 hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
+                System.out.println("setGame " + hangman);
+
             }
 
             if (hangman.hasGame(user.getIdLong())) {
                 hangman = hangman.getGame(user.getIdLong());
                 hangman.startGame(guild, channel, user);
+                System.out.println("startGame " + hangman);
             }
         }
     }

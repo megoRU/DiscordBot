@@ -8,6 +8,7 @@ import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import javax.security.auth.login.LoginException;
 import games.GameOfDice;
+import giftaway.MessageGift;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -59,6 +60,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessageBan());
     jdaBuilder.addEventListeners(new MessagePoll());
     jdaBuilder.addEventListeners(new PrefixChange());
+    jdaBuilder.addEventListeners(new MessageGift());
 
     jda = jdaBuilder.build();
     jda.awaitReady();
