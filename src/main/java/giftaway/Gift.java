@@ -5,22 +5,20 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import startbot.BotStart;
-
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Gift {
 
     private final ArrayList<String> listUsers = new ArrayList<>();
+    private static final HashMap<Long, String> messageId = new HashMap<>();
     private final HashMap<String, String> listUsersHash = new HashMap<>();
     private static final HashMap<Long, Gift> guilds = new HashMap<>();
-    private boolean isLetterPresent;
-    private User user;
+    private int count = 0;
     private Guild guild;
-    private TextChannel channel;
-    private Message message;
-    private String guildPrefix;
 
     public Gift(Guild guild) {
         this.guild = guild;
@@ -29,44 +27,52 @@ public class Gift {
     public Gift() {
     }
 
-    public void startGift(Guild guild, TextChannel channel, User user, Message message, String guildPrefix) {
+    public void startGift(Guild guild, TextChannel channel, String guildPrefix, GuildMessageReceivedEvent event) {
         EmbedBuilder start = new EmbedBuilder();
         start.setColor(0x00FF00);
         start.setTitle("Giftaway starts");
-        start.setDescription("Write to participate: "+ guildPrefix);
+        start.setDescription("Write to participate: " + guildPrefix
+                + "\n Users: " + count);
 
         BotStart.jda.getGuildById(guild.getId())
                 .getTextChannelById(channel.getId())
                 .sendMessage(start.build()).queue();
         start.clear();
+        List<Message> messages = event.getChannel().getHistory().retrievePast(1).complete();
+        messageId.put(guild.getIdLong(), messages.get(0).getId());
     }
 
-    public void addUserToPoll(User user, Guild guild, TextChannel channel) {
-        EmbedBuilder start = new EmbedBuilder();
-        start.setColor(0x00FF00);
-        start.setTitle("Giftaway starts");
-        start.setDescription("You are now in the list");
-        //Add user to list
+    public void addUserToPoll(User user, Guild guild, String guildPrefix, TextChannel channel) {
+        count++;
         listUsers.add(user.getId());
         listUsersHash.put(user.getId(), user.getId());
-        System.out.println(getListUsers());
+        EmbedBuilder addUser = new EmbedBuilder();
+        addUser.setColor(0x00FF00);
+        addUser.setTitle(user.getName());
+        addUser.setDescription("You are now in the list");
+        //Add user to list
         BotStart.jda.getGuildById(guild.getId())
                 .getTextChannelById(channel.getId())
-                .sendMessage(start.build()).queue();
-        start.clear();
+                .sendMessage(addUser.build()).queue();
 
+        EmbedBuilder edit = new EmbedBuilder();
+        edit.setColor(0x00FF00);
+        edit.setTitle("Giftaway");
+        edit.setDescription("Write to participate: " + guildPrefix
+                + "\n Users: " + count);
+
+        BotStart.jda.getGuildById(guild.getId()).getTextChannelById(channel.getId())
+                .editMessageById(messageId.get(guild.getIdLong()), edit.build()).queue();
+        addUser.clear();
+        edit.clear();
     }
 
     public void stopGift(Guild guild, TextChannel channel) {
-        System.out.println(listUsers);
         int randomWord = (int) Math.floor(Math.random() * listUsers.size());
-
-        System.out.println(listUsers);
         String winUser = listUsers.get(randomWord);
-
         EmbedBuilder start = new EmbedBuilder();
         start.setColor(0x00FF00);
-        start.setTitle("Giftaway stop");
+        start.setTitle("Giftaway the end");
         start.setDescription("Win: <@" + winUser + ">");
         //Add user to list
         BotStart.jda.getGuildById(guild.getId())
@@ -75,15 +81,12 @@ public class Gift {
         start.clear();
         listUsersHash.clear();
         listUsers.clear();
+        messageId.clear();
         removeGame(guild.getIdLong());
     }
 
-    public ArrayList<String> getListUsers() {
-        return listUsers;
-    }
-
-    public HashMap<String, String> getListUsersHash() {
-        return listUsersHash;
+    public String getListUsersHash(String id) {
+        return listUsersHash.get(id);
     }
 
     protected HashMap<Long, Gift> getGames() {
@@ -106,28 +109,12 @@ public class Gift {
         guilds.remove(userId);
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Guild getGuild() {
         return guild;
     }
 
     public void setGuild(Guild guild) {
         this.guild = guild;
-    }
-
-    public TextChannel getChannel() {
-        return channel;
-    }
-
-    private boolean isIsLetterPresent() {
-        return isLetterPresent;
     }
 
 }

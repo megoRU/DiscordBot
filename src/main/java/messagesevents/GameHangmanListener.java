@@ -46,8 +46,6 @@ public class GameHangmanListener extends ListenerAdapter {
             if (hangman.hasGame(user.getIdLong())) {
                 hangman = hangman.getGame(user.getIdLong());
                 hangman.logic(guild, channel, user, message);
-                System.out.println("logic " + hangman);
-
             }
             return;
         }
@@ -65,8 +63,6 @@ public class GameHangmanListener extends ListenerAdapter {
             }
 
             if (message.equals(prefix2) && hangman.hasGame(user.getIdLong())) {
-                System.out.println("remove " + hangman);
-
                 hangman.removeGame(user.getIdLong());
                 event.getChannel().sendMessage("Вы завершили игру.\n" +
                         "Чтобы начать новую игру напишите: `" + prefix + "`\n" +
@@ -81,14 +77,11 @@ public class GameHangmanListener extends ListenerAdapter {
 
             if (!hangman.hasGame(user.getIdLong())) {
                 hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
-                System.out.println("setGame " + hangman);
-
             }
 
             if (hangman.hasGame(user.getIdLong())) {
                 hangman = hangman.getGame(user.getIdLong());
                 hangman.startGame(guild, channel, user);
-                System.out.println("startGame " + hangman);
             }
         }
     }
