@@ -12,7 +12,6 @@ public class MessageGift extends ListenerAdapter {
     private static final String GIFT_START = "!gift start";
     private static final String GIFT_STOP = "!gift stop";
 
-    //TODO почему то два раза пишет
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
@@ -32,16 +31,15 @@ public class MessageGift extends ListenerAdapter {
                 Gift gift;
                 gift = new Gift();
 
-                if (!gift.hasGame(guild)) {
-                    System.out.println("Игры нет");
+                if (!gift.hasGift(guild)) {
                     return;
                 }
 
                 //Исключает повторных
-                if (gift.hasGame(guild)) {
-                    gift = gift.getGame(event.getGuild().getIdLong());
+                if (gift.hasGift(guild)) {
+                    gift = gift.getGift(event.getGuild().getIdLong());
                     if (gift.getListUsersHash(event.getAuthor().getId()) == null) {
-                        gift.addUserToPoll(event.getMember().getUser(), event.getGuild(), prefix, event.getChannel());
+                        gift.addUserToPoll(event.getMember().getUser(), event.getGuild(), prefix, prefix3, event.getChannel());
                         return;
                     }
                 }
@@ -53,14 +51,13 @@ public class MessageGift extends ListenerAdapter {
                 Gift gift;
                 gift = new Gift();
 
-                if (message.equals(prefix2) && !gift.hasGame(guild)) {
-                    gift.setGame(guild, new Gift(event.getGuild()));
-                    gift.startGift(event.getGuild(), event.getChannel(), prefix, event);
-
+                if (message.equals(prefix2) && !gift.hasGift(guild)) {
+                    gift.setGift(guild, new Gift(event.getGuild()));
+                    gift.startGift(event.getGuild(), event.getChannel(), prefix, prefix3, event);
                 }
 
-                if (message.equals(prefix3) && gift.hasGame(guild)) {
-                    gift = gift.getGame(event.getGuild().getIdLong());
+                if (message.equals(prefix3) && gift.hasGift(guild)) {
+                    gift = gift.getGift(event.getGuild().getIdLong());
                     gift.stopGift(event.getGuild(), event.getChannel());
                 }
 

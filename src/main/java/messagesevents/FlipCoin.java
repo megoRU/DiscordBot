@@ -24,7 +24,7 @@ public class FlipCoin extends ListenerAdapter {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {
-        avatarUrl = "https://cdn.discordapp.com/avatars/754093698681274369/a6b1eb1cdcc29e0bd7e14228b17a28aa.png";
+        avatarUrl = "https://cdn.discordapp.com/avatars/754093698681274369/dc4b416065569253bc6323efb6296703.png";
       }
       if (avatarFromEvent != null) {
         avatarUrl = avatarFromEvent;

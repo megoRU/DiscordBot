@@ -16,71 +16,26 @@
 
 [![Discord Bots](https://top.gg/api/widget/754093698681274369.svg)](https://top.gg/bot/754093698681274369)
 
-
 ## What the bot can do
 
-1.  [Delete messages](#delete-messages)
+1.  Delete messages
 2.  Move user to you voice channel | Beta
-3.  [Available Commands](#available-commands)
-4.  [Write to the special channel when someone entered/left](#bot-log)
+3.  Available Commands
+4.  Write to the special channel when someone entered/left
 5.  Converts YouTube links to timecode links
 6.  Bot welcome msg when Bot join Guild
-7.  [Change channel bitrate](#change-channel-bitrate)
-8.  [Exchange Rates (DOLLAR/EURO to RUB)](#exchange-rates)
-9.  [Exchange Values](#exchange-values)
+7.  Change channel bitrate
+8.  Exchange Rates (DOLLAR/EURO to RUB)
+9.  Exchange Values
 10. Repeat after me
-11. Game !roll
-12. Game !hg (Exclusive for Russian players)
+11. Game `!roll`
+12. Game `!hg` (Exclusive for Russian players)
+13. Now you can create giveaway - `!gift start`
 
 ## TODO
 
--   [x]   Change the guild prefix.
 -   [ ]   Fix exceptions that occurred in the work.
 
-## Games
+## Our documentation
 
-| Виселица (!hg)          | Game of dice (!roll)       |
-| ----------------------- | -------------------------- |
-| ![](images/hangman.jpg) | ![](images/gameofdice.png) |
-
-## Delete messages
-
-| Deleting multiple messages (!clear 10) | Checking Administrator's rights to delete messages |
-| -------------------------------------- | -------------------------------------------------- |
-| ![](images/deleteTenMessages.png)      | ![](images/PrivilegesDeliting.png)                 |
-
-## Available Commands
-
-| info/help/!help       |  
-| --------------------- |
-| ![](images/info2.png) | 
-
-| !ping/ping                                    | !uptime/uptime         |
-| --------------------------------------------- | ---------------------- |
-| ![](images/ping.png)                          | ![](images/uptime.png) |
-
-## Bot log
-
-| !ping/ping                                    |
-| --------------------------------------------- |
-| ![bot-log](images/botlog.png)                 |
-
-## Exchange Rates
-
-So far, only the dollar, the euro against the ruble.
-
-| курс доллара                  |
-| ----------------------------- |
-| ![](images/ExchangeRates.png) |
-
-## Exchange Values
-
-| 100 рублей в долларах          | 100 долларов в рублях           |
-| ------------------------------ | ------------------------------- |
-| ![](images/ExchangeValues.png) | ![](images/ExchangeValues2.png) |
-
-## Change channel bitrate
-
-| !bitrate 64                    |
-| ------------------------------ |
-| ![](images/bitrateChannel.png) |
+[<img src="https://github.com/megoRU/DiscordBot/blob/master/images/gitbook.jpg?raw=true">](https://discord.megolox.ru)

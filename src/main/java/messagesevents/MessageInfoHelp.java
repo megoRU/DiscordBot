@@ -30,7 +30,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       String avatarUrl = null;
       String avatarFromEvent = event.getMessage().getAuthor().getAvatarUrl();
       if (avatarFromEvent == null) {
-        avatarUrl = "https://cdn.discordapp.com/avatars/754093698681274369/a6b1eb1cdcc29e0bd7e14228b17a28aa.png";
+        avatarUrl = "https://cdn.discordapp.com/avatars/754093698681274369/dc4b416065569253bc6323efb6296703.png";
       }
       if (avatarFromEvent != null) {
         avatarUrl = avatarFromEvent;
@@ -40,6 +40,7 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.setAuthor(event.getAuthor().getName(), null, avatarUrl);
       info.setDescription("Commands:"
           + "\n`[*prefix <symbol>/*prefix reset]` - Changes the prefix."
+          + "\n`[" + p + "gift start/" + p + "gift stop]` - Giveaway."
           + "\n`[" + p + "help/" + p + "info/help/info]` - Information."
           + "\n`[" + p + "roll]` - The Game of Dice."
           + "\n`[" + p + "poll <text>]` - Create a poll."
