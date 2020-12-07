@@ -31,6 +31,7 @@ public class Hangman {
     private User user;
     private Guild guild;
     private TextChannel channel;
+    private final Random random = new Random();
 
     public Hangman(Guild guild, TextChannel channel, User user) {
         this.guild = guild;
@@ -43,7 +44,6 @@ public class Hangman {
 
     public void startGame(Guild guild, TextChannel channel, User user) {
         if (WORD == null) {
-            Random random = new Random();
             WORD = ALL_WORDS[random.nextInt(ALL_WORDS.length)];
             strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
             hideWord(WORD.length());
