@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GameOfDice extends ListenerAdapter {
 
@@ -14,6 +15,7 @@ public class GameOfDice extends ListenerAdapter {
     private static final ArrayList<Long> guild = new ArrayList<>();
     private static final ArrayList<Long> chat = new ArrayList<>();
     private static final String ROLL = "!roll";
+    private static final Random random = new Random();
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -42,8 +44,8 @@ public class GameOfDice extends ListenerAdapter {
                     return;
                 }
 
-                int diceFirstPlayer = 1 + (int) (Math.random() * 6);
-                int diceSecondPlayer = 1 + (int) (Math.random() * 6);
+                int diceFirstPlayer = random.nextInt(6) + 1;
+                int diceSecondPlayer = random.nextInt(6) + 1;
                 long idChannel = event.getChannel().getIdLong();
                 int index = playerList.get(0).indexOf("_");
                 int index2 = playerList.get(1).indexOf("_");
@@ -62,7 +64,6 @@ public class GameOfDice extends ListenerAdapter {
                 gameOfDice.setColor(Color.WHITE);
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
                 event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
-                // event.getChannel().sendMessage(gameOfDice.build()).queue();
                 playerList.clear();
                 guild.clear();
                 chat.clear();
@@ -80,8 +81,8 @@ public class GameOfDice extends ListenerAdapter {
                     return;
                 }
 
-                int diceFirstPlayer = 1 + (int) (Math.random() * 6);
-                int diceSecondPlayer = 1 + (int) (Math.random() * 6);
+                int diceFirstPlayer = random.nextInt(6) + 1;
+                int diceSecondPlayer = random.nextInt(6) + 1;
                 long idChannel = event.getChannel().getIdLong();
                 int index = playerList.get(0).indexOf("_");
                 int index2 = playerList.get(1).indexOf("_");
@@ -101,7 +102,6 @@ public class GameOfDice extends ListenerAdapter {
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
                 event.getJDA().getGuildById(guild.get(0)).getTextChannelById(chat.get(0)).sendMessage(gameOfDice.build()).queue();
                 event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
-                // event.getChannel().sendMessage(gameOfDice.build()).queue();
                 playerList.clear();
                 guild.clear();
                 chat.clear();

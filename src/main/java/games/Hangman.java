@@ -8,6 +8,7 @@ import startbot.BotStart;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Hangman {
 
@@ -42,8 +43,8 @@ public class Hangman {
 
     public void startGame(Guild guild, TextChannel channel, User user) {
         if (WORD == null) {
-            int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
-            WORD = ALL_WORDS[randomWord];
+            Random random = new Random();
+            WORD = ALL_WORDS[random.nextInt(ALL_WORDS.length)];
             strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
             hideWord(WORD.length());
         }

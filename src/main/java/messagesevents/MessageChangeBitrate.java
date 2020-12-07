@@ -59,7 +59,7 @@ public class MessageChangeBitrate extends ListenerAdapter {
                         && Integer.parseInt(messages[1]) >= 10
                         && Integer.parseInt(messages[1] + "000") <= maxBitrate) {
                     voiceChannel.getManager().setBitrate(Integer.parseInt(messages[1] + "000")).queue();
-                    event.getChannel().sendMessage("Bitrate channel : " + voiceChannel.getName() + " changed to: "
+                    event.getChannel().sendMessage("Bitrate channel: `" + voiceChannel.getName() + "` changed to: "
                             + Integer.parseInt(messages[1] + "000") + " kbps").queue();
                 }
             } catch (Exception e) {
