@@ -190,8 +190,7 @@ public class GameOfDice extends ListenerAdapter {
         //3
         if (first.equals("3")) {
 
-
-            if (first.equals("3") && second.equals("1")) {
+            if (second.equals("1")) {
                 return "https://megolox.ru/disImages/3-1.png";
             }
 
