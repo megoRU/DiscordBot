@@ -27,7 +27,7 @@ public class Gift {
     public Gift() {
     }
 
-    public void startGift(Guild guild, TextChannel channel, String guildPrefix, String guildPrefixStop, GuildMessageReceivedEvent event) {
+    public void startGift(Guild guild, TextChannel channel, String guildPrefix, String guildPrefixStop) throws InterruptedException {
         EmbedBuilder start = new EmbedBuilder();
         start.setColor(0x00FF00);
         start.setTitle("Giveaway starts");
@@ -39,7 +39,8 @@ public class Gift {
                 .getTextChannelById(channel.getId())
                 .sendMessage(start.build()).queue();
         start.clear();
-        List<Message> messages = event.getChannel().getHistory().retrievePast(1).complete();
+        Thread.sleep(250);
+        List<Message> messages = guild.getTextChannelById(channel.getIdLong()).getHistory().retrievePast(1).complete();
         messageId.put(guild.getIdLong(), messages.get(0).getId());
     }
 
@@ -54,7 +55,9 @@ public class Gift {
         //Add user to list
         BotStart.jda.getGuildById(guild.getId())
                 .getTextChannelById(channel.getId())
-                .sendMessage(addUser.build()).queue();
+                .sendMessage(addUser.build()).queue(null, (exception) ->
+                BotStart.jda.getGuildById(guild.getIdLong())
+                        .getTextChannelById(channel.getIdLong()).sendMessage(removeGiftExceptions(guild.getIdLong())).queue());
 
         EmbedBuilder edit = new EmbedBuilder();
         edit.setColor(0x00FF00);
@@ -64,7 +67,9 @@ public class Gift {
                 + "\nUsers: `" + count + "`");
 
         BotStart.jda.getGuildById(guild.getId()).getTextChannelById(channel.getId())
-                .editMessageById(messageId.get(guild.getIdLong()), edit.build()).queue();
+                .editMessageById(messageId.get(guild.getIdLong()), edit.build()).queue(null, (exception) ->
+                BotStart.jda.getGuildById(guild.getIdLong())
+                        .getTextChannelById(channel.getIdLong()).sendMessage(removeGiftExceptions(guild.getIdLong())).queue());
         addUser.clear();
         edit.clear();
     }
@@ -120,6 +125,12 @@ public class Gift {
 
     public void removeGift(long guildId) {
         guilds.remove(guildId);
+    }
+
+    public String removeGiftExceptions(long guildId) {
+        guilds.remove(guildId);
+        return "The giveaway was canceled because the bot was unable to get the ID\n" +
+                "your post for editing. Please try again.";
     }
 
     public Guild getGuild() {

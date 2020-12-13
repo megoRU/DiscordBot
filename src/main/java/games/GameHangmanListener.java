@@ -1,6 +1,5 @@
-package messagesevents;
+package games;
 
-import games.Hangman;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -81,7 +80,12 @@ public class GameHangmanListener extends ListenerAdapter {
 
             if (hangman.hasGame(user.getIdLong())) {
                 hangman = hangman.getGame(user.getIdLong());
-                hangman.startGame(guild, channel, user);
+                try {
+                    hangman.startGame(guild, channel, user);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    e.printStackTrace();
+                }
             }
         }
     }

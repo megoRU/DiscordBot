@@ -7,6 +7,7 @@ import events.LogWhoEnterLeaveMoveChannel;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import javax.security.auth.login.LoginException;
+import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
 import messagesevents.*;

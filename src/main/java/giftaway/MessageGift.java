@@ -53,7 +53,12 @@ public class MessageGift extends ListenerAdapter {
 
                 if (message.equals(prefix2) && !gift.hasGift(guild)) {
                     gift.setGift(guild, new Gift(event.getGuild()));
-                    gift.startGift(event.getGuild(), event.getChannel(), prefix, prefix3, event);
+                    try {
+                        gift.startGift(event.getGuild(), event.getChannel(), prefix, prefix3);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        e.printStackTrace();
+                    }
                 }
 
                 if (message.equals(prefix3) && gift.hasGift(guild)) {

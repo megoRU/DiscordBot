@@ -60,7 +60,6 @@ public class PrefixChange extends ListenerAdapter {
                 e.printStackTrace();
             }
             event.getChannel().sendMessage("The prefix is now standard: `!`").queue();
-            return;
         }
 
     }
