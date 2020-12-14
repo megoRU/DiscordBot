@@ -10,6 +10,7 @@ import javax.security.auth.login.LoginException;
 import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
+import lavaplayer.MessagePlayMusic;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -62,6 +63,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessagePoll());
     jdaBuilder.addEventListeners(new PrefixChange());
     jdaBuilder.addEventListeners(new MessageGift());
+    jdaBuilder.addEventListeners(new MessagePlayMusic());
 
     jda = jdaBuilder.build();
     jda.awaitReady();
