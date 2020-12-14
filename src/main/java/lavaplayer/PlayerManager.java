@@ -18,9 +18,8 @@ public class PlayerManager {
     private final AudioPlayerManager playerManager;
     private final Map<Long, GuildMusicManager> musicManagers;
 
-    private PlayerManager() {
+    PlayerManager() {
         this.musicManagers = new HashMap<>();
-
         this.playerManager = new DefaultAudioPlayerManager();
         AudioSourceManagers.registerRemoteSources(playerManager);
         AudioSourceManagers.registerLocalSource(playerManager);
