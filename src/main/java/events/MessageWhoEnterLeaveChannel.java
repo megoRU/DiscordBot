@@ -4,7 +4,6 @@ import db.DataBase;
 import java.sql.SQLException;
 import java.util.Map;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -23,8 +22,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     //TODO: Сделать ООП
     private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
         DataBase dataBase = new DataBase();
-        Map<Integer, String> whoLast = dataBase.whoLastEnter(idGuild);
-        return whoLast.get(0).equals(idUser);
+        Map<String, String> whoLast = dataBase.whoLastEnter(idGuild);
+        return whoLast.get(idGuild).equals(idUser);
     }
 
     //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
@@ -52,7 +51,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
             }
             String nameChannelEnterUser = event.getChannelJoined().getName();
             String nameUserWhoEnter = event.getMember().getUser().getName();
-            User user = event.getMember().getUser();
             inChannelMeshiva = false;
             event.getGuild().getVoiceChannels()
                     .forEach(e -> e.getMembers()
@@ -118,7 +116,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
             String nameChannelLeaveUser = event.getChannelLeft().getName();
             String nameUserWhoLeave = event.getMember().getUser().getName();
             String idGuild = event.getGuild().getId();
-            User user = event.getMember().getUser();
             inChannelMeshiva = false;
             event.getGuild().getVoiceChannels()
                     .forEach(e -> e.getMembers()
