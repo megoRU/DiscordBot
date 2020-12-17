@@ -14,6 +14,7 @@ public class PrefixChange extends ListenerAdapter {
     private static final String PREFIX = "\\*prefix\\s.{1}";
     private static final String PREFIX_RESET = "*prefix reset";
 
+    //TODO При вводе префекса "!" делать стандартный.
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase().trim();

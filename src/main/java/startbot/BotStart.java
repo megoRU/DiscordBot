@@ -64,6 +64,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new PrefixChange());
     jdaBuilder.addEventListeners(new MessageGift());
     jdaBuilder.addEventListeners(new MessagePlayMusic());
+    jdaBuilder.addEventListeners(new MessageCheckBotSettings());
 
     jda = jdaBuilder.build();
     jda.awaitReady();
