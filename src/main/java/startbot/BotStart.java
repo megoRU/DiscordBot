@@ -10,6 +10,7 @@ import javax.security.auth.login.LoginException;
 import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
+import lavaplayer.PlayerControl;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -62,6 +63,8 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessagePoll());
     jdaBuilder.addEventListeners(new PrefixChange());
     jdaBuilder.addEventListeners(new MessageGift());
+    jdaBuilder.addEventListeners(new MessageCheckBotSettings());
+    jdaBuilder.addEventListeners(new PlayerControl());
 
     jda = jdaBuilder.build();
     jda.awaitReady();
@@ -80,12 +83,12 @@ public class BotStart {
       e.printStackTrace();
     }
 
-    TOP_GG_API = new DiscordBotListAPI.Builder()
-            .token(Config.getTopGgApiToken())
-            .botId(Config.getBotId())
-            .build();
-    int serverCount = (int) jda.getGuildCache().size();
-    TOP_GG_API.setStats(serverCount);
+//    TOP_GG_API = new DiscordBotListAPI.Builder()
+//            .token(Config.getTopGgApiToken())
+//            .botId(Config.getBotId())
+//            .build();
+//    int serverCount = (int) jda.getGuildCache().size();
+//    TOP_GG_API.setStats(serverCount);
 
   }
 

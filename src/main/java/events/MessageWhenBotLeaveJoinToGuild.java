@@ -28,8 +28,12 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
                 "Guild id: " + idGuildJoin
                         + "\nGuild name: " + nameGuild
                         + "\nGuild region: " + regionGuild);
-        BotStart.jda.getGuildById("779317239722672128").getTextChannelById("779321076424376350").sendMessage(botAddToGuild.build()).queue();
-        botAddToGuild.clear();
+        try {
+            BotStart.jda.getGuildById("779317239722672128").getTextChannelById("779321076424376350").sendMessage(botAddToGuild.build()).queue();
+            botAddToGuild.clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             DataBase dataBase = new DataBase();
