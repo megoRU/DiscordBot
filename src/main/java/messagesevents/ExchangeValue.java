@@ -2,6 +2,7 @@ package messagesevents;
 
 import java.text.DecimalFormat;
 import java.util.Arrays;
+
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -22,6 +23,7 @@ public class ExchangeValue extends ListenerAdapter {
         if (messages.length > 3 && !isBot) {
             if (messages[1].equals(RUB[0])
                     || messages[1].equals(RUB[1])
+                    || messages[1].equals(RUB[2])
                     || messages[1].equals(USD[0])
                     || messages[1].equals(USD[1])
                     || messages[1].equals(USD[2])

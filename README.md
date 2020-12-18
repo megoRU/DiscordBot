@@ -38,12 +38,10 @@
 -   [ ]   Fix exceptions that occurred in the work.
 -   [ ]   Done music function.
 
-
 ## Copyright Notice
 
-1. The music function was taken a little from here: [Yui](https://github.com/DV8FromTheWorld/Yui)
-2. The bot is made using the library: [JDA](https://github.com/DV8FromTheWorld/JDA)
-
+1.  The music function was taken a little from here: [Yui](https://github.com/DV8FromTheWorld/Yui)
+2.  The bot is made using the library: [JDA](https://github.com/DV8FromTheWorld/JDA)
 
 ## Our documentation
 

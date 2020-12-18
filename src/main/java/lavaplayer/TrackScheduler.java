@@ -16,9 +16,9 @@ import java.util.Queue;
 public class TrackScheduler extends AudioEventAdapter
 {
     private boolean repeating = false;
-    final AudioPlayer player;
-    final Queue<AudioTrack> queue;
-    AudioTrack lastTrack;
+    protected final AudioPlayer player;
+    protected final Queue<AudioTrack> queue;
+    protected AudioTrack lastTrack;
 
     /**
      * @param player The audio player this scheduler uses

@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Queue;
 
 public class PlayerControl extends ListenerAdapter {
-    public static final int DEFAULT_VOLUME = 35; //(0 - 150, where 100 is default max volume)
+    private static final int DEFAULT_VOLUME = 35; //(0 - 150, where 100 is default max volume)
     private final AudioPlayerManager playerManager;
     private final Map<String, GuildMusicManager> musicManagers;
     private static final String VOLUME = "!volume\\s[0-9]{1,3}+";

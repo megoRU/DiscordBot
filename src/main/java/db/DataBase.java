@@ -98,7 +98,6 @@ public class DataBase {
             while (resultSet.next()) {
                 String userLongId = resultSet.getString("userLongId");
                 whoLast.put(voiceGuild, userLongId);
-                break;
             }
             return whoLast;
         } catch (Exception e) {
