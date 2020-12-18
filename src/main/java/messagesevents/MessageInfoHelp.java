@@ -44,10 +44,18 @@ public class MessageInfoHelp extends ListenerAdapter {
 
             info.addField("Giveaway:", "`" + p + "gift start` - Run Giveaway \n`" +
                     p + "gift stop` - Stop Giveaway.", false);
-            info.addField("Music | Beta:", "`!play <YouTube url>` - The bot will play audio from the video. \n" +
-                    "`" + p + "stop` - Stops music and clears.\n" +
-                    "`" + p + "skip` - Skip track. (now not work)\n" +
-                    "`" + p + "volume` - Sets the volume of the track. (now not work)", false);
+            info.addField("Music | Beta:",
+                    "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
+                            "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
+                            "`" + p + "stop` - Stops music and clears.\n" +
+                            "`" + p + "skip` - Skip track.\n" +
+                            "`" + p + "pause` - Pause track.\n" +
+                            "" + p + "leave` - Bot leave from voice channel.\n" +
+                            "" + p + "restart` - Restarts the playing track.\n" +
+                            "" + p + "list` - Will print all the tracks in the list.\n" +
+                            "" + p + "shuffle` - Shuffles all tracks in the list.\n" +
+
+                            "", false);
 
             info.addField("Games:",
                     "`" + p + "roll` - The Game of Dice.\n" +

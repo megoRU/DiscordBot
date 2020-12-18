@@ -31,10 +31,19 @@
 11. Game `!roll`
 12. Game `!hg` (Exclusive for Russian players)
 13. Now you can create giveaway - `!gift start`
+14. Music! :)
 
 ## TODO
 
 -   [ ]   Fix exceptions that occurred in the work.
+-   [ ]   Done music function.
+
+
+## Copyright Notice
+
+1. The music function was taken a little from here: [Yui](https://github.com/DV8FromTheWorld/Yui)
+2. The bot is made using the library: [JDA](https://github.com/DV8FromTheWorld/JDA)
+
 
 ## Our documentation
 

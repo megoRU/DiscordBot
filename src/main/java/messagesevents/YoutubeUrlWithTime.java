@@ -50,7 +50,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
         }
     }
 
-    public void youtubeLinks(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
+    public String youtubeLinks(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
         String[] text = message.split(" ");
         String slash = "/";
         String equal = "=";
@@ -77,5 +77,6 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
         event.getChannel().deleteMessageById(lastMessage).queue();
         event.getChannel().sendMessage("<@" + idUser + ">! " + "sent a message:" + "\n"
                 + "https://youtu.be/" + resultsUrl + "?t=" + results).queue();
+        return null;
     }
 }
