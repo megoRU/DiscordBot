@@ -10,7 +10,7 @@ import javax.security.auth.login.LoginException;
 import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
-import lavaplayer.PlayerControl;
+import lavaplayer.MessagePlayerControl;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -34,7 +34,7 @@ public class BotStart {
     jdaBuilder.setAutoReconnect(true);
     jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
-    jdaBuilder.setActivity(Activity.playing("—> !help"));
+    jdaBuilder.setActivity(Activity.playing("—> !music"));
     jdaBuilder.setBulkDeleteSplittingEnabled(false);
     jdaBuilder.addEventListeners(new BotShutDown());
     jdaBuilder.addEventListeners(new MessagePing());
@@ -64,7 +64,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new PrefixChange());
     jdaBuilder.addEventListeners(new MessageGift());
     jdaBuilder.addEventListeners(new MessageCheckBotSettings());
-    jdaBuilder.addEventListeners(new PlayerControl());
+    jdaBuilder.addEventListeners(new MessagePlayerControl());
 
     jda = jdaBuilder.build();
     jda.awaitReady();

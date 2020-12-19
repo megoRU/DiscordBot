@@ -22,13 +22,12 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import startbot.BotStart;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class PlayerControl extends ListenerAdapter {
+public class MessagePlayerControl extends ListenerAdapter {
     private static final int DEFAULT_VOLUME = 35; //(0 - 150, where 100 is default max volume)
     private final AudioPlayerManager playerManager;
     private final Map<String, GuildMusicManager> musicManagers;
@@ -42,8 +41,12 @@ public class PlayerControl extends ListenerAdapter {
     private static final String RESTART = "!restart";
     private static final String LIST = "!list";
     private static final String SHUFFLE = "!shuffle";
+    private static final String REPEAT = "!repeat";
+    private static final String RESET = "!reset";
+    private static final String NP = "!np";
+    private static final String NOWPLAYING = "!nowplaying";
 
-    public PlayerControl() {
+    public MessagePlayerControl() {
         this.playerManager = new DefaultAudioPlayerManager();
         playerManager.registerSourceManager(new YoutubeAudioSourceManager());
         playerManager.registerSourceManager(new BandcampAudioSourceManager());
@@ -71,6 +74,10 @@ public class PlayerControl extends ListenerAdapter {
         String prefixShuffle = SHUFFLE;
         String prefixList = LIST;
         String prefixVolume = VOLUME;
+        String prefixRepeat = REPEAT;
+        String prefixReset = RESET;
+        String prefixNowPlaying = NOWPLAYING;
+        String prefixNP = NP;
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
             prefixPlay = BotStart.mapPrefix.get(event.getGuild().getId()) + "play\\s.+";
@@ -83,6 +90,10 @@ public class PlayerControl extends ListenerAdapter {
             prefixRestart = BotStart.mapPrefix.get(event.getGuild().getId()) + "restart";
             prefixShuffle = BotStart.mapPrefix.get(event.getGuild().getId()) + "shuffle";
             prefixList = BotStart.mapPrefix.get(event.getGuild().getId()) + "list";
+            prefixRepeat = BotStart.mapPrefix.get(event.getGuild().getId()) + "repeat";
+            prefixReset = BotStart.mapPrefix.get(event.getGuild().getId()) + "reset";
+            prefixNowPlaying = BotStart.mapPrefix.get(event.getGuild().getId()) + "nowplaying";
+            prefixNP = BotStart.mapPrefix.get(event.getGuild().getId()) + "np";
         }
 
         Guild guild = event.getGuild();
@@ -203,12 +214,12 @@ public class PlayerControl extends ListenerAdapter {
             }
         }
 
-        if ("!repeat".equals(command[0])) {
+        if (message.equals(prefixRepeat)) {
             scheduler.setRepeating(!scheduler.isRepeating());
             event.getChannel().sendMessage("Player was set to: **" + (scheduler.isRepeating() ? "repeat" : "not repeat") + "**").queue();
         }
 
-        if (".reset".equals(command[0])) {
+        if (message.equals(prefixReset)) {
             synchronized (musicManagers) {
                 scheduler.queue.clear();
                 player.destroy();
@@ -221,7 +232,7 @@ public class PlayerControl extends ListenerAdapter {
             event.getChannel().sendMessage("The player has been completely reset!").queue();
         }
 
-        if ("!nowplaying".equals(command[0]) || ".np".equals(command[0])) {
+        if (message.equals(prefixNowPlaying) || message.equals(prefixNP)) {
             AudioTrack currentTrack = player.getPlayingTrack();
             if (currentTrack != null) {
                 String title = currentTrack.getInfo().title;
@@ -275,10 +286,12 @@ public class PlayerControl extends ListenerAdapter {
         final String trackUrl;
 
         //Strip <>'s that prevent discord from embedding link resources
-        if (url.startsWith("<") && url.endsWith(">"))
+        if (url.startsWith("<") && url.endsWith(">")) {
             trackUrl = url.substring(1, url.length() - 1);
-        else
+        }
+        else {
             trackUrl = url;
+        }
 
         playerManager.loadItemOrdered(mng, trackUrl, new AudioLoadResultHandler() {
             @Override

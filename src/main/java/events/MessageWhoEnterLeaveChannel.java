@@ -1,13 +1,13 @@
 package events;
 
 import db.DataBase;
-import java.sql.SQLException;
-import java.util.Map;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
+import java.util.Map;
+import java.sql.SQLException;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
@@ -49,18 +49,18 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
             } catch (SQLException exception) {
                 exception.printStackTrace();
             }
-            String nameChannelEnterUser = event.getChannelJoined().getName();
-            String nameUserWhoEnter = event.getMember().getUser().getName();
-            inChannelMeshiva = false;
-            event.getGuild().getVoiceChannels()
-                    .forEach(e -> e.getMembers()
-                            .forEach(f -> {
-                                if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-                                    inChannelMeshiva = true;
-                                }
-                            }));
 
             if (idGuild.equals(MAIN_GUILD_ID)) {
+                String nameChannelEnterUser = event.getChannelJoined().getName();
+                String nameUserWhoEnter = event.getMember().getUser().getName();
+                inChannelMeshiva = false;
+                event.getGuild().getVoiceChannels()
+                        .forEach(e -> e.getMembers()
+                                .forEach(f -> {
+                                    if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+                                        inChannelMeshiva = true;
+                                    }
+                                }));
                 if (isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
                     TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
                             .get(0);
@@ -111,11 +111,13 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-        if (!event.getMember().getUser().isBot()) {
+        String idGuild = event.getGuild().getId();
+
+        if (!event.getMember().getUser().isBot() && idGuild.equals(MAIN_GUILD_ID)) {
+
             String idLeaveUser = event.getMember().getId();
             String nameChannelLeaveUser = event.getChannelLeft().getName();
             String nameUserWhoLeave = event.getMember().getUser().getName();
-            String idGuild = event.getGuild().getId();
             inChannelMeshiva = false;
             event.getGuild().getVoiceChannels()
                     .forEach(e -> e.getMembers()
@@ -124,52 +126,49 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
                                     inChannelMeshiva = true;
                                 }
                             }));
+            if (idLeaveUser.equals(USER_ID_MESHIVA)) {
+                TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+                        .get(0);
+                textChannel.sendMessage(
+                        "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+                                + "** вышел из канала: " + nameChannelLeaveUser).queue();
+                return;
+            }
 
-            if (idGuild.equals(MAIN_GUILD_ID)) {
-                if (idLeaveUser.equals(USER_ID_MESHIVA)) {
-                    TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                            .get(0);
-                    textChannel.sendMessage(
-                            "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
-                                    + "** вышел из канала: " + nameChannelLeaveUser).queue();
-                    return;
-                }
+            if (isInChannelMeshiva()) {
+                TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+                        .get(0);
+                textChannel.sendMessage(
+                        "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+                                + "** вышел из канала: " + nameChannelLeaveUser).queue();
+                return;
+            }
 
-                if (isInChannelMeshiva()) {
-                    TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                            .get(0);
-                    textChannel.sendMessage(
-                            "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
-                                    + "** вышел из канала: " + nameChannelLeaveUser).queue();
-                    return;
-                }
+            if (!isInChannelMeshiva() && idLeaveUser.equals("250699265389625347")) {
+                TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+                        .get(0);
+                textChannel.sendMessage(
+                        "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+                                + "** вышел из канала: " + nameChannelLeaveUser).queue();
+                return;
+            }
 
-                if (!isInChannelMeshiva() && idLeaveUser.equals("250699265389625347")) {
-                    TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                            .get(0);
-                    textChannel.sendMessage(
-                            "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
-                                    + "** вышел из канала: " + nameChannelLeaveUser).queue();
-                    return;
-                }
+            if (!isInChannelMeshiva() && idLeaveUser.equals("335466800793911298")) {
+                TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+                        .get(0);
+                textChannel.sendMessage(
+                        "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
+                                + "** вышел из канала: " + nameChannelLeaveUser).queue();
+                return;
+            }
 
-                if (!isInChannelMeshiva() && idLeaveUser.equals("335466800793911298")) {
-                    TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                            .get(0);
-                    textChannel.sendMessage(
-                            "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoLeave
-                                    + "** вышел из канала: " + nameChannelLeaveUser).queue();
-                    return;
-                }
-
-                if (!isInChannelMeshiva()) {
-                    TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                            .get(0);
-                    textChannel.sendMessage(
-                            "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
-                                    + nameUserWhoLeave
-                                    + "** вышел в канал: " + nameChannelLeaveUser).queue();
-                }
+            if (!isInChannelMeshiva()) {
+                TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+                        .get(0);
+                textChannel.sendMessage(
+                        "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
+                                + nameUserWhoLeave
+                                + "** вышел в канал: " + nameChannelLeaveUser).queue();
             }
         }
     }
