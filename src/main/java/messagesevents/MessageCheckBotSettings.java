@@ -25,7 +25,7 @@ public class MessageCheckBotSettings extends ListenerAdapter {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId());
         }
 
-        if (!event.getMember().getUser().isBot() && message.equals(CHECK)) {
+        if (message.equals(CHECK)) {
             try {
                 List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
                 if (textChannels.size() >= 1) {

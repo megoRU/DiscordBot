@@ -12,7 +12,7 @@ public class MessageInfoHelp extends ListenerAdapter {
     public final String INFO_WITH_OUT = "info";
     public final String INFO = "!info";
     public final String INFO_RU = "инфо";
-    public final String MUSIC = "music";
+    public final String MUSIC = "!music";
 
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
