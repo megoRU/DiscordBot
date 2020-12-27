@@ -19,7 +19,7 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private static final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
   private static final String BOT_CHANNEL_LOGS = "botchat";
-  private static Calendar calendar = Calendar.getInstance();
+  private Calendar calendar = Calendar.getInstance();
 
   //TODO: Сделать ООП
   private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
