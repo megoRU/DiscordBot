@@ -104,7 +104,7 @@ public class MessageInfoHelp extends ListenerAdapter {
                             + "\n`<YouTube link> <minutes> <seconds if present>` - Converts to a short link with time.", false);
             info.addField("Checking the settings",
                     "`?check` - Checks the correct bot setup.", false);
-            info.addField("Links:", ":zap: [megolox.ru](https://megolox.ru)\n" +
+            info.addField("Links:", ":zap: [megoru.ru](https://megoru.ru)\n" +
                     ":robot: [Add me to other guilds](https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8)", false);
             info.addField("Bot creator", ":tools: [mego](https://steamcommunity.com/id/megoRU)", false);
             info.addField("License", ":page_facing_up: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0)", false);

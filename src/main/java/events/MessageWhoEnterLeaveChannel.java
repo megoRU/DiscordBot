@@ -19,7 +19,6 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private static final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
   private static final String BOT_CHANNEL_LOGS = "botchat";
-  private Calendar calendar = Calendar.getInstance();
 
   //TODO: Сделать ООП
   private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
@@ -63,9 +62,9 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
                     inChannelMeshiva = true;
                   }
                 }));
-
+        Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 11 || (hour == 1 || hour == 0)) {
+        if (hour >= 11 || (hour == 0)) {
           if (isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
             TextChannel textChannel = event.getGuild()
                 .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
@@ -137,8 +136,10 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
                   inChannelMeshiva = true;
                 }
               }));
+
+      Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
-      if (hour >= 11 || (hour == 1 || hour == 0)) {
+      if (hour >= 11 || (hour == 0)) {
         if (idLeaveUser.equals(USER_ID_MESHIVA)) {
           TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
               .get(0);

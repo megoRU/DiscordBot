@@ -134,27 +134,27 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("1")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/1-1.png";
+                return "https://megoru.ru/disImages/1-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/1-2.png";
+                return "https://megoru.ru/disImages/1-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/1-3.png";
+                return "https://megoru.ru/disImages/1-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/1-4.png";
+                return "https://megoru.ru/disImages/1-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/1-5.png";
+                return "https://megoru.ru/disImages/1-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/1-6.png";
+                return "https://megoru.ru/disImages/1-6.png";
             }
         }
 
@@ -163,27 +163,27 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("2")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/2-1.png";
+                return "https://megoru.ru/disImages/2-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/2-2.png";
+                return "https://megoru.ru/disImages/2-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/2-3.png";
+                return "https://megoru.ru/disImages/2-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/2-4.png";
+                return "https://megoru.ru/disImages/2-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/2-5.png";
+                return "https://megoru.ru/disImages/2-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/2-6.png";
+                return "https://megoru.ru/disImages/2-6.png";
             }
         }
 
@@ -191,27 +191,27 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("3")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/3-1.png";
+                return "https://megoru.ru/disImages/3-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/3-2.png";
+                return "https://megoru.ru/disImages/3-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/3-3.png";
+                return "https://megoru.ru/disImages/3-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/3-4.png";
+                return "https://megoru.ru/disImages/3-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/3-5.png";
+                return "https://megoru.ru/disImages/3-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/3-6.png";
+                return "https://megoru.ru/disImages/3-6.png";
             }
         }
 
@@ -219,27 +219,27 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("4")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/4-1.png";
+                return "https://megoru.ru/disImages/4-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/4-2.png";
+                return "https://megoru.ru/disImages/4-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/4-3.png";
+                return "https://megoru.ru/disImages/4-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/4-4.png";
+                return "https://megoru.ru/disImages/4-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/4-5.png";
+                return "https://megoru.ru/disImages/4-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/4-6.png";
+                return "https://megoru.ru/disImages/4-6.png";
             }
         }
 
@@ -247,27 +247,27 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("5")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/5-1.png";
+                return "https://megoru.ru/disImages/5-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/5-2.png";
+                return "https://megoru.ru/disImages/5-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/5-3.png";
+                return "https://megoru.ru/disImages/5-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/5-4.png";
+                return "https://megoru.ru/disImages/5-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/5-5.png";
+                return "https://megoru.ru/disImages/5-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/5-6.png";
+                return "https://megoru.ru/disImages/5-6.png";
             }
         }
 
@@ -275,31 +275,31 @@ public class GameOfDice extends ListenerAdapter {
         if (first.equals("6")) {
 
             if (second.equals("1")) {
-                return "https://megolox.ru/disImages/6-1.png";
+                return "https://megoru.ru/disImages/6-1.png";
             }
 
             if (second.equals("2")) {
-                return "https://megolox.ru/disImages/6-2.png";
+                return "https://megoru.ru/disImages/6-2.png";
             }
 
             if (second.equals("3")) {
-                return "https://megolox.ru/disImages/6-3.png";
+                return "https://megoru.ru/disImages/6-3.png";
             }
 
             if (second.equals("4")) {
-                return "https://megolox.ru/disImages/6-4.png";
+                return "https://megoru.ru/disImages/6-4.png";
             }
 
             if (second.equals("5")) {
-                return "https://megolox.ru/disImages/6-5.png";
+                return "https://megoru.ru/disImages/6-5.png";
             }
 
             if (second.equals("6")) {
-                return "https://megolox.ru/disImages/6-6.png";
+                return "https://megoru.ru/disImages/6-6.png";
             }
         }
 
-        return "https://megolox.ru/dice.png";
+        return "https://megoru.ru/dice.png";
     }
 
 }

@@ -1,4 +1,7 @@
+import java.util.LinkedList;
+import java.util.List;
 import javax.security.auth.login.LoginException;
+import messagesevents.ClassWithThread;
 import startbot.BotStart;
 
 public class Main {
@@ -7,6 +10,14 @@ public class Main {
 
     BotStart botStart = new BotStart();
     botStart.startBot();
-    //runBot.sendMessage("753624591594946678", "Бот запущен!");
+
+    List<Thread> threads = new LinkedList<>();
+    threads.add(new Thread((new ClassWithThread())));
+    threads.forEach(Thread::start);
+//    for(Thread thread : threads) {
+//      thread.join();
+//    }
+
   }
+
 }

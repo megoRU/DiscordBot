@@ -45,4 +45,4 @@
 
 ## Our documentation
 
-[![gitbook](https://github.com/megoRU/DiscordBot/blob/master/images/gitbook.jpg?raw=true)](https://discord.megolox.ru)
+[![gitbook](https://github.com/megoRU/DiscordBot/blob/master/images/gitbook.jpg?raw=true)](https://discord.megoru.ru)
