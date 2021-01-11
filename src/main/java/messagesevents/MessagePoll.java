@@ -12,11 +12,15 @@ public class MessagePoll extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentDisplay().trim();
         String prefix = POLL;
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "poll\\s.+";
+            prefix = "/" + BotStart.mapPrefix.get(event.getGuild().getId()) + "poll\\s.+";
         }
 
         if (message.matches(prefix)) {

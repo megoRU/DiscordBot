@@ -12,17 +12,42 @@ public class MessageInfoHelp extends ListenerAdapter {
     public final String INFO_WITH_OUT = "info";
     public final String INFO = "!info";
     public final String INFO_RU = "инфо";
+    public final String MUSIC = "!music";
+
 
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String message = event.getMessage().getContentRaw().toLowerCase();
         String prefix = HELP;
         String prefix2 = INFO;
+        String prefix3 = MUSIC;
+
         String p = "!";
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "help";
             prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "info";
+            prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "music";
             p = BotStart.mapPrefix.get(event.getGuild().getId());
+        }
+
+        if (message.equals(prefix3)) {
+            EmbedBuilder music = new EmbedBuilder();
+            music.setColor(0xa224db);
+            music.addField("Music:",
+                    "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
+                            "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
+                            "`" + p + "stop` - Stops music and clears.\n" +
+                            "`" + p + "skip` - Skip track.\n" +
+                            "`" + p + "pause` - Pause track.\n" +
+                            "`" + p + "leave` - Bot leave from voice channel.\n" +
+                            "`" + p + "list` - Will print all the tracks in the list.\n" +
+                            "`" + p + "restart` - Restarts the playing track.\n" +
+                            "`" + p + "repeat` - Repeat endlessly track.\n" +
+                            "`" + p + "reset` - Resets the player.\n" +
+                            "`" + p + "np` - Sends a list of tracks currently on the list.\n", false);
+            event.getChannel().sendMessage(music.build()).queue();
+            music.clear();
+            return;
         }
 
         if (message.equals(prefix) || message.equals(HELP_WITH_OUT) || message.equals(INFO_WITH_OUT)
@@ -44,18 +69,18 @@ public class MessageInfoHelp extends ListenerAdapter {
 
             info.addField("Giveaway:", "`" + p + "gift start` - Run Giveaway \n`" +
                     p + "gift stop` - Stop Giveaway.", false);
-            info.addField("Music | Beta:",
+            info.addField("Music:",
                     "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
                             "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
                             "`" + p + "stop` - Stops music and clears.\n" +
                             "`" + p + "skip` - Skip track.\n" +
                             "`" + p + "pause` - Pause track.\n" +
-                            "" + p + "leave` - Bot leave from voice channel.\n" +
-                            "" + p + "restart` - Restarts the playing track.\n" +
-                            "" + p + "list` - Will print all the tracks in the list.\n" +
-                            "" + p + "shuffle` - Shuffles all tracks in the list.\n" +
-
-                            "", false);
+                            "`" + p + "leave` - Bot leave from voice channel.\n" +
+                            "`" + p + "list` - Will print all the tracks in the list.\n" +
+                            "`" + p + "restart` - Restarts the playing track.\n" +
+                            "`" + p + "repeat` - Repeat endlessly track.\n" +
+                            "`" + p + "reset` - Resets the player.\n" +
+                            "`" + p + "np` - Sends a list of tracks currently on the list.\n", false);
 
             info.addField("Games:",
                     "`" + p + "roll` - The Game of Dice.\n" +
@@ -79,7 +104,7 @@ public class MessageInfoHelp extends ListenerAdapter {
                             + "\n`<YouTube link> <minutes> <seconds if present>` - Converts to a short link with time.", false);
             info.addField("Checking the settings",
                     "`?check` - Checks the correct bot setup.", false);
-            info.addField("Links:", ":zap: [megolox.ru](https://megolox.ru)\n" +
+            info.addField("Links:", ":zap: [megoru.ru](https://megoru.ru)\n" +
                     ":robot: [Add me to other guilds](https://discord.com/oauth2/authorize?client_id=754093698681274369&scope=bot&permissions=8)", false);
             info.addField("Bot creator", ":tools: [mego](https://steamcommunity.com/id/megoRU)", false);
             info.addField("License", ":page_facing_up: [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0)", false);

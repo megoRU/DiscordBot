@@ -21,6 +21,10 @@ public class MessageBan extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 4);
         String prefix = BAN;
@@ -31,7 +35,6 @@ public class MessageBan extends ListenerAdapter {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+\\s[0-9]+";
             prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+";
             prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "unban\\s.+";
-
         }
 
         if (message.matches(prefix3)) {

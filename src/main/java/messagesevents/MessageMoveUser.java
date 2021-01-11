@@ -19,6 +19,10 @@ public class MessageMoveUser extends ListenerAdapter {
     // Либо сделать вообще всех перемещать
     // Сделать на подобее с !kick
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentRaw().toLowerCase();
         String prefix = MOVE;
 
