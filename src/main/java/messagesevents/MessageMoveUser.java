@@ -13,20 +13,32 @@ import startbot.BotStart;
 
 public class MessageMoveUser extends ListenerAdapter {
 
-    public final String MOVE = "!move\\s.+";
+    public final String MOVE = "move\\s.+";
 
     //TODO: Исправить ошибку с выбрасыванием эксепшина по поводу если юзер в том же канале что и тот кто просит
     // Либо сделать вообще всех перемещать
     // Сделать на подобее с !kick
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentRaw().toLowerCase();
-        String prefix = MOVE;
+        String prefix = "!";
+        int length = message.length();
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "move\\s.+";
         }
 
-        if (message.matches(prefix)) {
+        String prefixCheck = message.substring(0, 1);
+        String messageWithOutPrefix = message.substring(1, length);
+
+        if (!prefixCheck.equals(prefix)) {
+            return;
+        }
+
+        if (messageWithOutPrefix.matches(MOVE)) {
             User user = event.getMember().getUser();
             boolean boolPermission = event.getMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
 

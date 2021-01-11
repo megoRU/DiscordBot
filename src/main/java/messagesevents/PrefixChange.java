@@ -11,17 +11,19 @@ import java.sql.SQLException;
 
 public class PrefixChange extends ListenerAdapter {
 
-    private static final String PREFIX = "\\*prefix\\s.{1}";
-    private static final String PREFIX_RESET = "*prefix reset";
+    private static final String PREFIX = "\\*prefix\\s.";
+    private static final String PREFIX_RESET = "prefix reset";
 
-    //TODO При вводе префекса "!" делать стандартный.
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 2);
 
-        if ((message.equals(PREFIX_RESET) || message.matches(PREFIX))
-                && !event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
+        if ((message.equals(PREFIX_RESET) || message.matches(PREFIX)) && !event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
             event.getChannel().sendMessage("You cannot change the prefix. You must have permission: `MANAGE_SERVER`").queue();
             return;
         }

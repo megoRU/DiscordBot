@@ -9,18 +9,34 @@ import time.UptimeBot;
 
 public class MessageUptimeBot extends ListenerAdapter {
 
-  public final String UPTIME = "!uptime";
   public final String UPTIME_WITH_OUT = "uptime";
 
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-    String message = event.getMessage().getContentRaw().toLowerCase().trim();
-    String prefix = UPTIME;
-
-    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "uptime";
+    if (event.getAuthor().isBot()) {
+      return;
     }
 
-    if (message.equals(prefix) || message.equals(UPTIME_WITH_OUT)) {
+    String message = event.getMessage().getContentRaw().toLowerCase().trim();
+
+    String prefix = "!";
+    int length = message.length();
+
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId());
+    }
+
+    String prefixCheck = message.substring(0, 1);
+    String messageWithOutPrefix = message.substring(1, length);
+
+    if (prefixCheck.matches("[0-9A-Za-zА-Яа-я]")) {
+      prefixCheck = "";
+    }
+
+    if (!prefixCheck.equals(prefix) && !message.equals(UPTIME_WITH_OUT)) {
+      return;
+    }
+
+    if (messageWithOutPrefix.equals(UPTIME_WITH_OUT) || message.equals(UPTIME_WITH_OUT)) {
       TextChannel textChannel = event.getChannel();
 
       String[] messageFromHandle = UptimeBot.uptimeBot().split(" ");
