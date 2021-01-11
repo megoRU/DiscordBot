@@ -14,8 +14,12 @@ public class MessageInfoHelp extends ListenerAdapter {
     public final String INFO_RU = "инфо";
     public final String MUSIC = "!music";
 
-
+    @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) {
+            return;
+        }
+
         String message = event.getMessage().getContentRaw().toLowerCase();
         String prefix = HELP;
         String prefix2 = INFO;
@@ -29,6 +33,8 @@ public class MessageInfoHelp extends ListenerAdapter {
             prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "music";
             p = BotStart.mapPrefix.get(event.getGuild().getId());
         }
+
+
 
         if (message.equals(prefix3)) {
             EmbedBuilder music = new EmbedBuilder();

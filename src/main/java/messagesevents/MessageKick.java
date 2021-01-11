@@ -2,7 +2,6 @@ package messagesevents;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -15,8 +14,8 @@ import java.util.List;
 
 public class MessageKick extends ListenerAdapter {
 
-  private static final String KICK = "!kick\\s.+\\s.+";
-  private static final String KICK2 = "!kick\\s.+";
+  private static final String KICK = "kick\\s.+\\s.+";
+  private static final String KICK2 = "kick\\s.+";
   private static final String BOT_CHANNEL_LOGS = "botlog";
 
   @Override
@@ -27,15 +26,23 @@ public class MessageKick extends ListenerAdapter {
 
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ");
-    String prefix = KICK;
-    String prefix2 = KICK2;
+    String prefix = "!";
+    String prefix2 = "!";
+    int length = message.length();
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "kick\\s.+\\s.+";
-      prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "kick\\s.+";
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefix2 = BotStart.mapPrefix.get(event.getGuild().getId());
     }
 
-    if (message.matches(prefix) || message.matches(prefix2)) {
+    String prefixCheck = message.substring(0, 1);
+    String messageWithOutPrefix = message.substring(1, length);
+
+    if (!prefixCheck.equals(prefix) || !prefixCheck.equals(prefix2)) {
+      return;
+    }
+
+    if (messageWithOutPrefix.matches(KICK) || messageWithOutPrefix.matches(KICK2)) {
       if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
         if (messages.length == 3 || messages.length == 2) {
           List<Member> toKick = new ArrayList<>(1);

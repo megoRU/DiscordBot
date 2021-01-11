@@ -19,10 +19,8 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.exceptions.PermissionException;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
 import java.util.HashMap;
 import java.util.List;
@@ -34,20 +32,20 @@ public class MessagePlayerControl extends ListenerAdapter {
   private static final int DEFAULT_VOLUME = 35; //(0 - 150, where 100 is default max volume)
   private final AudioPlayerManager playerManager;
   private final Map<String, GuildMusicManager> musicManagers;
-  private static final String VOLUME = "!volume\\s[0-9]{1,3}+";
-  private static final String PLAY = "!play\\s.+";
-  private static final String PPLAY = "!pplay\\s.+";
-  private static final String LEAVE = "!leave";
-  private static final String STOP = "!stop";
-  private static final String SKIP = "!skip";
-  private static final String PAUSE = "!pause";
-  private static final String RESTART = "!restart";
-  private static final String LIST = "!list";
-  private static final String SHUFFLE = "!shuffle";
-  private static final String REPEAT = "!repeat";
-  private static final String RESET = "!reset";
-  private static final String NP = "!np";
-  private static final String NOWPLAYING = "!nowplaying";
+  private static final String VOLUME = "volume\\s[0-9]{1,3}+";
+  private static final String PLAY = "play\\s.+";
+  private static final String PPLAY = "pplay\\s.+";
+  private static final String LEAVE = "leave";
+  private static final String STOP = "stop";
+  private static final String SKIP = "skip";
+  private static final String PAUSE = "pause";
+  private static final String RESTART = "restart";
+  private static final String LIST = "list";
+  private static final String SHUFFLE = "shuffle";
+  private static final String REPEAT = "repeat";
+  private static final String RESET = "reset";
+  private static final String NP = "np";
+  private static final String NOWPLAYING = "nowplaying";
 
   public MessagePlayerControl() {
     this.playerManager = new DefaultAudioPlayerManager();
@@ -69,36 +67,55 @@ public class MessagePlayerControl extends ListenerAdapter {
     String message = event.getMessage().getContentDisplay().trim();
     String[] command = event.getMessage().getContentDisplay().split(" ", 2);
 
-    String prefixPlay = PLAY;
-    String prefixPPlay = PPLAY;
-    String prefixPause = PAUSE;
-    String prefixStop = STOP;
-    String prefixSkip = SKIP;
-    String prefixLeave = LEAVE;
-    String prefixRestart = RESTART;
-    String prefixShuffle = SHUFFLE;
-    String prefixList = LIST;
-    String prefixVolume = VOLUME;
-    String prefixRepeat = REPEAT;
-    String prefixReset = RESET;
-    String prefixNowPlaying = NOWPLAYING;
-    String prefixNP = NP;
+    String prefixPlay = "!";
+    String prefixPPlay = "!";
+    String prefixPause = "!";
+    String prefixStop = "!";
+    String prefixSkip = "!";
+    String prefixLeave = "!";
+    String prefixRestart = "!";
+    String prefixShuffle = "!";
+    String prefixList = "!";
+    String prefixVolume = "!";
+    String prefixRepeat = "!";
+    String prefixReset = "!";
+    String prefixNowPlaying = "!";
+    String prefixNP = "!";
+    int length = message.length();
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-      prefixPlay = BotStart.mapPrefix.get(event.getGuild().getId()) + "play\\s.+";
-      prefixPPlay = BotStart.mapPrefix.get(event.getGuild().getId()) + "pplay\\s.+";
-      prefixStop = BotStart.mapPrefix.get(event.getGuild().getId()) + "stop";
-      prefixPause = BotStart.mapPrefix.get(event.getGuild().getId()) + "pause";
-      prefixLeave = BotStart.mapPrefix.get(event.getGuild().getId()) + "leave";
-      prefixSkip = BotStart.mapPrefix.get(event.getGuild().getId()) + "skip";
-      prefixVolume = BotStart.mapPrefix.get(event.getGuild().getId()) + "volume\\s[0-9]{1,3}+";
-      prefixRestart = BotStart.mapPrefix.get(event.getGuild().getId()) + "restart";
-      prefixShuffle = BotStart.mapPrefix.get(event.getGuild().getId()) + "shuffle";
-      prefixList = BotStart.mapPrefix.get(event.getGuild().getId()) + "list";
-      prefixRepeat = BotStart.mapPrefix.get(event.getGuild().getId()) + "repeat";
-      prefixReset = BotStart.mapPrefix.get(event.getGuild().getId()) + "reset";
-      prefixNowPlaying = BotStart.mapPrefix.get(event.getGuild().getId()) + "nowplaying";
-      prefixNP = BotStart.mapPrefix.get(event.getGuild().getId()) + "np";
+      prefixPlay = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixPPlay = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixStop = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixPause = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixLeave = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixSkip = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixVolume = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixRestart = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixShuffle = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixList = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixRepeat = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixReset = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixNowPlaying = BotStart.mapPrefix.get(event.getGuild().getId());
+      prefixNP = BotStart.mapPrefix.get(event.getGuild().getId());
+    }
+
+
+    String prefixCheck = message.substring(0, 1);
+    String messageWithOutPrefix = message.substring(1, length);
+
+    if (prefixCheck.matches("[0-9A-Za-zА-Яа-я]")) {
+      prefixCheck = "";
+    }
+
+    if (!prefixCheck.equals(prefixPlay) || !prefixCheck.equals(prefixPPlay)
+        || !prefixCheck.equals(prefixStop) || !prefixCheck.equals(prefixPause)
+        || !prefixCheck.equals(prefixLeave) || !prefixCheck.equals(prefixSkip)
+        || !prefixCheck.equals(prefixVolume) || !prefixCheck.equals(prefixRestart)
+        || !prefixCheck.equals(prefixShuffle) || !prefixCheck.equals(prefixList)
+        || !prefixCheck.equals(prefixRepeat) || !prefixCheck.equals(prefixReset)
+        || !prefixCheck.equals(prefixNowPlaying) || !prefixCheck.equals(prefixNP)) {
+      return;
     }
 
     Guild guild = event.getGuild();
@@ -106,12 +123,12 @@ public class MessagePlayerControl extends ListenerAdapter {
     AudioPlayer player = mng.player;
     TrackScheduler scheduler = mng.scheduler;
 
-    if (message.equals(prefixLeave)) {
+    if (messageWithOutPrefix.equals(LEAVE)) {
       guild.getAudioManager().setSendingHandler(null);
       guild.getAudioManager().closeAudioConnection();
     }
 
-    if (message.matches(prefixPlay)) {
+    if (messageWithOutPrefix.matches(PLAY)) {
       if (command.length == 1) {
         if (player.isPaused()) {
           player.setPaused(false);
@@ -150,7 +167,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.matches(prefixPPlay) && command.length == 2) {
+    if (messageWithOutPrefix.matches(PPLAY) && command.length == 2) {
       VoiceChannel chan = null;
       try {
         chan = event.getMember().getVoiceState().getChannel();
@@ -172,12 +189,12 @@ public class MessagePlayerControl extends ListenerAdapter {
       loadAndPlay(mng, event.getChannel(), command[1], true);
     }
 
-    if (message.equals(prefixSkip)) {
+    if (messageWithOutPrefix.equals(SKIP)) {
       scheduler.nextTrack();
       event.getChannel().sendMessage("The current track was skipped.").queue();
     }
 
-    if (message.equals(prefixPause)) {
+    if (messageWithOutPrefix.equals(PAUSE)) {
       if (player.getPlayingTrack() == null) {
         event.getChannel()
             .sendMessage("Cannot pause or resume player because no track is loaded for playing.")
@@ -193,7 +210,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.equals(prefixStop)) {
+    if (messageWithOutPrefix.equals(STOP)) {
       scheduler.queue.clear();
       player.stopTrack();
       player.setPaused(false);
@@ -202,7 +219,7 @@ public class MessagePlayerControl extends ListenerAdapter {
           .queue();
     }
 
-    if (message.matches(prefixVolume)) {
+    if (messageWithOutPrefix.matches(VOLUME)) {
       if (command.length == 1) {
         event.getChannel().sendMessage("Current player volume: **" + player.getVolume() + "**")
             .queue();
@@ -221,7 +238,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.equals(prefixRestart)) {
+    if (messageWithOutPrefix.equals(RESTART)) {
       AudioTrack track = player.getPlayingTrack();
       if (track == null) {
         track = scheduler.lastTrack;
@@ -236,14 +253,14 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.equals(prefixRepeat)) {
+    if (messageWithOutPrefix.equals(REPEAT)) {
       scheduler.setRepeating(!scheduler.isRepeating());
       event.getChannel().sendMessage(
           "Player was set to: **" + (scheduler.isRepeating() ? "repeat" : "not repeat") + "**")
           .queue();
     }
 
-    if (message.equals(prefixReset)) {
+    if (messageWithOutPrefix.equals(RESET)) {
       synchronized (musicManagers) {
         scheduler.queue.clear();
         player.destroy();
@@ -256,7 +273,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       event.getChannel().sendMessage("The player has been completely reset!").queue();
     }
 
-    if (message.equals(prefixNowPlaying) || message.equals(prefixNP)) {
+    if (messageWithOutPrefix.equals(NOWPLAYING) || messageWithOutPrefix.equals(NP)) {
       AudioTrack currentTrack = player.getPlayingTrack();
       if (currentTrack != null) {
         String title = currentTrack.getInfo().title;
@@ -272,7 +289,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.equals(prefixList)) {
+    if (messageWithOutPrefix.equals(LIST)) {
       Queue<AudioTrack> queue = scheduler.queue;
       synchronized (queue) {
         if (queue.isEmpty()) {
@@ -297,7 +314,7 @@ public class MessagePlayerControl extends ListenerAdapter {
       }
     }
 
-    if (message.equals(prefixShuffle)) {
+    if (messageWithOutPrefix.equals(SHUFFLE)) {
       if (scheduler.queue.isEmpty()) {
         event.getChannel().sendMessage("The queue is currently empty!").queue();
         return;

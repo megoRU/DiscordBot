@@ -14,9 +14,9 @@ import java.util.List;
 
 public class MessageBan extends ListenerAdapter {
 
-    private static final String BAN = "!ban\\s.+\\s[0-9]+";
-    private static final String BAN2 = "!ban\\s.+";
-    private static final String UN_BAN = "!unban\\s.+";
+    private static final String BAN = "ban\\s.+\\s[0-9]+";
+    private static final String BAN2 = "ban\\s.+";
+    private static final String UN_BAN = "unban\\s.+";
     private static final String BOT_CHANNEL_LOGS = "botlog";
 
     @Override
@@ -27,17 +27,25 @@ public class MessageBan extends ListenerAdapter {
 
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 4);
-        String prefix = BAN;
-        String prefix2 = BAN2;
-        String prefix3 = UN_BAN;
+        String prefix = "!";
+        String prefix2 = "!";
+        String prefix3 = "!";
+        int length = message.length();
 
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+\\s[0-9]+";
-            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "ban\\s.+";
-            prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "unban\\s.+";
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId());
+            prefix2 = BotStart.mapPrefix.get(event.getGuild().getId());
+            prefix3 = BotStart.mapPrefix.get(event.getGuild().getId());
         }
 
-        if (message.matches(prefix3)) {
+        String prefixCheck = message.substring(0, 1);
+        String messageWithOutPrefix = message.substring(1, length);
+
+        if (!prefixCheck.equals(prefix) || !prefixCheck.equals(prefix2) || !prefixCheck.equals(prefix3)) {
+            return;
+        }
+
+        if (messageWithOutPrefix.matches(UN_BAN)) {
             if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                 String result = message
                         .replaceAll("!unban <@!", "")
@@ -59,7 +67,7 @@ public class MessageBan extends ListenerAdapter {
             return;
         }
 
-        if (message.matches(prefix) || message.matches(prefix2)) {
+        if (messageWithOutPrefix.matches(BAN) || messageWithOutPrefix.matches(BAN2)) {
             if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
                 if (messages.length == 4 || messages.length == 3) {
                     List<Member> toBan = new ArrayList<>(1);
