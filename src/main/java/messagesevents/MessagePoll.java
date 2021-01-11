@@ -8,18 +8,30 @@ import startbot.BotStart;
 
 public class MessagePoll extends ListenerAdapter {
 
-    private static final String POLL = "!poll\\s.+";
+    private static final String POLL = "poll\\s.+";
 
     @Override
     public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        String message = event.getMessage().getContentDisplay().trim();
-        String prefix = POLL;
-
-        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-            prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "poll\\s.+";
+        if (event.getAuthor().isBot()) {
+            return;
         }
 
-        if (message.matches(prefix)) {
+        String message = event.getMessage().getContentDisplay().trim();
+        String prefix = "!";
+        int length = message.length();
+
+        if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+            prefix = BotStart.mapPrefix.get(event.getGuild().getId());
+        }
+
+        String prefixCheck = message.substring(0, 1);
+        String messageWithOutPrefix = message.substring(1, length);
+
+        if (!prefixCheck.equals(prefix)) {
+            return;
+        }
+
+        if (messageWithOutPrefix.matches(POLL)) {
             String[] messages = message.split(" ", 2);
             EmbedBuilder emb = new EmbedBuilder();
             emb.setColor(event.getGuild().getMemberById(event.getMessage().getAuthor().getIdLong()).getColor());

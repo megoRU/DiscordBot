@@ -1,5 +1,6 @@
 package games;
 
+import java.util.concurrent.ExecutionException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Message;
@@ -8,7 +9,6 @@ import net.dv8tion.jda.api.entities.User;
 import startbot.BotStart;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 public class Hangman {
@@ -44,7 +44,7 @@ public class Hangman {
     public Hangman() {
     }
 
-    public void startGame(Guild guild, TextChannel channel, User user) throws InterruptedException {
+    public void startGame(Guild guild, TextChannel channel, User user) {
         if (WORD == null) {
             WORD = ALL_WORDS[random.nextInt(ALL_WORDS.length)];
             strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
@@ -61,11 +61,8 @@ public class Hangman {
 
         BotStart.jda.getGuildById(guild.getId())
                 .getTextChannelById(channel.getId())
-                .sendMessage(start.build()).queue();
+                .sendMessage(start.build()).queue(m -> messageId.put(user.getIdLong(), m.getId()));
         start.clear();
-        Thread.sleep(250);
-        List<Message> messages = guild.getTextChannelById(channel.getIdLong()).getHistory().retrievePast(1).complete();
-        messageId.put(user.getIdLong(), messages.get(0).getId());
     }
 
     public void logic(Guild guild, TextChannel channel, User user, String inputs) {

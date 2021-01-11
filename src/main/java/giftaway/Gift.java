@@ -27,7 +27,7 @@ public class Gift {
     public Gift() {
     }
 
-    public void startGift(Guild guild, TextChannel channel, String guildPrefix, String guildPrefixStop) throws InterruptedException {
+    public void startGift(Guild guild, TextChannel channel, String guildPrefix, String guildPrefixStop) {
         EmbedBuilder start = new EmbedBuilder();
         start.setColor(0x00FF00);
         start.setTitle("Giveaway starts");
@@ -36,12 +36,9 @@ public class Gift {
                 + "\nUsers: `" + count + "`");
 
         BotStart.jda.getGuildById(guild.getId())
-                .getTextChannelById(channel.getId())
-                .sendMessage(start.build()).queue();
+            .getTextChannelById(channel.getId())
+            .sendMessage(start.build()).queue(m -> messageId.put(guild.getIdLong(), m.getId()));
         start.clear();
-        Thread.sleep(250);
-        List<Message> messages = guild.getTextChannelById(channel.getIdLong()).getHistory().retrievePast(1).complete();
-        messageId.put(guild.getIdLong(), messages.get(0).getId());
     }
 
     public void addUserToPoll(User user, Guild guild, String guildPrefix, String guildPrefixStop, TextChannel channel) {
