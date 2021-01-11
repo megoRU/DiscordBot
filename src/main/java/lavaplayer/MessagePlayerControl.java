@@ -100,7 +100,6 @@ public class MessagePlayerControl extends ListenerAdapter {
       prefixNP = BotStart.mapPrefix.get(event.getGuild().getId());
     }
 
-
     String prefixCheck = message.substring(0, 1);
     String messageWithOutPrefix = message.substring(1, length);
 
