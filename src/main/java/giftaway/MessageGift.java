@@ -22,13 +22,14 @@ public class MessageGift extends ListenerAdapter {
     String prefix = GIFT;
     String prefix2 = GIFT_START;
     String prefix3 = GIFT_STOP;
-    if ((message.equals(prefix) || message.equals(prefix2) || message.equals(prefix3))) {
 
-      if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
-        prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift";
-        prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift start";
-        prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift stop";
-      }
+    if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
+      prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift";
+      prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift start";
+      prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift stop";
+    }
+
+    if ((message.equals(prefix) || message.equals(prefix2) || message.equals(prefix3))) {
 
       if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
         event.getChannel().sendMessage("You are not Admin").queue();
