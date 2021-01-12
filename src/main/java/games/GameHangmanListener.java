@@ -17,6 +17,10 @@ public class GameHangmanListener extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
 
     String prefix = HG;
@@ -58,9 +62,13 @@ public class GameHangmanListener extends ListenerAdapter {
       Hangman hangman;
       hangman = new Hangman();
 
-      if (message.equals(prefix) && hangman.hasGame(user.getIdLong())) {
-        event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.")
-            .queue();
+      if (!hangman.hasGame(user.getIdLong())) {
+        hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
+      }
+
+      if (hangman.hasGame(user.getIdLong())) {
+        hangman = hangman.getGame(user.getIdLong());
+        hangman.startGame(guild, channel, user);
         return;
       }
 
@@ -73,17 +81,14 @@ public class GameHangmanListener extends ListenerAdapter {
       }
 
       if (message.equals(prefix2) && !hangman.hasGame(user.getIdLong())) {
-        event.getChannel().sendMessage("Вы сейчас не играете.\n").queue();
+        event.getChannel().sendMessage("Вы сейчас не играете.").queue();
         return;
       }
 
-      if (!hangman.hasGame(user.getIdLong())) {
-        hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
-      }
+      if (message.equals(prefix) && hangman.hasGame(user.getIdLong())) {
+        event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.")
+            .queue();
 
-      if (hangman.hasGame(user.getIdLong())) {
-        hangman = hangman.getGame(user.getIdLong());
-        hangman.startGame(guild, channel, user);
       }
     }
   }

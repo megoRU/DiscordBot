@@ -19,6 +19,10 @@ public class GameOfDice extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentDisplay().trim();
     String prefix = ROLL;
 
