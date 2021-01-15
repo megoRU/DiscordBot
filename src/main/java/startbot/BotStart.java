@@ -21,7 +21,6 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class BotStart {
 
@@ -34,7 +33,7 @@ public class BotStart {
     jdaBuilder.setAutoReconnect(true);
     jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
-    jdaBuilder.setActivity(Activity.playing("—> !music"));
+    jdaBuilder.setActivity(Activity.playing("—> !music | !help"));
     jdaBuilder.setBulkDeleteSplittingEnabled(false);
     jdaBuilder.addEventListeners(new BotShutDown());
     jdaBuilder.addEventListeners(new MessagePing());
@@ -92,15 +91,7 @@ public class BotStart {
 
   }
 
-  public void sendMessage(String channelId, String message) {
-    Objects.requireNonNull(jda.getTextChannelById(channelId)).sendMessage(message).queue();
-  }
-
   public JDA getJda() {
     return jda;
-  }
-
-  public JDABuilder getJdaBuilder() {
-    return jdaBuilder;
   }
 }

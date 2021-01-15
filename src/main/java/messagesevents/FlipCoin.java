@@ -9,10 +9,14 @@ import startbot.BotStart;
 public class FlipCoin extends ListenerAdapter {
 
   private static final Random random = new Random();
-  public final String FLIP_WITH = "!flip";
-  public final String FLIP = "flip";
+  private static final String FLIP_WITH = "!flip";
+  private static final String FLIP = "flip";
 
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase();
     String prefix = FLIP_WITH;
 

@@ -11,6 +11,7 @@ public class MessageUptimeBot extends ListenerAdapter {
 
   public final String UPTIME_WITH_OUT = "uptime";
 
+  @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     if (event.getAuthor().isBot()) {
       return;

@@ -14,11 +14,16 @@ import org.jsoup.select.Elements;
 public class ExchangeRates extends ListenerAdapter {
 
   private static final String URL = "https://www.cbr.ru/key-indicators/";
-  private static final String[] values = {"курс доллара", "курс доллора", "курс евро", "курс", "евро", "доллар"};
+  private static final String[] values = {"курс доллара", "курс доллора", "курс евро", "курс",
+      "евро", "доллар"};
   private static String[] elements;
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase();
     boolean contains = Arrays.asList(values).contains(message);
     if (contains) {
@@ -29,8 +34,8 @@ public class ExchangeRates extends ListenerAdapter {
 
       String usd =
           elements[5] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
-          + formatter.format(Double.parseDouble(elements[6].replace(",", "."))) + "⠀⠀⠀⠀⠀⠀⠀"
-          + formatter.format(Double.parseDouble(elements[7].replace(",", ".")));
+              + formatter.format(Double.parseDouble(elements[6].replace(",", "."))) + "⠀⠀⠀⠀⠀⠀⠀"
+              + formatter.format(Double.parseDouble(elements[7].replace(",", ".")));
       String euro =
           elements[9] + "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀"
               + formatter.format(Double.parseDouble(elements[10].replace(",", "."))) + "⠀⠀⠀⠀⠀⠀⠀"
@@ -46,12 +51,13 @@ public class ExchangeRates extends ListenerAdapter {
     }
   }
 
-  public static void parserSBR() {
+  private static void parserSBR() {
     Document doc = null;
     try {
       doc = Jsoup.connect(URL)
           .maxBodySize(0)
-          .userAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.53 Safari/537.36")
+          .userAgent(
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
           .referrer("https://www.yandex.com/")
           .get();
     } catch (IOException e) {

@@ -13,6 +13,10 @@ public class GoogleSearch extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase();
     String[] messages = message.split(" ");
     String prefix = SEARCH;

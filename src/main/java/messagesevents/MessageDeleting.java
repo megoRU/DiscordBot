@@ -18,6 +18,7 @@ public class MessageDeleting extends ListenerAdapter {
   private static final String DELETE_INDEXES2 = "clear\\s+\\d+";
   private static final String BOT_CHANNEL_LOGS = "botlog";
 
+  @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     if (event.getAuthor().isBot()) {
       return;
@@ -62,7 +63,8 @@ public class MessageDeleting extends ListenerAdapter {
         int indexParseInt = Integer.parseInt(index);
 
         if (indexParseInt >= 2 && indexParseInt <= 100) {
-          List<TextChannel> textChannels = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true);
+          List<TextChannel> textChannels = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true);
           if (textChannels.size() >= 1) {
             deletingLog(event, index);
           }
@@ -76,7 +78,7 @@ public class MessageDeleting extends ListenerAdapter {
             error.setTitle(":white_check_mark: Removed: " + indexParseInt + " messages!");
             error.setDescription("This message will be deleted after 5 seconds");
             event.getChannel().sendMessage(error.build()).delay(5, TimeUnit.SECONDS)
-                .flatMap(Message::delete).submit();
+                .flatMap(Message::delete).queue();
             error.clear();
           } catch (Exception e) {
             event.getMessage().addReaction("\u26D4").queue();
