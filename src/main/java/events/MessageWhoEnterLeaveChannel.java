@@ -23,97 +23,98 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   //TODO: Сделать ООП
   private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
     DataBase dataBase = new DataBase();
-    Map<String, String> whoLast = dataBase.whoLastEnter(idGuild);
+    Map<String, String> whoLast = dataBase.getWhoLastEnter(idGuild);
     return whoLast.get(idGuild).equals(idUser);
   }
 
   //TODO: Исправить баг когда бывают случаи, что он не меняет битрейт
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
-    if (!event.getMember().getUser().isBot()) {
-      String idEnterUser = event.getMember().getId();
-      String nameEnterUser = event.getMember().getUser().getName();
-      String idGuild = event.getGuild().getId();
-      try {
-        DataBase dataBase = new DataBase();
-        String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
-        boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
+    if (event.getMember().getUser().isBot()) {
+      return;
+    }
 
-        if (!userFromBD.equals(idEnterUser)) {
-          dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
-          dataBase.setCount(idEnterUser, idGuild);
-        }
-        if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {
-          dataBase.setWhoLastEnter(1, idGuild, idEnterUser);
-          dataBase.setCount(idEnterUser, idGuild);
-        }
-      } catch (SQLException exception) {
-        exception.printStackTrace();
+    String idEnterUser = event.getMember().getId();
+    String nameEnterUser = event.getMember().getUser().getName();
+    String idGuild = event.getGuild().getId();
+    try {
+      DataBase dataBase = new DataBase();
+      String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
+      boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
+
+      if (!userFromBD.equals(idEnterUser)) {
+        dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
+        dataBase.setCount(idEnterUser, idGuild);
       }
+      if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {
+        dataBase.setWhoLastEnter(idGuild, idEnterUser);
+        dataBase.setCount(idEnterUser, idGuild);
+      }
+    } catch (SQLException exception) {
+      exception.printStackTrace();
+    }
 
-      if (idGuild.equals(MAIN_GUILD_ID)) {
-        String nameChannelEnterUser = event.getChannelJoined().getName();
-        String nameUserWhoEnter = event.getMember().getUser().getName();
-        inChannelMeshiva = false;
-        event.getGuild().getVoiceChannels()
-            .forEach(e -> e.getMembers()
-                .forEach(f -> {
-                  if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-                    inChannelMeshiva = true;
-                  }
-                }));
-        Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        if (hour >= 11 || (hour == 0)) {
-          if (isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
-            TextChannel textChannel = event.getGuild()
-                .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                .get(0);
-            textChannel.sendMessage(
-                "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
-                    + "** зашёл в канал: " + nameChannelEnterUser).queue();
-            return;
-          }
+    if (idGuild.equals(MAIN_GUILD_ID)) {
+      String nameChannelEnterUser = event.getChannelJoined().getName();
+      String nameUserWhoEnter = event.getMember().getUser().getName();
+      inChannelMeshiva = false;
+      event.getChannelJoined().getMembers()
+          .forEach(f -> {
+            if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+              inChannelMeshiva = true;
+            }
+          });
+      Calendar calendar = Calendar.getInstance();
+      int hour = calendar.get(Calendar.HOUR_OF_DAY);
+      if (hour >= 11 || (hour == 0)) {
+        if (isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
+          TextChannel textChannel = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+              .get(0);
+          textChannel.sendMessage(
+              "Эй <@310364711587676161>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+                  + "** зашёл в канал: " + nameChannelEnterUser).queue();
+          return;
+        }
 
-          if (isInChannelMeshiva() && idEnterUser.equals(USER_ID_MESHIVA)) {
-            TextChannel textChannel = event.getGuild()
-                .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                .get(0);
-            textChannel.sendMessage(
-                "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
-                    + "** зашёл в канал: " + nameChannelEnterUser).queue();
-            return;
-          }
+        if (isInChannelMeshiva() && idEnterUser.equals(USER_ID_MESHIVA)) {
+          TextChannel textChannel = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+              .get(0);
+          textChannel.sendMessage(
+              "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+                  + "** зашёл в канал: " + nameChannelEnterUser).queue();
+          return;
+        }
 
-          if (!isInChannelMeshiva() && idEnterUser.equals("250699265389625347")) {
-            TextChannel textChannel = event.getGuild()
-                .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                .get(0);
-            textChannel.sendMessage(
-                "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
-                    + "** зашёл в канал: " + nameChannelEnterUser).queue();
-            return;
-          }
+        if (!isInChannelMeshiva() && idEnterUser.equals("250699265389625347")) {
+          TextChannel textChannel = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+              .get(0);
+          textChannel.sendMessage(
+              "Эй <@335466800793911298>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+                  + "** зашёл в канал: " + nameChannelEnterUser).queue();
+          return;
+        }
 
-          if (!isInChannelMeshiva() && idEnterUser.equals("335466800793911298")) {
-            TextChannel textChannel = event.getGuild()
-                .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                .get(0);
-            textChannel.sendMessage(
-                "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
-                    + "** зашёл в канал: " + nameChannelEnterUser).queue();
-            return;
-          }
+        if (!isInChannelMeshiva() && idEnterUser.equals("335466800793911298")) {
+          TextChannel textChannel = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+              .get(0);
+          textChannel.sendMessage(
+              "Эй <@250699265389625347>!" + "\n" + "Пользователь: **" + nameUserWhoEnter
+                  + "** зашёл в канал: " + nameChannelEnterUser).queue();
+          return;
+        }
 
-          if (!isInChannelMeshiva()) {
-            TextChannel textChannel = event.getGuild()
-                .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-                .get(0);
-            textChannel.sendMessage(
-                "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
-                    + nameUserWhoEnter
-                    + "** зашёл в канал: " + nameChannelEnterUser).queue();
-          }
+        if (!isInChannelMeshiva()) {
+          TextChannel textChannel = event.getGuild()
+              .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
+              .get(0);
+          textChannel.sendMessage(
+              "Эй <@250699265389625347> и <@335466800793911298>!" + "\n" + "Пользователь: **"
+                  + nameUserWhoEnter
+                  + "** зашёл в канал: " + nameChannelEnterUser).queue();
         }
       }
     }
@@ -129,13 +130,12 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameChannelLeaveUser = event.getChannelLeft().getName();
       String nameUserWhoLeave = event.getMember().getUser().getName();
       inChannelMeshiva = false;
-      event.getGuild().getVoiceChannels()
-          .forEach(e -> e.getMembers()
-              .forEach(f -> {
-                if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-                  inChannelMeshiva = true;
-                }
-              }));
+      event.getChannelLeft().getMembers()
+          .forEach(f -> {
+            if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+              inChannelMeshiva = true;
+            }
+          });
 
       Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);

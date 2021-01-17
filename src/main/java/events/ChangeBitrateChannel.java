@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class ChangeBitrateChannel extends ListenerAdapter {
 
   private boolean inChannelMeshiva;
-  //310364711587676161 - Meshiva //753218484455997491 - megoTEST
+  // Meshiva: 310364711587676161 // megoTEST: 753218484455997491
   private static final String USER_ID_MESHIVA = "310364711587676161";
   private static final String MAIN_GUILD_ID = "250700478520885248";
 
@@ -21,13 +21,12 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
     if (idGuild.equals(MAIN_GUILD_ID)) {
       inChannelMeshiva = false;
-      event.getGuild().getVoiceChannels()
-          .forEach(e -> e.getMembers()
-              .forEach(f -> {
-                if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-                  inChannelMeshiva = true;
-                }
-              }));
+      event.getChannelJoined().getMembers()
+          .forEach(f -> {
+            if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+              inChannelMeshiva = true;
+            }
+          });
 
       if (!idUser.equals(USER_ID_MESHIVA) && !isInChannelMeshiva()) {
         event.getNewValue().getManager().setBitrate(64000).queue();
@@ -52,13 +51,12 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
     if (idGuild.equals(MAIN_GUILD_ID)) {
       inChannelMeshiva = false;
-      event.getGuild().getVoiceChannels()
-          .forEach(e -> e.getMembers()
+      event.getChannelJoined().getMembers()
               .forEach(f -> {
                 if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
                   inChannelMeshiva = true;
                 }
-              }));
+              });
 
       if (!idUser.equals(USER_ID_MESHIVA) && !isInChannelMeshiva()) {
         event.getNewValue().getManager().setBitrate(64000).queue();
@@ -72,6 +70,7 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
       if (idUser.equals(USER_ID_MESHIVA)) {
         event.getNewValue().getManager().setBitrate(45000).queue();
+        event.getChannelLeft().getManager().setBitrate(64000).queue();
       }
     }
   }
