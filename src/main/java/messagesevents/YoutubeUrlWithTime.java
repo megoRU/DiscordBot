@@ -17,6 +17,10 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().trim();
 
     if (message.matches(YOUTUBE_LINKS_MIN_SEC)

@@ -122,6 +122,10 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
+    if (event.getMember().getUser().isBot()) {
+      return;
+    }
+
     String idGuild = event.getGuild().getId();
 
     if (!event.getMember().getUser().isBot() && idGuild.equals(MAIN_GUILD_ID)) {

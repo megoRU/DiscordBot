@@ -16,6 +16,10 @@ public class ExchangeValue extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ");
     boolean isBot = event.getAuthor().isBot();

@@ -14,7 +14,7 @@ public class RepeatMyMessage extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-    if (event.getMember().getUser().isBot()) {
+    if (event.getAuthor().isBot()) {
       return;
     }
 
