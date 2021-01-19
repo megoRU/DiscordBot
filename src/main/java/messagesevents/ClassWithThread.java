@@ -1,29 +1,59 @@
 package messagesevents;
 
-import java.util.Calendar;
+import config.Config;
+import net.dv8tion.jda.api.EmbedBuilder;
+import org.icmp4j.IcmpPingRequest;
+import org.icmp4j.IcmpPingResponse;
+import org.icmp4j.IcmpPingUtil;
+import startbot.BotStart;
 
 public class ClassWithThread extends Thread {
+
+  private static final String ID_GUILD = "250700478520885248";
+  private static final String ID_CHAT = "800380002767208518";
 
   @Override
   public void run() {
     while (true) {
-      Calendar calendar = Calendar.getInstance();
-      int year = calendar.get(Calendar.YEAR);
-      int sec = calendar.get(Calendar.SECOND);
-      System.out.println(sec);
-      try {
-        ClassWithThread.sleep(1000);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-        ClassWithThread.currentThread().interrupt();
+
+      final IcmpPingRequest request = IcmpPingUtil.createIcmpPingRequest();
+      request.setHost(Config.getIpServerForTracert());
+      final IcmpPingResponse response = IcmpPingUtil.executePingRequest(request);
+      final String formattedResponse = IcmpPingUtil.formatResponse(response);
+
+      String[] args = formattedResponse.split(" ");
+
+      String replace = args[4]
+          .replaceAll("time=", "")
+          .replaceAll("ms", "");
+      System.out.println(replace);
+      if (Integer.parseInt(replace) > 50) {
+        try {
+          EmbedBuilder ping = new EmbedBuilder();
+          ping.setColor(0xff3923);
+          ping.setTitle("Проблема с пингом на Linux сервере!");
+          ping.setDescription("Пинг сейчас: `" + replace + "ms`");
+          BotStart.jda.getGuildById(ID_GUILD)
+              .getTextChannelById(ID_CHAT)
+              .sendMessage(ping.build()).queue();
+          ping.clear();
+        } catch (NullPointerException e) {
+          e.printStackTrace();
+        }
+        try {
+          ClassWithThread.sleep(3540000);
+        } catch (InterruptedException e) {
+          ClassWithThread.currentThread().interrupt();
+          e.printStackTrace();
+        }
       }
-//      if (year == 2021) {
-//        BotStart.jda.getGuildById("250700478520885248")
-//            .getDefaultChannel()
-//            .sendMessage("**С новым 2021 годом!** \uD83C\uDF84\u200B :sparkles: \n" +
-//                "Теперь добби свободен." + "\n@everyone").queue();
-//        break;
-//      }
+
+      try {
+        ClassWithThread.sleep(12000);
+      } catch (InterruptedException e) {
+        ClassWithThread.currentThread().interrupt();
+        e.printStackTrace();
+      }
     }
   }
 }
