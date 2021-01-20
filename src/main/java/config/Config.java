@@ -10,6 +10,7 @@ public class Config {
   private static final String PASS = "";
   private static final String TOP_GG_API_TOKEN = "";
   private static final String BOT_ID = "754093698681274369";
+  private static final String IP_SERVER_FOR_TRACERT = "";
 
   public static String getTOKEN() {
     return TOKEN;
@@ -33,5 +34,9 @@ public class Config {
 
   public static String getBotId() {
     return BOT_ID;
+  }
+
+  public static String getIpServerForTracert() {
+    return IP_SERVER_FOR_TRACERT;
   }
 }
