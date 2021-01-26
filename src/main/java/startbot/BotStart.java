@@ -90,6 +90,9 @@ public class BotStart {
     int serverCount = (int) jda.getGuildCache().size();
     TOP_GG_API.setStats(serverCount);
 
+    Statcord.start(jda.getSelfUser().getId(), Config.getStatcrord(), jda, false, 5);
+
+
   }
 
   public JDA getJda() {

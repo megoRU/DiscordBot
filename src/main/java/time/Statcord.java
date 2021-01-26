@@ -71,8 +71,7 @@ public class Statcord {
   //manually updating Stats
   public static void updateStats() throws IOException, InterruptedException {
     if (!statcordActive) {
-      System.out.println(
-          "\u001B[33m[Statcord]You can not use 'updateStats' because Statcord is not active!\u001B[0m");
+      System.out.println("\u001B[33m[Statcord]You can not use 'updateStats' because Statcord is not active!\u001B[0m");
       return;
     }
     System.out.println("\u001B[33m[Statcord] Updating Statcord!\u001B[0m");
@@ -122,8 +121,7 @@ public class Statcord {
 
   public static void customPost(int id, String content) {
     if (!statcordActive) {
-      System.out.println(
-          "\u001B[33m[Statcord]You can not use 'customPost' because Statcord is not active!\u001B[0m");
+      System.out.println("\u001B[33m[Statcord]You can not use 'customPost' because Statcord is not active!\u001B[0m");
       return;
     }
     switch (id) {
@@ -209,6 +207,7 @@ public class Statcord {
         try {
           updateStats();
         } catch (IOException | InterruptedException e) {
+          Thread.currentThread().interrupt();
           e.printStackTrace();
         }
       }
