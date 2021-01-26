@@ -54,6 +54,12 @@
             <version>4.2.0_227</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>de.pvhil</groupId>-->
+<!--            <artifactId>statcordapi</artifactId>-->
+<!--            <version>4.0-ALPHA</version>-->
+<!--        </dependency>-->
+
         <dependency>
             <groupId>org.discordbots</groupId>
             <artifactId>DBL-Java-Library</artifactId>
