@@ -1,10 +1,12 @@
 package time;
 
 import com.sun.management.OperatingSystemMXBean;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 import net.dv8tion.jda.api.JDA;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.lang.management.ManagementFactory;
 import java.net.URI;
@@ -13,19 +15,20 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Timer;
 import java.util.TimerTask;
+import oshi.SystemInfo;
 
 public class Statcord {
 
   private static boolean statcordActive = false;
-  private static int servers = 0;
-  private static int users = 0;
-  private static int commandsRun = 0;
+  private static int servers;
+  private static int users;
+  private static int commandsRun;
   private static String key;
   private static String id;
-  private static int memactive = 0; // need help pls
-  private static int memload = 0; // need help pls
-  private static int cpuload = 0; // need help pls
-  private static String bandwidth = "0"; // need help pls
+  private static int memactive;
+  private static int memload;
+  private static int cpuload;
+  private static long bandwidth; // need help pls
 
   private static String custom1 = "empty";
   private static String custom2 = "empty";
@@ -36,8 +39,12 @@ public class Statcord {
   private static boolean autopost = false;
 
   private static int time = 60; // autopost timer in min
+  private static final SystemInfo si = new SystemInfo();
+  private static String NetworkName = "";
+  private static int count;
 
-  public static void start(String id, String key, JDA jda, boolean autopost, int timerInMin) {
+  public static void start(String id, String key, JDA jda, boolean autopost, int timerInMin)
+      throws Exception {
     System.out.println(
         "\u001B[33mStatcord started with this: " + id + " " + key + " " + jda.toString()
             + "\u001B[0m");
@@ -51,21 +58,13 @@ public class Statcord {
     statcordActive = true;
 
     time = timerInMin;
+    getNetworkName();
 
     if (autopost) {
       autorun();
       System.out.println("\u001B[33m!!! [Statcord] autorun activated!\u001B[0m");
       Statcord.autopost = true;
     }
-  }
-
-  //some booleans for users
-  public static boolean isStatcordActive() {
-    return statcordActive;
-  }
-
-  public static boolean isAutopostActive() {
-    return autopost;
   }
 
   //manually updating Stats
@@ -82,6 +81,18 @@ public class Statcord {
     memload = (int) (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory());
     double mem = ((double) memload / (double) memactive) * (double) 100;
     int memperc = (int) Math.round(mem);
+
+    for (int i = 0; i < si.getHardware().getNetworkIFs().size(); i++) {
+      count++;
+      if (si.getHardware().getNetworkIFs().get(i).getName().equals(NetworkName)) {
+        System.out.println(si.getHardware().getNetworkIFs().get(i).getName());
+        break;
+      }
+    }
+
+    long down = si.getHardware().getNetworkIFs().get(count).getBytesRecv();
+    long up = si.getHardware().getNetworkIFs().get(count).getBytesSent();
+    bandwidth = down + up;
 
     OperatingSystemMXBean osBean = ManagementFactory.getPlatformMXBean(
         OperatingSystemMXBean.class);
@@ -100,7 +111,7 @@ public class Statcord {
     post.put("memactive", String.valueOf(memload));
     post.put("memload", String.valueOf(memperc));
     post.put("cpuload", String.valueOf(cpuload));
-    post.put("bandwidth", "0");
+    post.put("bandwidth", String.valueOf(bandwidth));
     if (!custom1.equalsIgnoreCase("empty")) {
       post.put("custom1", custom1);
     }
@@ -117,62 +128,6 @@ public class Statcord {
     activeuser = new JSONArray();
     custom2 = "empty";
     custom1 = "empty";
-  }
-
-  public static void customPost(int id, String content) {
-    if (!statcordActive) {
-      System.out.println("\u001B[33m[Statcord]You can not use 'customPost' because Statcord is not active!\u001B[0m");
-      return;
-    }
-    switch (id) {
-      case (1):
-        custom1 = content;
-      case (2):
-        custom2 = content;
-      default:
-        System.out.println("[Statcord] The given customPost ID is not working. It only can be 1 or 2!");
-        break;
-    }
-  }
-
-
-  // command metrics with active users
-  public static void commandPost(String command, String author) {
-    if (!statcordActive) {
-      System.out.println("\u001B[33m[Statcord]You can not use 'commandPost' because Statcord is not active!\u001B[0m");
-      return;
-    }
-    System.out.println("Doing it!");
-
-    // popular cmds
-    JSONObject obj = new JSONObject();
-    if (!userexists(popcmd, command)) {
-      obj.put("name", command);
-      obj.put("count", 1);
-      popcmd.put(obj);
-      commandsRun++;
-    } else {
-      for (int i = 0; i < popcmd.length(); i++) {
-        if (popcmd.getJSONObject(i).getString("name").equalsIgnoreCase(command)) {
-          int test = popcmd.getJSONObject(i).getInt("count") + 1;
-          popcmd.getJSONObject(i).put("count", test);
-          commandsRun++;
-          break;
-        }
-      }
-    }
-
-    //active users
-    if (!activeuser.toString().contains(author)) {
-      activeuser.put(author);
-    }
-
-    //When popular cmds are higher than 5, it gets shortened because Statcord only accepts 5 commands but! it is still working with more than 5 cmds, sooo im not going to delete them rn:)
-  }
-
-  //boolean if a value is existing in a jsonarray (for popular cmds)
-  private static boolean userexists(JSONArray jsonArray, String usernameToFind) {
-    return jsonArray.toString().contains("\"name\":\"" + usernameToFind + "\"");
   }
 
   //http post to statcord
@@ -212,5 +167,26 @@ public class Statcord {
         }
       }
     }, 5000, time * 60000L);
+  }
+
+  public static void getNetworkName() throws Exception {
+
+    final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+
+    // get hostname
+    InetAddress myAddr = InetAddress.getByName(si.getOperatingSystem().getNetworkParams().getHostName());
+
+    while (networkInterfaces.hasMoreElements()) {
+      NetworkInterface networkInterface = networkInterfaces.nextElement();
+      Enumeration<InetAddress> inAddrs = networkInterface.getInetAddresses();
+      while (inAddrs.hasMoreElements()) {
+        InetAddress inAddr = inAddrs.nextElement();
+        if (inAddr.equals(myAddr)) {
+          NetworkName = networkInterface.getName();
+          return;
+        }
+      }
+    }
+    throw new Exception("Not found network hostname");
   }
 }

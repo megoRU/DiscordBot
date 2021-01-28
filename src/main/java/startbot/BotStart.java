@@ -6,7 +6,6 @@ import events.EventJoinMemberToGuildSetRole;
 import events.LogWhoEnterLeaveMoveChannel;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
-import javax.security.auth.login.LoginException;
 import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
@@ -30,7 +29,7 @@ public class BotStart {
   public static Map<String, String> mapPrefix = new HashMap<>();
   public static DiscordBotListAPI TOP_GG_API;
 
-  public void startBot() throws InterruptedException, LoginException {
+  public void startBot() throws Exception {
     jdaBuilder.setAutoReconnect(true);
     jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
@@ -83,14 +82,14 @@ public class BotStart {
       e.printStackTrace();
     }
 
-    TOP_GG_API = new DiscordBotListAPI.Builder()
-            .token(Config.getTopGgApiToken())
-            .botId(Config.getBotId())
-            .build();
-    int serverCount = (int) jda.getGuildCache().size();
-    TOP_GG_API.setStats(serverCount);
+//    TOP_GG_API = new DiscordBotListAPI.Builder()
+//            .token(Config.getTopGgApiToken())
+//            .botId(Config.getBotId())
+//            .build();
+//    int serverCount = (int) jda.getGuildCache().size();
+//    TOP_GG_API.setStats(serverCount);
 
-    Statcord.start(jda.getSelfUser().getId(), Config.getStatcrord(), jda, false, 5);
+    //Statcord.start(jda.getSelfUser().getId(), Config.getStatcrord(), jda, true, 5);
 
 
   }
