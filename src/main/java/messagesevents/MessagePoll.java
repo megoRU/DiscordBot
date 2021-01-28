@@ -1,7 +1,11 @@
 package messagesevents;
 
+import db.DataBase;
+import java.sql.SQLException;
+import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
@@ -9,6 +13,9 @@ import startbot.BotStart;
 public class MessagePoll extends ListenerAdapter {
 
   private static final String POLL = "poll\\s.+";
+  private static final String emojiYes = "\uD83D\uDC4D";
+  private static final String emojiNo = "\uD83D\uDC4E";
+  private static final String emojiIdk = "\uD83E\uDD37";
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -39,10 +46,31 @@ public class MessagePoll extends ListenerAdapter {
       emb.setFooter("Poll by: " + event.getAuthor().getAsTag(), event.getAuthor().getAvatarUrl());
       emb.setTitle("**" + messages[1] + "**");
       event.getChannel().sendMessage(emb.build()).queue(m -> {
-        m.addReaction("\ud83d\udc4d").queue();
-        m.addReaction("\uD83D\uDC4E").queue();
-        m.addReaction("\uD83E\uDD37").queue();
+        m.addReaction(emojiYes).queue();
+        m.addReaction(emojiNo).queue();
+        m.addReaction(emojiIdk).queue();
+        BotStart.idMessagesWithPollEmoji.put(m.getId(), m.getId());
+        try {
+          DataBase dataBase = new DataBase();
+          dataBase.insertIdMessagesWithPollEmoji(m.getId());
+        } catch (SQLException troubles) {
+          troubles.printStackTrace();
+        }
       });
     }
   }
+
+  @Override
+  public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
+    if (event.getUser().isBot()) {
+      return;
+    }
+    String emoji = event.getReaction().getReactionEmote().getEmoji();
+
+    if (!(emoji.equals(emojiYes) || emoji.equals(emojiNo) || emoji.equals(emojiIdk))
+        && BotStart.idMessagesWithPollEmoji.get(event.getMessageId()) != null) {
+      event.getReaction().removeReaction(event.getUser()).queue();
+    }
+  }
+
 }

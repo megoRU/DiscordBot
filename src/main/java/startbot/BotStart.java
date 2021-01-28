@@ -26,7 +26,8 @@ public class BotStart {
 
   public static JDA jda;
   private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());
-  public static Map<String, String> mapPrefix = new HashMap<>();
+  public static final Map<String, String> mapPrefix = new HashMap<>();
+  public static final Map<String, String> idMessagesWithPollEmoji = new HashMap<>();
   public static DiscordBotListAPI TOP_GG_API;
 
   public void startBot() throws Exception {
@@ -73,9 +74,19 @@ public class BotStart {
       Statement statement = conn.createStatement();
       String sql = "select * from prefixs";
       ResultSet rs = statement.executeQuery(sql);
+      Statement statementSecond = conn.createStatement();
+
+      String sqlIdMessagesWithPollEmoji = "select * from idMessagesWithPollEmoji";
+      ResultSet rsIdMessages = statementSecond.executeQuery(sqlIdMessagesWithPollEmoji);
+
 
       while (rs.next()) {
         mapPrefix.put(rs.getString("serverId"), rs.getString("prefix"));
+      }
+
+      while (rsIdMessages.next()) {
+        idMessagesWithPollEmoji.put(rsIdMessages.getString("idMessagesWithPollEmoji")
+            , rsIdMessages.getString("idMessagesWithPollEmoji"));
       }
 
     } catch (SQLException e) {

@@ -36,6 +36,17 @@ public class DataBase {
     }
   }
 
+  public void insertIdMessagesWithPollEmoji(String messageId) {
+    try {
+      String query = "INSERT IGNORE INTO `idMessagesWithPollEmoji` (idMessagesWithPollEmoji) values (?)";
+      PreparedStatement preparedStatement = conn.prepareStatement(query);
+      preparedStatement.setString(1, messageId);
+      preparedStatement.executeUpdate();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public Map<Integer, String> topThree(String guildId) {
     try {
       String query = "SELECT userName, countConn FROM `GUILD_" + guildId
