@@ -13,9 +13,8 @@ import java.sql.SQLException;
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
   private boolean inChannelMeshiva;
-  //310364711587676161 - Meshiva //753218484455997491 - megoTEST //250699265389625347 - mego
+  //Meshiva: 310364711587676161 //megoTEST: 753218484455997491 //mego: 250699265389625347
   private static final String USER_ID_MESHIVA = "310364711587676161";
-  //private static final String userIdMego = "250699265389625347";
   private static final String MAIN_GUILD_ID = "250700478520885248";
   //bottestchannel //botchat
   private static final String BOT_CHANNEL_LOGS = "botchat";
@@ -58,12 +57,12 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameChannelEnterUser = event.getChannelJoined().getName();
       String nameUserWhoEnter = event.getMember().getUser().getName();
       inChannelMeshiva = false;
-      event.getChannelJoined().getMembers()
-          .forEach(f -> {
-            if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-              inChannelMeshiva = true;
-            }
-          });
+
+      inChannelMeshiva =
+          event.getChannelJoined().getMembers()
+              .stream()
+              .anyMatch(member -> USER_ID_MESHIVA.equals(member.getUser().getId()));
+
       Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
       if (hour >= 11 || (hour == 0)) {
@@ -134,12 +133,11 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameChannelLeaveUser = event.getChannelLeft().getName();
       String nameUserWhoLeave = event.getMember().getUser().getName();
       inChannelMeshiva = false;
-      event.getChannelLeft().getMembers()
-          .forEach(f -> {
-            if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
-              inChannelMeshiva = true;
-            }
-          });
+
+      inChannelMeshiva =
+          event.getChannelJoined().getMembers()
+              .stream()
+              .anyMatch(member -> USER_ID_MESHIVA.equals(member.getUser().getId()));
 
       Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
