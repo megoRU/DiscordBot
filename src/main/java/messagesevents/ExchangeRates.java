@@ -15,7 +15,7 @@ public class ExchangeRates extends ListenerAdapter {
 
   private static final String URL = "https://www.cbr.ru/key-indicators/";
   private static final String[] values = {"курс доллара", "курс доллора", "курс евро", "курс",
-      "евро", "доллар"};
+      "евро", "доллар", "рубль", "рублей"};
   private static String[] elements;
 
   @Override
@@ -52,20 +52,19 @@ public class ExchangeRates extends ListenerAdapter {
   }
 
   private static void parserSBR() {
-    Document doc = null;
     try {
-      doc = Jsoup.connect(URL)
+    Document doc = Jsoup.connect(URL)
           .maxBodySize(0)
           .userAgent(
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36")
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36")
           .referrer("https://www.yandex.com/")
           .get();
+
+    Elements values = doc.getElementsByClass("key-indicator_table");
+    elements = values.text().split(" ");
     } catch (IOException e) {
       e.printStackTrace();
     }
-    assert doc != null;
-    Elements values = doc.getElementsByClass("key-indicator_table");
-    elements = values.text().split(" ");
   }
 
   public static void getParser() {

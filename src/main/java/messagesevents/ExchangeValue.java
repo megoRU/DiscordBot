@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class ExchangeValue extends ListenerAdapter {
 
   private static final String[] RUB = {"рублей", "рубль", "рублях"};
-  private static final String[] USD = {"долларах", "долларов", "доллоров", "доллар"};
+  private static final String[] USD = {"долларах", "долларов", "доллоров", "доллар", "доллор"};
   private static final String[] EUR = {"евро"};
 
   @Override
@@ -71,7 +71,8 @@ public class ExchangeValue extends ListenerAdapter {
           if (containsRUBFirst && containsEURLast) {
             double format = Double.parseDouble(text[10].replace(",", "."));
             double result = Double.parseDouble(messages[0]) / format;
-            event.getChannel().sendMessage(messages[0] + " рублей в евро: "
+            event.getChannel().sendMessage(
+                messages[0] + getEndingWord(Integer.parseInt(messages[0]), "RUB") + " в евро: "
                 + "`" + addCommasToNumericString(formatter.format(result).replace(",", ".")) + "`")
                 .queue();
             return;
@@ -80,7 +81,8 @@ public class ExchangeValue extends ListenerAdapter {
           if (containsEURFirst && containsRUBLast) {
             double format = Double.parseDouble(text[10].replace(",", "."));
             double result = Double.parseDouble(messages[0]) * format;
-            event.getChannel().sendMessage(messages[0] + " евро в рублях: "
+            event.getChannel().sendMessage(
+                messages[0] + getEndingWord(Integer.parseInt(messages[0]), "EUR") + " в рублях: "
                 + "`" + addCommasToNumericString(formatter.format(result).replace(",", ".")) + "`")
                 .queue();
           }
@@ -100,34 +102,62 @@ public class ExchangeValue extends ListenerAdapter {
   }
 
   public String addCommasToNumericString(String digits) {
-    String result = "";
+    StringBuilder result = new StringBuilder();
     for (int i = 1; i <= digits.length(); ++i) {
       char ch = digits.charAt(digits.length() - i);
-      result = ch + result;
-      if (i % 3 == 0 && i > 3) {
-        result = "," + result;
+      result.insert(0, ch);
+      if (i % 3 == 0 && i > 3 && i != digits.length()) {
+        result.insert(0, " ");
       }
     }
-    return result;
+    return result.toString();
   }
 
-  private String getEndingWord(double num, String whatCurrency) {
-    int intValue = (int) num;
+  private String getEndingWord(int num, String whatCurrency) {
 
-    int preLastDigit = intValue % 100 / 10;
+    int preLastDigit = num % 100 / 10;
     if (preLastDigit == 1) {
-      return whatCurrency.equals("USD") ? " долларов" : " рублей";
+      switch (whatCurrency) {
+        case "USD":
+          return " долларов";
+        case "RUB":
+          return " рублей";
+        case "EUR":
+          return " евро";
+      }
     }
-    switch (intValue % 10) {
+    switch (num % 10) {
       case 1:
-        return whatCurrency.equals("USD") ? " доллар" : " рубль";
+        switch (whatCurrency) {
+          case "USD":
+            return " доллар";
+          case "RUB":
+            return " рубль";
+          case "EUR":
+            return " евро";
+        }
       case 2:
       case 3:
       case 4:
-        return whatCurrency.equals("USD") ? " доллара" : " рубля";
+        switch (whatCurrency) {
+          case "USD":
+            return " доллара";
+          case "RUB":
+            return " рубля";
+          case "EUR":
+            return " евро";
+        }
       case 5:
       default:
-        return whatCurrency.equals("USD") ? " долларов" : " рублей";
+        switch (whatCurrency) {
+          case "USD":
+            return " долларов";
+          case "RUB":
+            return " рублей";
+          case "EUR":
+            return " евро";
+        }
+        return "Error: send to: https://discord.gg/UrWG3R683d";
     }
   }
 }
