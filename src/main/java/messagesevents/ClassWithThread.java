@@ -11,7 +11,7 @@ public class ClassWithThread extends Thread {
       try {
         ClassWithThread.sleep(80000);
         BotStart.jda.getPresence().setActivity(Activity.playing("—> ?check"));
-        ClassWithThread.sleep(15000);
+        ClassWithThread.sleep(20000);
         BotStart.jda.getPresence().setActivity(Activity.playing("—> !music | !help"));
       } catch (InterruptedException e) {
         ClassWithThread.currentThread().interrupt();

@@ -1,5 +1,10 @@
 package giftaway;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
@@ -12,9 +17,11 @@ public class Gift {
 
   private final ArrayList<String> listUsers = new ArrayList<>();
   private static final HashMap<Long, String> messageId = new HashMap<>();
-  private final HashMap<String, String> listUsersHash = new HashMap<>();
+  private final Map<String, String> listUsersHash = new HashMap<>();
   private static final HashMap<Long, Gift> guilds = new HashMap<>();
-  private int count = 0;
+  private final Random random = new Random();
+  private final Set<String> usersWhoWinSet = new HashSet<>();
+  private int count;
   private Guild guild;
 
   public Gift(Guild guild) {
@@ -44,9 +51,14 @@ public class Gift {
     count++;
     listUsers.add(user.getId());
     listUsersHash.put(user.getId(), user.getId());
+    String avatarUrl = null;
+    String avatarFromEvent = user.getAvatarUrl();
+    if (avatarFromEvent != null) {
+      avatarUrl = avatarFromEvent;
+    }
     EmbedBuilder addUser = new EmbedBuilder();
     addUser.setColor(0x00FF00);
-    addUser.setTitle(user.getName());
+    addUser.setAuthor(user.getName(), null, avatarUrl);
     addUser.setDescription("You are now on the list");
     //Add user to list
     BotStart.jda.getGuildById(guild.getId())
@@ -72,8 +84,8 @@ public class Gift {
     edit.clear();
   }
 
-  public void stopGift(Guild guild, TextChannel channel) {
-    if (listUsers.size() < 2) {
+  public void stopGift(Guild guild, TextChannel channel, Integer countWinner) {
+    if (listUsers.size() < 2 || listUsers.size() < countWinner) {
       BotStart.jda.getGuildById(guild.getId())
           .getTextChannelById(channel.getId())
           .sendMessage("Not enough users \nThe giveaway deleted").queue();
@@ -84,17 +96,40 @@ public class Gift {
       return;
     }
 
+    if (countWinner != 1) {
+      for (int i = 0; i < countWinner; i++) {
+        int randomNumber = random.nextInt(listUsers.size());
+        usersWhoWinSet.add("<@" + listUsers.get(randomNumber) + ">");
+        listUsers.remove(randomNumber);
+      }
+
+      EmbedBuilder stopWithMoreWiner = new EmbedBuilder();
+      stopWithMoreWiner.setColor(0x00FF00);
+      stopWithMoreWiner.setTitle("Giveaway the end");
+      stopWithMoreWiner.setDescription("Winners: " + Arrays.toString(usersWhoWinSet.toArray()));
+      //Add user to list
+      BotStart.jda.getGuildById(guild.getId())
+          .getTextChannelById(channel.getId())
+          .sendMessage(stopWithMoreWiner.build()).queue();
+      stopWithMoreWiner.clear();
+      listUsersHash.clear();
+      listUsers.clear();
+      messageId.clear();
+      removeGift(guild.getIdLong());
+      return;
+    }
+
     int randomWord = (int) Math.floor(Math.random() * listUsers.size());
     String winUser = listUsers.get(randomWord);
-    EmbedBuilder start = new EmbedBuilder();
-    start.setColor(0x00FF00);
-    start.setTitle("Giveaway the end");
-    start.setDescription("Winner: <@" + winUser + ">");
+    EmbedBuilder stop = new EmbedBuilder();
+    stop.setColor(0x00FF00);
+    stop.setTitle("Giveaway the end");
+    stop.setDescription("Winner: <@" + winUser + ">");
     //Add user to list
     BotStart.jda.getGuildById(guild.getId())
         .getTextChannelById(channel.getId())
-        .sendMessage(start.build()).queue();
-    start.clear();
+        .sendMessage(stop.build()).queue();
+    stop.clear();
     listUsersHash.clear();
     listUsers.clear();
     messageId.clear();

@@ -11,6 +11,8 @@ public class MessageGift extends ListenerAdapter {
   private static final String GIFT = "!gift";
   private static final String GIFT_START = "!gift start";
   private static final String GIFT_STOP = "!gift stop";
+  private static final String GIFT_STOP_COUNT = "gift stop\\s[0-9]+";
+
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
@@ -19,6 +21,10 @@ public class MessageGift extends ListenerAdapter {
     }
 
     String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
+    String[] messageSplit = message.split(" ");
+    int length = message.length();
+    String messageWithOutPrefix = message.substring(1, length);
+
     String prefix = GIFT;
     String prefix2 = GIFT_START;
     String prefix3 = GIFT_STOP;
@@ -29,7 +35,10 @@ public class MessageGift extends ListenerAdapter {
       prefix3 = BotStart.mapPrefix.get(event.getGuild().getId()) + "gift stop";
     }
 
-    if ((message.equals(prefix) || message.equals(prefix2) || message.equals(prefix3))) {
+    if ((message.equals(prefix)
+        || message.equals(prefix2)
+        || message.equals(prefix3)
+        || messageWithOutPrefix.matches(GIFT_STOP_COUNT))) {
 
       if (!event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
         event.getChannel().sendMessage("You are not Admin").queue();
@@ -57,8 +66,10 @@ public class MessageGift extends ListenerAdapter {
         return;
       }
 
-      if ((message.equals(prefix2) || message.equals(prefix3)) && event.getMember()
-          .hasPermission(Permission.ADMINISTRATOR)) {
+      if ((message.equals(prefix2)
+          || message.equals(prefix3)
+          || messageWithOutPrefix.matches(GIFT_STOP_COUNT))
+          && event.getMember().hasPermission(Permission.ADMINISTRATOR)) {
         long guild = event.getGuild().getIdLong();
         Gift gift;
         gift = new Gift();
@@ -69,9 +80,17 @@ public class MessageGift extends ListenerAdapter {
 
         }
 
-        if (message.equals(prefix3) && gift.hasGift(guild)) {
+        if ((message.equals(prefix3)
+            || messageWithOutPrefix.matches(GIFT_STOP_COUNT))
+            && gift.hasGift(guild)) {
           gift = gift.getGift(event.getGuild().getIdLong());
-          gift.stopGift(event.getGuild(), event.getChannel());
+
+          if (messageSplit.length == 3) {
+            gift.stopGift(event.getGuild(), event.getChannel(),
+                Integer.parseInt(messageSplit[messageSplit.length - 1]));
+            return;
+          }
+          gift.stopGift(event.getGuild(), event.getChannel(), Integer.parseInt("1"));
         }
       }
     }
