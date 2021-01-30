@@ -32,16 +32,22 @@
 12. Game `!hg` (Exclusive for Russian players)
 13. Now you can create giveaway - `!gift start`
 14. Music! :)
+15. Create `!poll`
 
 ## TODO
 
--   [ ]   Fix exceptions that occurred in the work.
--   [ ]   Done music function.
+-   [ ]   Fix bugs.
 
 ## Copyright Notice
 
 1.  The music function was taken a little from here: [Yui](https://github.com/DV8FromTheWorld/Yui)
 2.  The bot is made using the library: [JDA](https://github.com/DV8FromTheWorld/JDA)
+
+## What data we collect
+
+1.  Guild id.
+2.  User name & id.
+3.  Number of connections per voice channel for each user.
 
 ## Our documentation
 
