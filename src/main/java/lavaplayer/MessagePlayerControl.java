@@ -65,6 +65,9 @@ public class MessagePlayerControl extends ListenerAdapter {
     }
 
     String message = event.getMessage().getContentDisplay().trim();
+    if (message.equals("")) {
+      return;
+    }
     String[] command = event.getMessage().getContentDisplay().split(" ", 2);
 
     String prefixPlay = "!";

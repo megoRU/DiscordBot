@@ -73,8 +73,10 @@ public class MessageInfoHelp extends ListenerAdapter {
           "`*prefix <symbol>` - Changes the prefix.\n" +
               "`*prefix reset` - Reset the prefix.", false);
 
-      info.addField("Giveaway:", "`" + p + "gift start` - Run Giveaway \n`" +
-          p + "gift stop` - Stop Giveaway.", false);
+      info.addField("Giveaway:", "`"
+          + p + "gift start` - Run Giveaway.\n`"
+          + p + "gift stop` - Stop Giveaway.\n"
+          + p + "gift stop <number>` - Stop Giveaway with more winners.\n", false);
       info.addField("Music:",
           "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
               "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
