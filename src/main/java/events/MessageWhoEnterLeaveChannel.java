@@ -58,10 +58,13 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameUserWhoEnter = event.getMember().getUser().getName();
       inChannelMeshiva = false;
 
-      inChannelMeshiva =
-          event.getChannelJoined().getMembers()
-              .stream()
-              .anyMatch(member -> USER_ID_MESHIVA.equals(member.getUser().getId()));
+      event.getGuild().getVoiceChannels()
+          .forEach(e -> e.getMembers()
+              .forEach(f -> {
+                if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+                  inChannelMeshiva = true;
+                }
+              }));
 
       Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -134,10 +137,13 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
       String nameUserWhoLeave = event.getMember().getUser().getName();
       inChannelMeshiva = false;
 
-      inChannelMeshiva =
-          event.getChannelJoined().getMembers()
-              .stream()
-              .anyMatch(member -> USER_ID_MESHIVA.equals(member.getUser().getId()));
+      event.getGuild().getVoiceChannels()
+          .forEach(e -> e.getMembers()
+              .forEach(f -> {
+                if (f.getUser().getId().equals(USER_ID_MESHIVA)) {
+                  inChannelMeshiva = true;
+                }
+              }));
 
       Calendar calendar = Calendar.getInstance();
       int hour = calendar.get(Calendar.HOUR_OF_DAY);
