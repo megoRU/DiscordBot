@@ -38,17 +38,17 @@ public class MessageCheckBotSettings extends ListenerAdapter {
       boolean hasPermissionMessageManage = event.getGuild()
           .getSelfMember().hasPermission(Permission.MESSAGE_MANAGE);
 
-//      boolean hasPermissionKickUsers = event.getGuild()
-//          .getSelfMember().hasPermission(Permission.KICK_MEMBERS);
-//
-//      boolean hasPermissionBanUsers = event.getGuild()
-//          .getSelfMember().hasPermission(Permission.BAN_MEMBERS);
-//
-//      boolean hasPermissionMoveUsers = event.getGuild()
-//          .getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
-//
-//      boolean hasPermissionManageChannel = event.getGuild()
-//          .getSelfMember().hasPermission(Permission.MANAGE_CHANNEL);
+      boolean hasPermissionKickUsers = event.getGuild()
+          .getSelfMember().hasPermission(Permission.KICK_MEMBERS);
+
+      boolean hasPermissionBanUsers = event.getGuild()
+          .getSelfMember().hasPermission(Permission.BAN_MEMBERS);
+
+      boolean hasPermissionMoveUsers = event.getGuild()
+          .getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
+
+      boolean hasPermissionManageChannel = event.getGuild()
+          .getSelfMember().hasPermission(Permission.MANAGE_CHANNEL);
 
       EmbedBuilder settings = new EmbedBuilder();
       settings.setColor(0x00FF00);
@@ -59,6 +59,16 @@ public class MessageCheckBotSettings extends ListenerAdapter {
 
       settings.addField("Required:",
           "Bot have Permission.MESSAGE_MANAGE: " + getStatus(hasPermissionMessageManage)
+          , false);
+
+      settings.addField("To expand the functionality:",
+          "Bot have Permission.MANAGE_CHANNEL: " + getStatus(hasPermissionManageChannel)
+              + "\n" +
+              "Bot have Permission.VOICE_MOVE_OTHERS: " + getStatus(hasPermissionMoveUsers)
+              + "\n" +
+              "Bot have Permission.KICK_MEMBERS: " + getStatus(hasPermissionKickUsers)
+              + "\n" +
+              "Bot have Permission.BAN_MEMBERS: " + getStatus(hasPermissionBanUsers)
           , false);
 
       settings.addField("Other information:",

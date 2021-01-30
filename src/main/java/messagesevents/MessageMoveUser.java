@@ -1,7 +1,6 @@
 package messagesevents;
 
 import java.util.List;
-import java.util.Objects;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Member;
@@ -47,7 +46,8 @@ public class MessageMoveUser extends ListenerAdapter {
 
       if (!user.isBot() && boolPermission) {
         if (!event.getGuild().getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS)) {
-          event.getChannel().sendMessage("Bot don\\`t have: `Permission.VOICE_MOVE_OTHERS`").queue();
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.VOICE_MOVE_OTHERS`")
+              .queue();
           return;
         }
         String[] messages = message.split(" ", 2);
@@ -55,10 +55,9 @@ public class MessageMoveUser extends ListenerAdapter {
         System.out.println(messages[1]);
         if (memberId.size() > 0) {
           if (memberId.get(0) != null) {
-            event.getGuild().moveVoiceMember(memberId.get(0),
-                Objects.requireNonNull(
-                    Objects.requireNonNull(
-                        event.getGuild().getMember(user)).getVoiceState()).getChannel()).queue();
+            event.getGuild()
+                .moveVoiceMember(memberId.get(0),
+                    event.getGuild().getMember(user).getVoiceState().getChannel()).queue();
             memberId.clear();
             return;
           }
