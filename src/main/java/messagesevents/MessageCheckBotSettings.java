@@ -2,12 +2,10 @@ package messagesevents;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
-import java.util.List;
 
 public class MessageCheckBotSettings extends ListenerAdapter {
 
@@ -21,9 +19,6 @@ public class MessageCheckBotSettings extends ListenerAdapter {
     }
 
     String message = event.getMessage().getContentDisplay().trim();
-    boolean botPermission = event.getGuild().getSelfMember()
-        .hasPermission(Permission.ADMINISTRATOR);
-
     String prefix = "!";
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
@@ -31,59 +26,58 @@ public class MessageCheckBotSettings extends ListenerAdapter {
     }
 
     if (message.equals(CHECK)) {
-      try {
-        List<TextChannel> textChannels = event.getGuild()
-            .getTextChannelsByName(BOT_CHANNEL_LOGS, true);
-        if (textChannels.size() >= 1) {
-          TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
-              .get(0);
-          if (textChannel != null && botPermission) {
-            EmbedBuilder settings = new EmbedBuilder();
-            settings.setColor(0x00FF00);
-            settings.setTitle("Bot settings");
-            settings.setDescription("Bot Administrator. :white_check_mark:\n" +
-                "Guild have `botlog` text chat. :white_check_mark:\n" +
-                "Bot prefix: `" + prefix + "`");
-            event.getChannel().sendMessage(settings.build()).queue();
-            settings.clear();
-            return;
-          }
 
-          if (textChannel != null && !botPermission) {
-            EmbedBuilder settings = new EmbedBuilder();
-            settings.setColor(0x00FF00);
-            settings.setTitle("Bot settings");
-            settings.setDescription("Bot Administrator. :no_entry_sign:\n" +
-                "Guild have `botlog` text chat. :white_check_mark:\n" +
-                "Bot prefix: `" + prefix + "`");
-            event.getChannel().sendMessage(settings.build()).queue();
-            settings.clear();
-            return;
-          }
-        }
+      boolean hasChannel = event.getGuild()
+          .getTextChannels()
+          .stream()
+          .anyMatch(textChannel -> textChannel.getName().equals(BOT_CHANNEL_LOGS));
 
-        if (textChannels.size() == 0 && botPermission) {
-          EmbedBuilder settings = new EmbedBuilder();
-          settings.setColor(0x00FF00);
-          settings.setTitle("Bot settings");
-          settings.setDescription("Bot Administrator. :white_check_mark:\n" +
-              "Guild have `botlog` text chat. :no_entry_sign:\n" +
-              "Bot prefix: `" + prefix + "`");
-          event.getChannel().sendMessage(settings.build()).queue();
-          settings.clear();
-        } else {
-          EmbedBuilder settings = new EmbedBuilder();
-          settings.setColor(0x00FF00);
-          settings.setTitle("Bot settings");
-          settings.setDescription("Bot Administrator. :no_entry_sign:\n" +
-              "Guild have `botlog` text chat. :no_entry_sign:\n" +
-              "Bot prefix: `" + prefix + "`");
-          event.getChannel().sendMessage(settings.build()).queue();
-          settings.clear();
-        }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
+      boolean hasPermissionAdministrator = event.getGuild()
+          .getSelfMember().hasPermission(Permission.ADMINISTRATOR);
+
+      boolean hasPermissionManageChannel = event.getGuild()
+          .getSelfMember().hasPermission(Permission.MANAGE_CHANNEL);
+
+      boolean hasPermissionMessageManage = event.getGuild()
+          .getSelfMember().hasPermission(Permission.MESSAGE_MANAGE);
+
+      boolean hasPermissionKickUsers = event.getGuild()
+          .getSelfMember().hasPermission(Permission.KICK_MEMBERS);
+
+      boolean hasPermissionMoveUsers = event.getGuild()
+          .getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
+
+      EmbedBuilder settings = new EmbedBuilder();
+      settings.setColor(0x00FF00);
+      settings.setTitle("Bot permissions");
+      settings.addField("Optional, but recommended:",
+          "Bot have Permission.ADMINISTRATOR: " + getStatus(hasPermissionAdministrator)
+          , false);
+
+      settings.addField("Required:",
+          "Bot have Permission.MANAGE_CHANNEL: " + getStatus(hasPermissionManageChannel)
+              + "\n" +
+              "Bot have Permission.MESSAGE_MANAGE: " + getStatus(hasPermissionMessageManage)
+              + "\n" +
+              "Bot have Permission.KICK_MEMBERS: " + getStatus(hasPermissionKickUsers)
+              + "\n" +
+              "Bot have Permission.VOICE_MOVE_OTHERS: " + getStatus(hasPermissionMoveUsers)
+          , false);
+
+      settings.addField("Other information:",
+          "Guild have `botlog` text channel: " + getStatus(hasChannel)
+          + "\n" +
+          "Bot prefix: `" + prefix + "`", false);
+      event.getChannel().sendMessage(settings.build()).queue();
+      settings.clear();
+    }
+  }
+
+  private String getStatus(boolean permission) {
+    if (permission) {
+      return ":white_check_mark:";
+    } else {
+      return ":no_entry_sign:";
     }
   }
 }

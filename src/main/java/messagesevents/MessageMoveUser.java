@@ -46,6 +46,10 @@ public class MessageMoveUser extends ListenerAdapter {
       boolean boolPermission = event.getMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
 
       if (!user.isBot() && boolPermission) {
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS)) {
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.VOICE_MOVE_OTHERS`").queue();
+          return;
+        }
         String[] messages = message.split(" ", 2);
         List<Member> memberId = event.getGuild().getMembersByName(messages[1], true);
         System.out.println(messages[1]);

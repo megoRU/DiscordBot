@@ -48,6 +48,10 @@ public class MessageBan extends ListenerAdapter {
 
     if (messageWithOutPrefix.matches(UN_BAN)) {
       if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)) {
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.BAN_MEMBERS`").queue();
+          return;
+        }
         String result = message
             .replaceAll("!unban <@!", "")
             .replaceAll(">", "");
@@ -70,6 +74,10 @@ public class MessageBan extends ListenerAdapter {
 
     if (messageWithOutPrefix.matches(BAN) || messageWithOutPrefix.matches(BAN2)) {
       if (event.getMember().hasPermission(Permission.BAN_MEMBERS)) {
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.BAN_MEMBERS)) {
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.BAN_MEMBERS`").queue();
+          return;
+        }
         if (messages.length == 4 || messages.length == 3) {
           List<Member> toBan = new ArrayList<>(1);
           toBan.addAll(event.getMessage().getMentionedMembers());

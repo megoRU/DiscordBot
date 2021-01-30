@@ -44,6 +44,10 @@ public class MessageKick extends ListenerAdapter {
 
     if (messageWithOutPrefix.matches(KICK) || messageWithOutPrefix.matches(KICK2)) {
       if (event.getMember().hasPermission(Permission.KICK_MEMBERS)) {
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.KICK_MEMBERS)) {
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.KICK_MEMBERS`").queue();
+          return;
+        }
         if (messages.length == 3 || messages.length == 2) {
           List<Member> toKick = new ArrayList<>(1);
           toKick.addAll(event.getMessage().getMentionedMembers());

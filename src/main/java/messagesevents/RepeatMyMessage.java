@@ -1,5 +1,6 @@
 package messagesevents;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -30,6 +31,10 @@ public class RepeatMyMessage extends ListenerAdapter {
 
     if (split[0].equals(prefix) || split[0].equals(REPEAT2)
         || split[0].equals(REPEAT_RU) || split[0].equals(prefix2)) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
+        return;
+      }
       event.getMessage().delete().queue();
       event.getChannel().sendMessage(split[1]).queue();
     }

@@ -58,6 +58,10 @@ public class MessageDeleting extends ListenerAdapter {
       }
 
       if (permCheck(event.getMessage().getMember())) {
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+          event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
+          return;
+        }
         String[] commandArray = message.split("\\s+", 2);
         String index = commandArray[1];
         int indexParseInt = Integer.parseInt(index);

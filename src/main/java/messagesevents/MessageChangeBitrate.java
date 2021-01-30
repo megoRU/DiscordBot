@@ -1,5 +1,6 @@
 package messagesevents;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.VoiceChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -36,6 +37,10 @@ public class MessageChangeBitrate extends ListenerAdapter {
         }
 
         if (messageWithOutPrefix.matches(BITRATE) || message.equals(BITRATE_INFO)) {
+            if (!event.getGuild().getSelfMember().hasPermission(Permission.MANAGE_CHANNEL)) {
+                event.getChannel().sendMessage("Bot don\\`t have: `Permission.MANAGE_CHANNEL`").queue();
+                return;
+            }
             try {
                 User user = event.getMember().getUser();
                 VoiceChannel voiceChannel = event.getGuild().getMember(user).getVoiceState().getChannel();

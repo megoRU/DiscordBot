@@ -2,8 +2,8 @@ package messagesevents;
 
 import db.DataBase;
 import java.sql.SQLException;
-import java.util.HashMap;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.events.message.guild.react.GuildMessageReactionAddEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -39,6 +39,10 @@ public class MessagePoll extends ListenerAdapter {
     }
 
     if (messageWithOutPrefix.matches(POLL)) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
+        return;
+      }
       String[] messages = message.split(" ", 2);
       EmbedBuilder emb = new EmbedBuilder();
       emb.setColor(
@@ -66,6 +70,11 @@ public class MessagePoll extends ListenerAdapter {
       return;
     }
     String emoji = event.getReaction().getReactionEmote().getEmoji();
+
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+      event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
+      return;
+    }
 
     if (!(emoji.equals(emojiYes) || emoji.equals(emojiNo) || emoji.equals(emojiIdk))
         && BotStart.idMessagesWithPollEmoji.get(event.getMessageId()) != null) {
