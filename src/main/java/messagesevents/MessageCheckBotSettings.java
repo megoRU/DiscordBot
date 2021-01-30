@@ -35,17 +35,20 @@ public class MessageCheckBotSettings extends ListenerAdapter {
       boolean hasPermissionAdministrator = event.getGuild()
           .getSelfMember().hasPermission(Permission.ADMINISTRATOR);
 
-      boolean hasPermissionManageChannel = event.getGuild()
-          .getSelfMember().hasPermission(Permission.MANAGE_CHANNEL);
-
       boolean hasPermissionMessageManage = event.getGuild()
           .getSelfMember().hasPermission(Permission.MESSAGE_MANAGE);
 
-      boolean hasPermissionKickUsers = event.getGuild()
-          .getSelfMember().hasPermission(Permission.KICK_MEMBERS);
-
-      boolean hasPermissionMoveUsers = event.getGuild()
-          .getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
+//      boolean hasPermissionKickUsers = event.getGuild()
+//          .getSelfMember().hasPermission(Permission.KICK_MEMBERS);
+//
+//      boolean hasPermissionBanUsers = event.getGuild()
+//          .getSelfMember().hasPermission(Permission.BAN_MEMBERS);
+//
+//      boolean hasPermissionMoveUsers = event.getGuild()
+//          .getSelfMember().hasPermission(Permission.VOICE_MOVE_OTHERS);
+//
+//      boolean hasPermissionManageChannel = event.getGuild()
+//          .getSelfMember().hasPermission(Permission.MANAGE_CHANNEL);
 
       EmbedBuilder settings = new EmbedBuilder();
       settings.setColor(0x00FF00);
@@ -55,19 +58,13 @@ public class MessageCheckBotSettings extends ListenerAdapter {
           , false);
 
       settings.addField("Required:",
-          "Bot have Permission.MANAGE_CHANNEL: " + getStatus(hasPermissionManageChannel)
-              + "\n" +
-              "Bot have Permission.MESSAGE_MANAGE: " + getStatus(hasPermissionMessageManage)
-              + "\n" +
-              "Bot have Permission.KICK_MEMBERS: " + getStatus(hasPermissionKickUsers)
-              + "\n" +
-              "Bot have Permission.VOICE_MOVE_OTHERS: " + getStatus(hasPermissionMoveUsers)
+          "Bot have Permission.MESSAGE_MANAGE: " + getStatus(hasPermissionMessageManage)
           , false);
 
       settings.addField("Other information:",
           "Guild have `botlog` text channel: " + getStatus(hasChannel)
-          + "\n" +
-          "Bot prefix: `" + prefix + "`", false);
+              + "\n" +
+              "Bot prefix: `" + prefix + "`", false);
       event.getChannel().sendMessage(settings.build()).queue();
       settings.clear();
     }
