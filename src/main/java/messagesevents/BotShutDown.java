@@ -9,13 +9,22 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 public class BotShutDown extends ListenerAdapter {
 
-  public final String SHUTDOWN = "!shutdown";
-  public final String SHUTDOWN_WITH_OUT = "shutdown";
-  public final String SD = "sd";
-  public final String MAIN_GUILD_ID = "250700478520885248";
-  public final String MAIN_USER_ID = "250699265389625347";
+  /*
+   * TODO: Возможно сделать только проверку на гильдию MAIN_GUILD_ID и юзера MAIN_USER_ID
+   */
 
+  private static final String SHUTDOWN = "!shutdown";
+  private static final String SHUTDOWN_WITH_OUT = "shutdown";
+  private static final String SD = "sd";
+  private static final String MAIN_GUILD_ID = "250700478520885248";
+  private static final String MAIN_USER_ID = "250699265389625347";
+
+  @Override
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase();
 
     if (message.equals(SHUTDOWN) || message.equals(SHUTDOWN_WITH_OUT) || message.equals(SD)) {
@@ -26,7 +35,8 @@ public class BotShutDown extends ListenerAdapter {
         EmbedBuilder errorShutDown = new EmbedBuilder();
         errorShutDown.setColor(0xff3923);
         errorShutDown.setTitle("🔴 Error: Your guild has no access");
-        errorShutDown.setDescription("Your guild does not have access to shutdown the bot on the linux server\n-> BotShutDown.java");
+        errorShutDown.setDescription(
+            "Your guild does not have access to shutdown the bot on the linux server\n-> BotShutDown.java");
         event.getChannel().sendMessage(errorShutDown.build()).queue();
         errorShutDown.clear();
         return;

@@ -17,6 +17,10 @@ public class GameHangmanListener extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
 
     String prefix = HG;
@@ -73,7 +77,7 @@ public class GameHangmanListener extends ListenerAdapter {
       }
 
       if (message.equals(prefix2) && !hangman.hasGame(user.getIdLong())) {
-        event.getChannel().sendMessage("Вы сейчас не играете.\n").queue();
+        event.getChannel().sendMessage("Вы сейчас не играете.").queue();
         return;
       }
 

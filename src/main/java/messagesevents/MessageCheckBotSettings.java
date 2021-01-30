@@ -16,6 +16,10 @@ public class MessageCheckBotSettings extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
+    if (event.getAuthor().isBot()) {
+      return;
+    }
+
     String message = event.getMessage().getContentDisplay().trim();
     boolean botPermission = event.getGuild().getSelfMember()
         .hasPermission(Permission.ADMINISTRATOR);

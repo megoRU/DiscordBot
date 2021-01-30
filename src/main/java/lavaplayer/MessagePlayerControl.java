@@ -65,6 +65,9 @@ public class MessagePlayerControl extends ListenerAdapter {
     }
 
     String message = event.getMessage().getContentDisplay().trim();
+    if (message.equals("")) {
+      return;
+    }
     String[] command = event.getMessage().getContentDisplay().split(" ", 2);
 
     String prefixPlay = "!";
@@ -99,7 +102,6 @@ public class MessagePlayerControl extends ListenerAdapter {
       prefixNowPlaying = BotStart.mapPrefix.get(event.getGuild().getId());
       prefixNP = BotStart.mapPrefix.get(event.getGuild().getId());
     }
-
 
     String prefixCheck = message.substring(0, 1);
     String messageWithOutPrefix = message.substring(1, length);

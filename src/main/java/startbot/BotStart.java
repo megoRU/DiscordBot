@@ -6,7 +6,6 @@ import events.EventJoinMemberToGuildSetRole;
 import events.LogWhoEnterLeaveMoveChannel;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
-import javax.security.auth.login.LoginException;
 import games.GameHangmanListener;
 import games.GameOfDice;
 import giftaway.MessageGift;
@@ -21,20 +20,21 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
+import time.Statcord;
 
 public class BotStart {
 
   public static JDA jda;
   private final JDABuilder jdaBuilder = JDABuilder.createDefault(Config.getTOKEN());
-  public static Map<String, String> mapPrefix = new HashMap<>();
+  public static final Map<String, String> mapPrefix = new HashMap<>();
+  public static final Map<String, String> idMessagesWithPollEmoji = new HashMap<>();
   public static DiscordBotListAPI TOP_GG_API;
 
-  public void startBot() throws InterruptedException, LoginException {
+  public void startBot() throws Exception {
     jdaBuilder.setAutoReconnect(true);
     jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
-    jdaBuilder.setActivity(Activity.playing("—> !music"));
+    jdaBuilder.setActivity(Activity.playing("—> !music | !help"));
     jdaBuilder.setBulkDeleteSplittingEnabled(false);
     jdaBuilder.addEventListeners(new BotShutDown());
     jdaBuilder.addEventListeners(new MessagePing());
@@ -74,33 +74,38 @@ public class BotStart {
       Statement statement = conn.createStatement();
       String sql = "select * from prefixs";
       ResultSet rs = statement.executeQuery(sql);
+      Statement statementSecond = conn.createStatement();
+
+      String sqlIdMessagesWithPollEmoji = "select * from idMessagesWithPollEmoji";
+      ResultSet rsIdMessages = statementSecond.executeQuery(sqlIdMessagesWithPollEmoji);
+
 
       while (rs.next()) {
         mapPrefix.put(rs.getString("serverId"), rs.getString("prefix"));
+      }
+
+      while (rsIdMessages.next()) {
+        idMessagesWithPollEmoji.put(rsIdMessages.getString("idMessagesWithPollEmoji")
+            , rsIdMessages.getString("idMessagesWithPollEmoji"));
       }
 
     } catch (SQLException e) {
       e.printStackTrace();
     }
 
-    TOP_GG_API = new DiscordBotListAPI.Builder()
-            .token(Config.getTopGgApiToken())
-            .botId(Config.getBotId())
-            .build();
-    int serverCount = (int) jda.getGuildCache().size();
-    TOP_GG_API.setStats(serverCount);
+//    TOP_GG_API = new DiscordBotListAPI.Builder()
+//            .token(Config.getTopGgApiToken())
+//            .botId(Config.getBotId())
+//            .build();
+//    int serverCount = (int) jda.getGuildCache().size();
+//    TOP_GG_API.setStats(serverCount);
 
-  }
+    //Statcord.start(jda.getSelfUser().getId(), Config.getStatcrord(), jda, true, 5);
 
-  public void sendMessage(String channelId, String message) {
-    Objects.requireNonNull(jda.getTextChannelById(channelId)).sendMessage(message).queue();
+
   }
 
   public JDA getJda() {
     return jda;
-  }
-
-  public JDABuilder getJdaBuilder() {
-    return jdaBuilder;
   }
 }

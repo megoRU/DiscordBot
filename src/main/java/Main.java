@@ -1,12 +1,9 @@
-import java.util.LinkedList;
-import java.util.List;
-import javax.security.auth.login.LoginException;
 import messagesevents.ClassWithThread;
 import startbot.BotStart;
 
 public class Main {
 
-  public static void main(String[] args) throws LoginException, InterruptedException {
+  public static void main(String[] args) throws Exception {
 
     BotStart botStart = new BotStart();
     botStart.startBot();
@@ -17,6 +14,8 @@ public class Main {
 //    for(Thread thread : threads) {
 //      thread.join();
 //    }
+    ClassWithThread classWithThread = new ClassWithThread();
+    classWithThread.start();
 
   }
 

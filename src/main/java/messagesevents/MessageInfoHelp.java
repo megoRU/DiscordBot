@@ -1,18 +1,20 @@
 package messagesevents;
 
+import java.util.concurrent.TimeUnit;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import startbot.BotStart;
 
 public class MessageInfoHelp extends ListenerAdapter {
 
-  public final String HELP = "!help";
-  public final String HELP_WITH_OUT = "help";
-  public final String INFO_WITH_OUT = "info";
-  public final String INFO = "!info";
-  public final String INFO_RU = "инфо";
-  public final String MUSIC = "!music";
+  private static final String HELP = "!help";
+  private static final String HELP_WITH_OUT = "help";
+  private static final String INFO_WITH_OUT = "info";
+  private static final String INFO = "!info";
+  private static final String INFO_RU = "инфо";
+  private static final String MUSIC = "!music";
 
   @Override
   public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
@@ -71,8 +73,10 @@ public class MessageInfoHelp extends ListenerAdapter {
           "`*prefix <symbol>` - Changes the prefix.\n" +
               "`*prefix reset` - Reset the prefix.", false);
 
-      info.addField("Giveaway:", "`" + p + "gift start` - Run Giveaway \n`" +
-          p + "gift stop` - Stop Giveaway.", false);
+      info.addField("Giveaway:", "`"
+          + p + "gift start` - Run Giveaway.\n`"
+          + p + "gift stop` - Stop Giveaway.\n"
+          + p + "gift stop <number>` - Stop Giveaway with more winners.\n", false);
       info.addField("Music:",
           "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
               "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
@@ -122,8 +126,13 @@ public class MessageInfoHelp extends ListenerAdapter {
       info.addField("Support Server",
           ":helmet_with_cross: [Click me](https://discord.com/invite/UrWG3R683d)", false);
 
-      event.getChannel().sendMessage(info.build()).queue();
-      info.clear();
+      event.getChannel().sendMessage("I sent you a private message").delay(5, TimeUnit.SECONDS)
+          .flatMap(Message::delete).queue();
+
+      event.getMember().getUser().openPrivateChannel()
+          .flatMap(m -> event.getMember().getUser().openPrivateChannel())
+          .flatMap(channel -> channel.sendMessage(info.build()))
+          .queue(null, error -> event.getChannel().sendMessage("Failed to send message!").queue());
     }
   }
 }
