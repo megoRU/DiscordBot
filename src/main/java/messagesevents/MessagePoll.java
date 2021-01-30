@@ -23,12 +23,16 @@ public class MessagePoll extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentDisplay().trim();
+    String message = event.getMessage().getContentRaw().trim();
     String prefix = "!";
     int length = message.length();
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
       prefix = BotStart.mapPrefix.get(event.getGuild().getId());
+    }
+
+    if (message.equals("")) {
+      return;
     }
 
     String prefixCheck = message.substring(0, 1);

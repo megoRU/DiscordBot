@@ -23,7 +23,7 @@ public class GameOfDice extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentDisplay().trim();
+    String message = event.getMessage().getContentRaw().trim();
     String prefix = ROLL;
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {

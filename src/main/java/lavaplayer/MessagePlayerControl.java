@@ -64,11 +64,11 @@ public class MessagePlayerControl extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentDisplay().trim();
+    String message = event.getMessage().getContentRaw().trim();
     if (message.equals("")) {
       return;
     }
-    String[] command = event.getMessage().getContentDisplay().split(" ", 2);
+    String[] command = message.split(" ", 2);
 
     String prefixPlay = "!";
     String prefixPPlay = "!";
@@ -101,6 +101,10 @@ public class MessagePlayerControl extends ListenerAdapter {
       prefixReset = BotStart.mapPrefix.get(event.getGuild().getId());
       prefixNowPlaying = BotStart.mapPrefix.get(event.getGuild().getId());
       prefixNP = BotStart.mapPrefix.get(event.getGuild().getId());
+    }
+
+    if (message.equals("")) {
+      return;
     }
 
     String prefixCheck = message.substring(0, 1);

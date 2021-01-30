@@ -17,7 +17,7 @@ public class MessagePing extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentDisplay().toLowerCase().trim();
+    String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String prefix = PING;
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {

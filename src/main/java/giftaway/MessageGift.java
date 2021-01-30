@@ -19,7 +19,7 @@ public class MessageGift extends ListenerAdapter {
       return;
     }
     try {
-      String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
+      String message = event.getMessage().getContentRaw().trim().toLowerCase();
       if (message.equals("")) {
         return;
       }

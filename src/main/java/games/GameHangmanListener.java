@@ -21,7 +21,7 @@ public class GameHangmanListener extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentRaw().toLowerCase().trim().toLowerCase();
+    String message = event.getMessage().getContentRaw().trim().toLowerCase();
 
     String prefix = HG;
     String prefix2 = HG_STOP;

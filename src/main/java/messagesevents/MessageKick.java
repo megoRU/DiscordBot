@@ -35,6 +35,10 @@ public class MessageKick extends ListenerAdapter {
       prefix2 = BotStart.mapPrefix.get(event.getGuild().getId());
     }
 
+    if (message.equals("")) {
+      return;
+    }
+
     String prefixCheck = message.substring(0, 1);
     String messageWithOutPrefix = message.substring(1, length);
 

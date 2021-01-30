@@ -18,7 +18,7 @@ public class MessageCheckBotSettings extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentDisplay().trim();
+    String message = event.getMessage().getContentRaw().trim();
     String prefix = "!";
 
     if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {

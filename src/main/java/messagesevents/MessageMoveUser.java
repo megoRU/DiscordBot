@@ -33,6 +33,10 @@ public class MessageMoveUser extends ListenerAdapter {
       prefix = BotStart.mapPrefix.get(event.getGuild().getId()) + "move\\s.+";
     }
 
+    if (message.equals("")) {
+      return;
+    }
+
     String prefixCheck = message.substring(0, 1);
     String messageWithOutPrefix = message.substring(1, length);
 

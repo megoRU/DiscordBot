@@ -19,7 +19,7 @@ public class MessageChangeBitrate extends ListenerAdapter {
             return;
         }
 
-        String message = event.getMessage().getContentDisplay().trim();
+        String message = event.getMessage().getContentRaw().trim();
         String prefix = "!";
         String prefix2 = "!";
         int length = message.length();
@@ -27,6 +27,10 @@ public class MessageChangeBitrate extends ListenerAdapter {
         if (BotStart.mapPrefix.containsKey(event.getGuild().getId())) {
             prefix = BotStart.mapPrefix.get(event.getGuild().getId());
             prefix2 = BotStart.mapPrefix.get(event.getGuild().getId());
+        }
+
+        if (message.equals("")) {
+            return;
         }
 
         String prefixCheck = message.substring(0, 1);

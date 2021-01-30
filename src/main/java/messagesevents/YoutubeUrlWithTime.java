@@ -21,7 +21,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
       return;
     }
 
-    String message = event.getMessage().getContentRaw().trim();
+    String message = event.getMessage().getContentDisplay().trim();
 
     if (message.matches(YOUTUBE_LINKS_MIN_SEC)
         || message.matches(YOUTUBE_MINI_MIN_SEC)
