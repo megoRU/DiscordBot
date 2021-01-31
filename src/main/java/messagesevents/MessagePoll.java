@@ -77,7 +77,6 @@ public class MessagePoll extends ListenerAdapter {
         return;
       }
       if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE`").queue();
         return;
       }
 

@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 
-public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
+public class UserJoinToGuild extends ListenerAdapter {
 
   @Override
   public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
@@ -17,9 +17,6 @@ public class EventJoinMemberToGuildSetRole extends ListenerAdapter {
       String userFromDB = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
       if (!userFromDB.equals(idEnterUser)) {
         dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
-      }
-      if (userFromDB.equals(idEnterUser)) {
-        System.out.println("Ничего не делать");
       }
       //setJoinRole(event.getMember());
     } catch (Exception e) {
