@@ -22,7 +22,12 @@ public class MessagePoll extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+    if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
+      event.getMember().getUser().openPrivateChannel()
+          .flatMap(m -> event.getMember().getUser().openPrivateChannel())
+          .flatMap(channel -> channel.sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
+              + "Inform the creator of this guild that you need to grant the bot this permission"))
+          .queue();
       return;
     }
 
@@ -82,11 +87,6 @@ public class MessagePoll extends ListenerAdapter {
       }
 
       String emoji = event.getReactionEmote().getEmoji();
-
-      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
-        return;
-      }
 
       if (!(emoji.equals(emojiYes) || emoji.equals(emojiNo) || emoji.equals(emojiIdk))
           && BotStart.idMessagesWithPollEmoji.get(event.getMessageId()) != null) {

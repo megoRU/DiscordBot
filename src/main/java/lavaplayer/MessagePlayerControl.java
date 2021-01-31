@@ -63,7 +63,13 @@ public class MessagePlayerControl extends ListenerAdapter {
     if (!event.isFromType(ChannelType.TEXT) || event.getAuthor().isBot()) {
       return;
     }
-    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+    if (!event.getGuild().getSelfMember().hasPermission(event.getTextChannel(), Permission.MESSAGE_WRITE)) {
+      event.getMember().getUser().openPrivateChannel()
+          .flatMap(m -> event.getMember().getUser().openPrivateChannel())
+          .flatMap(channel -> channel.sendMessage(
+              "Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
+                  + "Inform the creator of this guild that you need to grant the bot this permission"))
+          .queue();
       return;
     }
     String message = event.getMessage().getContentRaw().trim();
@@ -228,6 +234,9 @@ public class MessagePlayerControl extends ListenerAdapter {
     }
 
     if (messageWithOutPrefix.matches(VOLUME)) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+        return;
+      }
       if (command.length == 1) {
         event.getChannel().sendMessage("Current player volume: **" + player.getVolume() + "**")
             .queue();
