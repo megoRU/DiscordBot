@@ -46,7 +46,7 @@ public class MessagePoll extends ListenerAdapter {
     }
 
     if (messageWithOutPrefix.matches(POLL)) {
-      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+      if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_MANAGE)) {
         event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
         return;
       }
@@ -74,6 +74,15 @@ public class MessagePoll extends ListenerAdapter {
   public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
     try {
       if (event.getUser().isBot()) {
+        return;
+      }
+      if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
+        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE`").queue();
+        return;
+      }
+
+      if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_MANAGE)) {
+        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
         return;
       }
       if (!event.getReactionEmote().isEmoji()) {
