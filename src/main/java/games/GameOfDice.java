@@ -1,6 +1,7 @@
 package games;
 
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -22,7 +23,9 @@ public class GameOfDice extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().trim();
     String prefix = ROLL;
 

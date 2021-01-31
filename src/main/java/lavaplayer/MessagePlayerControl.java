@@ -63,7 +63,9 @@ public class MessagePlayerControl extends ListenerAdapter {
     if (!event.isFromType(ChannelType.TEXT) || event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().trim();
     if (message.equals("")) {
       return;

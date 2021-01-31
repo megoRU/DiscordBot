@@ -3,6 +3,7 @@ package events;
 import db.DataBase;
 import java.sql.SQLException;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import startbot.BotStart;
@@ -12,6 +13,9 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
   //bot join msg
   @Override
   public void onGuildJoin(GuildJoinEvent event) {
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String idGuildJoin = event.getGuild().getId();
     String nameGuild = event.getGuild().getName();
     String regionGuild = event.getGuild().getRegion().getName();

@@ -1,6 +1,5 @@
 package events;
 
-import java.util.Objects;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -77,7 +76,7 @@ public class ChangeBitrateChannel extends ListenerAdapter {
 
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
-    String idUser = Objects.requireNonNull(event.getMember()).getUser().getId();
+    String idUser = event.getMember().getUser().getId();
     String idGuild = event.getGuild().getId();
 
     if (idGuild.equals(MAIN_GUILD_ID)) {

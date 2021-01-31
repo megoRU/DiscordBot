@@ -1,5 +1,6 @@
 package games;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -20,7 +21,9 @@ public class GameHangmanListener extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().trim().toLowerCase();
 
     String prefix = HG;

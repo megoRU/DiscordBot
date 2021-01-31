@@ -1,5 +1,6 @@
 package messagesevents;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -14,6 +15,9 @@ public class GoogleSearch extends ListenerAdapter {
   @Override
   public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
     if (event.getAuthor().isBot()) {
+      return;
+    }
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
       return;
     }
 

@@ -24,7 +24,9 @@ public class MessageBan extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String[] messages = message.split(" ", 4);
     String prefix = "!";

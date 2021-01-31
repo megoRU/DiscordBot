@@ -24,6 +24,9 @@ public class MessageGift extends ListenerAdapter {
         return;
       }
 
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+        return;
+      }
       String[] messageSplit = message.split(" ");
       int length = message.length();
       String messageWithOutPrefix = message.substring(1, length);

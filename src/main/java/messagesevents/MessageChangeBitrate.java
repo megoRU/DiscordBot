@@ -18,7 +18,9 @@ public class MessageChangeBitrate extends ListenerAdapter {
         if (event.getAuthor().isBot()) {
             return;
         }
-
+        if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+            return;
+        }
         String message = event.getMessage().getContentRaw().trim();
         String prefix = "!";
         String prefix2 = "!";

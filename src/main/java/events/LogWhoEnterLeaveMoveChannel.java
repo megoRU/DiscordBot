@@ -1,5 +1,6 @@
 package events;
 
+import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceMoveEvent;
@@ -14,6 +15,9 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     if (!event.getMember().getUser().isBot()) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+        return;
+      }
       String nameChannelEnterUser = event.getChannelJoined().getName();
       String nameUserWhoEnter = event.getMember().getUser().getName();
       event.getGuild()
@@ -31,6 +35,9 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     if (!event.getMember().getUser().isBot()) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+        return;
+      }
       String nameChannelMoveUser = event.getChannelJoined().getName();
       String nameUserWhoMove = event.getMember().getUser().getName();
 
@@ -49,6 +56,9 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
     if (!event.getMember().getUser().isBot()) {
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+        return;
+      }
       String nameChannelLeaveUser = event.getChannelLeft().getName();
       String nameUserWhoLeave = event.getMember().getUser().getName();
 

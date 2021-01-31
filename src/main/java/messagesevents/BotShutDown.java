@@ -24,7 +24,9 @@ public class BotShutDown extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().toLowerCase();
 
     if (message.equals(SHUTDOWN) || message.equals(SHUTDOWN_WITH_OUT) || message.equals(SD)) {

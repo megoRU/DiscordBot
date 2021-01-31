@@ -23,7 +23,9 @@ public class MessageDeleting extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
     String prefix = "!";
     int length = message.length();

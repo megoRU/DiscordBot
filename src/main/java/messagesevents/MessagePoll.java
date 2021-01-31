@@ -22,6 +22,9 @@ public class MessagePoll extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
+    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+      return;
+    }
 
     String message = event.getMessage().getContentRaw().trim();
     String prefix = "!";
@@ -49,8 +52,7 @@ public class MessagePoll extends ListenerAdapter {
       }
       String[] messages = message.split(" ", 2);
       EmbedBuilder emb = new EmbedBuilder();
-      emb.setColor(
-          event.getGuild().getMemberById(event.getMessage().getAuthor().getIdLong()).getColor());
+      emb.setColor(event.getMessage().getMember().getColor());
       emb.setFooter("Poll by: " + event.getAuthor().getAsTag(), event.getAuthor().getAvatarUrl());
       emb.setTitle("**" + messages[1] + "**");
       event.getChannel().sendMessage(emb.build()).queue(m -> {
@@ -70,20 +72,31 @@ public class MessagePoll extends ListenerAdapter {
 
   @Override
   public void onGuildMessageReactionAdd(@NotNull GuildMessageReactionAddEvent event) {
-    if (event.getUser().isBot()) {
-      return;
-    }
-    String emoji = event.getReaction().getReactionEmote().getEmoji();
+    try {
+      if (event.getUser().isBot()) {
+        return;
+      }
+      if (!event.getReactionEmote().isEmoji()) {
+        event.getReaction().removeReaction(event.getUser()).queue();
+        return;
+      }
 
-    if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
-      event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
-      return;
-    }
+      String emoji = event.getReactionEmote().getEmoji();
 
-    if (!(emoji.equals(emojiYes) || emoji.equals(emojiNo) || emoji.equals(emojiIdk))
-        && BotStart.idMessagesWithPollEmoji.get(event.getMessageId()) != null) {
-      event.getReaction().removeReaction(event.getUser()).queue();
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_MANAGE)) {
+        event.getChannel().sendMessage("Bot don\\`t have: `Permission.MESSAGE_MANAGE`").queue();
+        return;
+      }
+
+      if (!(emoji.equals(emojiYes) || emoji.equals(emojiNo) || emoji.equals(emojiIdk))
+          && BotStart.idMessagesWithPollEmoji.get(event.getMessageId()) != null) {
+        event.getReaction().removeReaction(event.getUser()).queue();
+      }
+    } catch (IllegalStateException e) {
+      BotStart.jda.getGuildById("779317239722672128")
+          .getTextChannelById("779321076424376350")
+          .sendMessage(event.getReaction().toString() + "\n"
+              + event.getReactionEmote().isEmoji()).queue();
     }
   }
-
 }
