@@ -15,13 +15,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
     if (!event.getMember().getUser().isBot()) {
-      if (!event.getGuild().getSelfMember().hasPermission(event.getGuild()
-          .getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0), Permission.MESSAGE_WRITE)) {
-        event.getMember().getUser().openPrivateChannel()
-            .flatMap(m -> event.getMember().getUser().openPrivateChannel())
-            .flatMap(channel -> channel.sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
-                + "Inform the creator of this guild that you need to grant the bot this permission"))
-            .queue();
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
         return;
       }
       String nameChannelEnterUser = event.getChannelJoined().getName();
@@ -41,13 +35,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
     if (!event.getMember().getUser().isBot()) {
-      if (!event.getGuild().getSelfMember().hasPermission(event.getGuild()
-          .getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0), Permission.MESSAGE_WRITE)) {
-        event.getMember().getUser().openPrivateChannel()
-            .flatMap(m -> event.getMember().getUser().openPrivateChannel())
-            .flatMap(channel -> channel.sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
-                + "Inform the creator of this guild that you need to grant the bot this permission"))
-            .queue();
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
         return;
       }
       String nameChannelMoveUser = event.getChannelJoined().getName();
@@ -68,13 +56,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
   @Override
   public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
     if (!event.getMember().getUser().isBot()) {
-      if (!event.getGuild().getSelfMember().hasPermission(event.getGuild()
-          .getTextChannelsByName(BOT_CHANNEL_LOGS, true).get(0), Permission.MESSAGE_WRITE)) {
-        event.getMember().getUser().openPrivateChannel()
-            .flatMap(m -> event.getMember().getUser().openPrivateChannel())
-            .flatMap(channel -> channel.sendMessage("Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
-                + "Inform the creator of this guild that you need to grant the bot this permission"))
-            .queue();
+      if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
         return;
       }
       String nameChannelLeaveUser = event.getChannelLeft().getName();

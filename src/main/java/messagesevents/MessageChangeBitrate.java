@@ -18,14 +18,7 @@ public class MessageChangeBitrate extends ListenerAdapter {
     if (event.getAuthor().isBot()) {
       return;
     }
-    if (!event.getGuild().getSelfMember()
-        .hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-      event.getMember().getUser().openPrivateChannel()
-          .flatMap(m -> event.getMember().getUser().openPrivateChannel())
-          .flatMap(channel -> channel.sendMessage(
-              "Bot don\\`t have: `Permission.MESSAGE_WRITE` in this text channel!" + "\n"
-                  + "Inform the creator of this guild that you need to grant the bot this permission"))
-          .queue();
+    if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
       return;
     }
     String message = event.getMessage().getContentRaw().trim();
