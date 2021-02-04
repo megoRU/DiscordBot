@@ -79,19 +79,18 @@ public class DataBase {
     return 0;
   }
 
-  public long getUserId(String userLongId, String guildId) {
+  public String getUserId(String userLongId, String guildId) {
     try {
       ResultSet resultSet = statement
           .executeQuery(
               "SELECT userLongId FROM `GUILD_" + guildId + "` WHERE userLongId = " + userLongId);
       if (resultSet.next()) {
-        String user = String.valueOf(resultSet.getLong(1));
-        return Long.parseLong(user);
+        return String.valueOf(resultSet.getLong(1));
       }
     } catch (Exception e) {
       e.printStackTrace();
     }
-    return Long.parseLong("0");
+    return "0";
   }
 
   public void setWhoLastEnter(String guildLongId, String userLongId) {

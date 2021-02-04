@@ -2,7 +2,7 @@ package startbot;
 
 import config.Config;
 import events.ChangeBitrateChannel;
-import events.EventJoinMemberToGuildSetRole;
+import events.UserJoinToGuild;
 import events.LogWhoEnterLeaveMoveChannel;
 import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
@@ -20,7 +20,6 @@ import org.discordbots.api.client.DiscordBotListAPI;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import time.Statcord;
 
 public class BotStart {
 
@@ -50,7 +49,7 @@ public class BotStart {
     jdaBuilder.addEventListeners(new ExchangeRates());
     jdaBuilder.addEventListeners(new FlipCoin());
     jdaBuilder.addEventListeners(new ExchangeValue());
-    jdaBuilder.addEventListeners(new EventJoinMemberToGuildSetRole());
+    jdaBuilder.addEventListeners(new UserJoinToGuild());
     jdaBuilder.addEventListeners(new CountConnectionsEvent());
     jdaBuilder.addEventListeners(new LogWhoEnterLeaveMoveChannel());
     jdaBuilder.addEventListeners(new RepeatMyMessage());

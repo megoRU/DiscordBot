@@ -9,12 +9,16 @@ public class UserJoinToGuild extends ListenerAdapter {
 
   @Override
   public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+    if (event.getUser().isBot()) {
+      return;
+    }
+
     try {
       DataBase dataBase = new DataBase();
       String idGuild = event.getGuild().getId();
       String idEnterUser = event.getMember().getId();
       String nameEnterUser = event.getMember().getUser().getName();
-      String userFromDB = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
+      String userFromDB = dataBase.getUserId(idEnterUser, idGuild);
       if (!userFromDB.equals(idEnterUser)) {
         dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
       }
