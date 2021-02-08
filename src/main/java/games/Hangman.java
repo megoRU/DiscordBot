@@ -4,7 +4,6 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
-import startbot.BotStart;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -42,7 +41,7 @@ public class Hangman {
   public Hangman() {
   }
 
-  public void startGame(Guild guild, TextChannel channel, User user) {
+  public void startGame(TextChannel channel, User user) {
     if (WORD == null) {
       WORD = ALL_WORDS[random.nextInt(ALL_WORDS.length)];
       strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
@@ -58,13 +57,11 @@ public class Hangman {
         + "Текущее слово: `" + hideWord(WORD.length()) + "`"
         + "\nИгрок: <@" + user.getIdLong() + ">");
 
-    BotStart.jda.getGuildById(guild.getId())
-        .getTextChannelById(channel.getId())
-        .sendMessage(start.build()).queue(m -> messageId.put(user.getIdLong(), m.getId()));
+    channel.sendMessage(start.build()).queue(m -> messageId.put(user.getIdLong(), m.getId()));
     start.clear();
   }
 
-  public void logic(Guild guild, TextChannel channel, User user, String inputs) {
+  public void logic(TextChannel channel, User user, String inputs) {
 
     if (WORD == null) {
       int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
@@ -98,8 +95,7 @@ public class Hangman {
               + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
               + "\nИгрок: <@" + user.getIdLong() + ">");
 
-          BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-              .editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+          channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
           info.clear();
           return;
         }
@@ -122,8 +118,7 @@ public class Hangman {
                 + "Текущее слово: `" + result + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-            BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-                .editMessageById(messageId.get(user.getIdLong()), infof.build()).queue();
+            channel.editMessageById(messageId.get(user.getIdLong()), infof.build()).queue();
             infof.clear();
             WORD = null;
             removeGame(user.getIdLong());
@@ -139,12 +134,9 @@ public class Hangman {
               + "Текущее слово: `" + result + "`"
               + "\nИгрок: <@" + user.getIdLong() + ">");
 
-          BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-              .editMessageById(messageId.get(user.getIdLong()), info.build())
+          channel.editMessageById(messageId.get(user.getIdLong()), info.build())
               .queue(null, (exception) ->
-                  BotStart.jda.getGuildById(guild.getIdLong())
-                      .getTextChannelById(channel.getIdLong())
-                      .sendMessage(removeGameException(user.getIdLong())).queue());
+                  channel.sendMessage(removeGameException(user.getIdLong())).queue());
           info.clear();
 
           return;
@@ -163,8 +155,7 @@ public class Hangman {
                 + "\n Слово которое было: `" + WORD + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-            BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-                .editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+           channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
             info.clear();
             WORD = null;
             removeGame(user.getIdLong());
@@ -182,12 +173,9 @@ public class Hangman {
                 + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-            BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-                .editMessageById(messageId.get(user.getIdLong()), wordNotFound.build())
+            channel.editMessageById(messageId.get(user.getIdLong()), wordNotFound.build())
                 .queue(null, (exception) ->
-                    BotStart.jda.getGuildById(guild.getIdLong())
-                        .getTextChannelById(channel.getIdLong())
-                        .sendMessage(removeGameException(user.getIdLong())).queue());
+                    channel.sendMessage(removeGameException(user.getIdLong())).queue());
             wordNotFound.clear();
 
             return;
@@ -207,8 +195,7 @@ public class Hangman {
           + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
           + "\nИгрок: <@" + user.getIdLong() + ">");
 
-      BotStart.jda.getGuildById(guild.getIdLong()).getTextChannelById(channel.getIdLong())
-          .editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+      channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
       info.clear();
 
     }
@@ -266,10 +253,6 @@ public class Hangman {
         //System.out.println(checkArray[i]);
       }
     }
-  }
-
-  protected HashMap<Long, Hangman> getGames() {
-    return games;
   }
 
   public void setGame(long userId, Hangman game) {

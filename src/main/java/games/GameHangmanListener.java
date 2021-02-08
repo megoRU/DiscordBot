@@ -37,7 +37,6 @@ public class GameHangmanListener extends ListenerAdapter {
     if (message.length() == 1) {
       User user = event.getMember().getUser();
       TextChannel channel = event.getChannel();
-      Guild guild = event.getGuild();
       Hangman hangman;
       hangman = new Hangman();
 
@@ -52,7 +51,7 @@ public class GameHangmanListener extends ListenerAdapter {
 
       if (hangman.hasGame(user.getIdLong())) {
         hangman = hangman.getGame(user.getIdLong());
-        hangman.logic(guild, channel, user, message);
+        hangman.logic(channel, user, message);
       }
       return;
     }
@@ -90,7 +89,7 @@ public class GameHangmanListener extends ListenerAdapter {
 
       if (hangman.hasGame(user.getIdLong())) {
         hangman = hangman.getGame(user.getIdLong());
-        hangman.startGame(guild, channel, user);
+        hangman.startGame(channel, user);
       }
     }
   }
