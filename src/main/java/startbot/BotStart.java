@@ -8,7 +8,6 @@ import events.MessageWhenBotLeaveJoinToGuild;
 import events.MessageWhoEnterLeaveChannel;
 import games.GameHangmanListener;
 import games.GameOfDice;
-import giftaway.MessageGift;
 import lavaplayer.MessagePlayerControl;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
@@ -61,7 +60,6 @@ public class BotStart {
     jdaBuilder.addEventListeners(new MessageBan());
     jdaBuilder.addEventListeners(new MessagePoll());
     jdaBuilder.addEventListeners(new PrefixChange());
-    jdaBuilder.addEventListeners(new MessageGift());
     jdaBuilder.addEventListeners(new MessageCheckBotSettings());
     jdaBuilder.addEventListeners(new MessagePlayerControl());
 
@@ -99,7 +97,6 @@ public class BotStart {
     int serverCount = (int) jda.getGuildCache().size();
     TOP_GG_API.setStats(serverCount);
 
-    //Statcord.start(jda.getSelfUser().getId(), Config.getStatcrord(), jda, true, 5);
 
 
   }
