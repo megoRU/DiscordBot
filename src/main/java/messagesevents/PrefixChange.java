@@ -7,8 +7,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
 
-import java.sql.SQLException;
-
 public class PrefixChange extends ListenerAdapter {
 
   private static final String PREFIX = "\\*prefix\\s.";
@@ -36,37 +34,28 @@ public class PrefixChange extends ListenerAdapter {
     if (message.matches(PREFIX) && event.getMember().hasPermission(Permission.MANAGE_SERVER)
         && BotStart.mapPrefix.get(event.getMessage().getGuild().getId()) != null) {
       BotStart.mapPrefix.put(event.getGuild().getId(), messages[1]);
-      try {
-        DataBase dataBase = new DataBase();
-        dataBase.removeDB(event.getGuild().getId());
-        dataBase.addDB(event.getGuild().getId(), messages[1]);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+
+      DataBase.getInstance().removeDB(event.getGuild().getId());
+      DataBase.getInstance().addDB(event.getGuild().getId(), messages[1]);
+
       event.getChannel().sendMessage("The prefix is now: `" + messages[1] + "`").queue();
       return;
     }
 
     if (message.matches(PREFIX) && event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
       BotStart.mapPrefix.put(event.getGuild().getId(), messages[1]);
-      try {
-        DataBase dataBase = new DataBase();
-        dataBase.addDB(event.getGuild().getId(), messages[1]);
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+
+      DataBase.getInstance().addDB(event.getGuild().getId(), messages[1]);
+
       event.getChannel().sendMessage("The prefix is now: `" + messages[1] + "`").queue();
       return;
     }
 
     if (message.equals(PREFIX_RESET) && event.getMember().hasPermission(Permission.MANAGE_SERVER)) {
       BotStart.mapPrefix.remove(event.getGuild().getId());
-      try {
-        DataBase dataBase = new DataBase();
-        dataBase.removeDB(event.getGuild().getId());
-      } catch (SQLException e) {
-        e.printStackTrace();
-      }
+
+      DataBase.getInstance().removeDB(event.getGuild().getId());
+
       event.getChannel().sendMessage("The prefix is now standard: `!`").queue();
     }
   }

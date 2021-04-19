@@ -49,10 +49,9 @@ public class CountConnectionsEvent extends ListenerAdapter {
       String idGuild = event.getGuild().getId();
       event.getChannel().sendTyping().queue();
       try {
-        DataBase dataBase = new DataBase();
-        Map<Integer, String> topThreeUsers = dataBase.topThree(idGuild);
+        Map<Integer, String> topThreeUsers = DataBase.getInstance().topThree(idGuild);
         if (!message.equals(COUNT4) && !message.equals(COUNT_TOP_THREE)) {
-          int value = dataBase.getCountConn(idUser, idGuild);
+          int value = DataBase.getInstance().getCountConn(idUser, idGuild);
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           info.setDescription(

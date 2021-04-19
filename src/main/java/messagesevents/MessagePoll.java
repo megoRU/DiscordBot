@@ -1,7 +1,6 @@
 package messagesevents;
 
 import db.DataBase;
-import java.sql.SQLException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -60,12 +59,9 @@ public class MessagePoll extends ListenerAdapter {
         m.addReaction(emojiNo).queue();
         m.addReaction(emojiIdk).queue();
         BotStart.idMessagesWithPollEmoji.put(m.getId(), m.getId());
-        try {
-          DataBase dataBase = new DataBase();
-          dataBase.insertIdMessagesWithPollEmoji(m.getId());
-        } catch (SQLException troubles) {
-          troubles.printStackTrace();
-        }
+
+        DataBase.getInstance().insertIdMessagesWithPollEmoji(m.getId());
+
       });
     }
   }

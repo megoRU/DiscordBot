@@ -2,7 +2,7 @@ package messagesevents;
 
 import config.Config;
 import startbot.BotStart;
-import time.Statcord;
+import startbot.Statcord;
 
 public class ClassWithThread extends Thread {
 

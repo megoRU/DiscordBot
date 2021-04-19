@@ -1,7 +1,6 @@
 package messagesevents;
 
 import db.DataBase;
-import java.sql.SQLException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
@@ -62,15 +61,12 @@ public class BotShutDown extends ListenerAdapter {
         event.getChannel().sendMessage(info.build()).queue();
         info.clear();
         event.getJDA().shutdown();
+
+        DataBase.getInstance().closeCon();
         try {
-          DataBase dataBase = new DataBase();
-          dataBase.closeCon();
           Thread.sleep(2000);
         } catch (InterruptedException e) {
           e.printStackTrace();
-          Thread.currentThread().interrupt();
-        } catch (SQLException exception) {
-          exception.printStackTrace();
         }
         System.exit(-1);
       }

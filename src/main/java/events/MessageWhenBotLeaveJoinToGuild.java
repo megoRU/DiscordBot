@@ -1,7 +1,6 @@
 package events;
 
 import db.DataBase;
-import java.sql.SQLException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
@@ -38,14 +37,8 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
     } catch (Exception e) {
       e.printStackTrace();
     }
-
-    try {
-      DataBase dataBase = new DataBase();
-      dataBase.createTableGuildWhenBotJoinGuild(idGuildJoin);
-      dataBase.createTableVoiceWhenBotJoinGuild(idGuildJoin);
-      dataBase.createDefaultUserInVoice("1", "111111111111111111", idGuildJoin);
-    } catch (SQLException exception) {
-      exception.printStackTrace();
-    }
+    DataBase.getInstance().createTableGuildWhenBotJoinGuild(idGuildJoin);
+    DataBase.getInstance().createTableVoiceWhenBotJoinGuild(idGuildJoin);
+    DataBase.getInstance().createDefaultUserInVoice("1", "111111111111111111", idGuildJoin);
   }
 }

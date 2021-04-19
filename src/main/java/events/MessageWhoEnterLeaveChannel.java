@@ -8,7 +8,6 @@ import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import java.util.Map;
-import java.sql.SQLException;
 
 public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
@@ -20,9 +19,8 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
   private static final String BOT_CHANNEL_LOGS = "botchat";
 
   //TODO: Сделать ООП
-  private Boolean whoLastEnter(String idUser, String idGuild) throws SQLException {
-    DataBase dataBase = new DataBase();
-    Map<String, String> whoLast = dataBase.getWhoLastEnter(idGuild);
+  private Boolean whoLastEnter(String idUser, String idGuild) {
+    Map<String, String> whoLast = DataBase.getInstance().getWhoLastEnter(idGuild);
     return whoLast.get(idGuild).equals(idUser);
   }
 
@@ -36,21 +34,17 @@ public class MessageWhoEnterLeaveChannel extends ListenerAdapter {
     String idEnterUser = event.getMember().getId();
     String nameEnterUser = event.getMember().getUser().getName();
     String idGuild = event.getGuild().getId();
-    try {
-      DataBase dataBase = new DataBase();
-      String userFromBD = String.valueOf(dataBase.getUserId(idEnterUser, idGuild));
-      boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
 
-      if (!userFromBD.equals(idEnterUser)) {
-        dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
-        dataBase.setCount(idEnterUser, idGuild);
-      }
-      if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {
-        dataBase.setWhoLastEnter(idGuild, idEnterUser);
-        dataBase.setCount(idEnterUser, idGuild);
-      }
-    } catch (SQLException exception) {
-      exception.printStackTrace();
+    String userFromBD = String.valueOf(DataBase.getInstance().getUserId(idEnterUser, idGuild));
+    boolean lastWhoEnter = whoLastEnter(idEnterUser, idGuild);
+
+    if (!userFromBD.equals(idEnterUser)) {
+      DataBase.getInstance().createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
+      DataBase.getInstance().setCount(idEnterUser, idGuild);
+    }
+    if (userFromBD.equals(idEnterUser) && !lastWhoEnter) {
+      DataBase.getInstance().setWhoLastEnter(idGuild, idEnterUser);
+      DataBase.getInstance().setCount(idEnterUser, idGuild);
     }
 
     if (idGuild.equals(MAIN_GUILD_ID)) {

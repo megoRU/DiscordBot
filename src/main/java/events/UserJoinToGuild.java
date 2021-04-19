@@ -14,13 +14,12 @@ public class UserJoinToGuild extends ListenerAdapter {
     }
 
     try {
-      DataBase dataBase = new DataBase();
       String idGuild = event.getGuild().getId();
       String idEnterUser = event.getMember().getId();
       String nameEnterUser = event.getMember().getUser().getName();
-      String userFromDB = dataBase.getUserId(idEnterUser, idGuild);
+      String userFromDB = DataBase.getInstance().getUserId(idEnterUser, idGuild);
       if (!userFromDB.equals(idEnterUser)) {
-        dataBase.createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
+        DataBase.getInstance().createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
       }
       //setJoinRole(event.getMember());
     } catch (Exception e) {
