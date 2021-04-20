@@ -1,22 +1,18 @@
 package games;
 
+import java.io.IOException;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 
 public class Hangman {
 
   private String WORD = null;
-  private final String[] ALL_WORDS = {"копирайтер", "деятельность", "любопытность",
-      "всласть", "лесопромышленность", "психология", "скоросшиватель", "толерантность",
-      "эксгумация", "астрономия", "либерализм", "экспонат", "пышность", "бодибилдинг",
-      "шаловливость", "экспозиция", "индульгенция", "контрацептив", "безмятежность", "барбекю",
-      "кулинария", "энцефалопатия", "парашютист", "сущность", "поэтапность", "напыщенность",
-      "возвышенность", "интерпретация", "термометр", "градусник"};
   private char[] strToArray;
   private String WORD_HIDDEN = "";
   private final ArrayList<String> wordList = new ArrayList<>();
@@ -30,7 +26,6 @@ public class Hangman {
   private User user;
   private Guild guild;
   private TextChannel channel;
-  private final Random random = new Random();
 
   public Hangman(Guild guild, TextChannel channel, User user) {
     this.guild = guild;
@@ -38,15 +33,29 @@ public class Hangman {
     this.user = user;
   }
 
-  public Hangman() {
+  public Hangman() {}
+
+  public String getWord() throws IOException {
+    final String URL = "https://evilcoder.ru/random_word/";
+    Document doc = Jsoup.connect(URL)
+          .userAgent(
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
+          .referrer("https://www.yandex.com/")
+          .get();
+    return doc.select("body").text().substring(3, doc.text().indexOf("П"));
   }
 
   public void startGame(TextChannel channel, User user) {
-    if (WORD == null) {
-      WORD = ALL_WORDS[random.nextInt(ALL_WORDS.length)];
-      strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
-      hideWord(WORD.length());
+    try {
+      if (WORD == null) {
+        WORD = getWord();
+        strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
+        hideWord(WORD.length());
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+
     EmbedBuilder start = new EmbedBuilder();
     start.setColor(0x00FF00);
     start.setTitle("Виселица");
@@ -62,13 +71,6 @@ public class Hangman {
   }
 
   public void logic(TextChannel channel, User user, String inputs) {
-
-    if (WORD == null) {
-      int randomWord = (int) Math.floor(Math.random() * ALL_WORDS.length);
-      WORD = ALL_WORDS[randomWord];
-      strToArray = WORD.toCharArray(); // Преобразуем строку str в массив символов (char)
-      hideWord(WORD.length());
-    }
 
     if (WORD_HIDDEN.contains("_")) {
 

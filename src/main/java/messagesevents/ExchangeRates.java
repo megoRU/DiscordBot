@@ -59,7 +59,7 @@ public class ExchangeRates extends ListenerAdapter {
     Document doc = Jsoup.connect(URL)
           .maxBodySize(0)
           .userAgent(
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.104 Safari/537.36")
+              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.72 Safari/537.36")
           .referrer("https://www.yandex.com/")
           .get();
 

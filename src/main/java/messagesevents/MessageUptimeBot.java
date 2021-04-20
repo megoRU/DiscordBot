@@ -20,7 +20,12 @@ public class MessageUptimeBot extends ListenerAdapter {
     if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
       return;
     }
+
     String message = event.getMessage().getContentRaw().toLowerCase().trim();
+
+    if (message.equals("")) {
+      return;
+    }
 
     String prefix = "!";
     int length = message.length();
@@ -29,9 +34,6 @@ public class MessageUptimeBot extends ListenerAdapter {
       prefix = BotStart.mapPrefix.get(event.getGuild().getId());
     }
 
-    if (message.equals("")) {
-      return;
-    }
 
     String prefixCheck = message.substring(0, 1);
     String messageWithOutPrefix = message.substring(1, length);
