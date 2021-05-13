@@ -39,21 +39,22 @@ public class MessageInfoHelp extends ListenerAdapter {
       p = BotStart.mapPrefix.get(event.getGuild().getId());
     }
 
+    String value = "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
+        "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
+        "`" + p + "stop` - Stops music and clears.\n" +
+        "`" + p + "skip` - Skip track.\n" +
+        "`" + p + "pause` - Pause track.\n" +
+        "`" + p + "leave` - Bot leave from voice channel.\n" +
+        "`" + p + "list` - Will print all the tracks in the list.\n" +
+        "`" + p + "restart` - Restarts the playing track.\n" +
+        "`" + p + "repeat` - Repeat endlessly track.\n" +
+        "`" + p + "reset` - Resets the player.\n" +
+        "`" + p + "np` - Sends a list of tracks currently on the list.\n";
     if (message.equals(prefix3)) {
       EmbedBuilder music = new EmbedBuilder();
       music.setColor(0xa224db);
       music.addField("Music:",
-          "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
-              "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
-              "`" + p + "stop` - Stops music and clears.\n" +
-              "`" + p + "skip` - Skip track.\n" +
-              "`" + p + "pause` - Pause track.\n" +
-              "`" + p + "leave` - Bot leave from voice channel.\n" +
-              "`" + p + "list` - Will print all the tracks in the list.\n" +
-              "`" + p + "restart` - Restarts the playing track.\n" +
-              "`" + p + "repeat` - Repeat endlessly track.\n" +
-              "`" + p + "reset` - Resets the player.\n" +
-              "`" + p + "np` - Sends a list of tracks currently on the list.\n", false);
+          value, false);
       event.getChannel().sendMessage(music.build()).queue();
       music.clear();
       return;
@@ -76,22 +77,8 @@ public class MessageInfoHelp extends ListenerAdapter {
           "`*prefix <symbol>` - Changes the prefix.\n" +
               "`*prefix reset` - Reset the prefix.", false);
 
-      info.addField("Giveaway:", "`"
-          + p + "gift start` - Run Giveaway.\n`"
-          + p + "gift stop` - Stop Giveaway.\n"
-          + p + "gift stop <number>` - Stop Giveaway with more winners.\n", false);
       info.addField("Music:",
-          "`" + p + "play <YouTube url>` - The bot will play audio from the video. \n" +
-              "`" + p + "pplay <YouTube url playlist>` - Generally this is for playlists.\n" +
-              "`" + p + "stop` - Stops music and clears.\n" +
-              "`" + p + "skip` - Skip track.\n" +
-              "`" + p + "pause` - Pause track.\n" +
-              "`" + p + "leave` - Bot leave from voice channel.\n" +
-              "`" + p + "list` - Will print all the tracks in the list.\n" +
-              "`" + p + "restart` - Restarts the playing track.\n" +
-              "`" + p + "repeat` - Repeat endlessly track.\n" +
-              "`" + p + "reset` - Resets the player.\n" +
-              "`" + p + "np` - Sends a list of tracks currently on the list.\n", false);
+          value, false);
 
       info.addField("Games:",
           "`" + p + "roll` - The Game of Dice.\n" +
