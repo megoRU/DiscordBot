@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import java.util.ArrayList;
-import java.util.HashMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -18,14 +17,12 @@ public class Hangman {
   private final ArrayList<String> wordList = new ArrayList<>();
   private final ArrayList<Integer> index = new ArrayList<>();
   private final ArrayList<String> usedLetters = new ArrayList<>();
-  private static final HashMap<Long, Hangman> games = new HashMap<>();
-  private static final HashMap<Long, String> messageId = new HashMap<>();
   private boolean isLetterPresent;
   private Integer count = 0;
   private Integer count2 = 1;
-  private User user;
-  private Guild guild;
-  private TextChannel channel;
+  private final User user;
+  private final Guild guild;
+  private final TextChannel channel;
 
   public Hangman(Guild guild, TextChannel channel, User user) {
     this.guild = guild;
@@ -33,9 +30,7 @@ public class Hangman {
     this.user = user;
   }
 
-  public Hangman() {}
-
-  public String getWord() throws IOException {
+  private String getWord() throws IOException {
     final String URL = "https://evilcoder.ru/random_word/";
     Document doc = Jsoup.connect(URL)
           .userAgent(
@@ -66,11 +61,11 @@ public class Hangman {
         + "Текущее слово: `" + hideWord(WORD.length()) + "`"
         + "\nИгрок: <@" + user.getIdLong() + ">");
 
-    channel.sendMessage(start.build()).queue(m -> messageId.put(user.getIdLong(), m.getId()));
+    channel.sendMessage(start.build()).queue(m -> HangmanRegistry.getInstance().getMessageId().put(user.getIdLong(), m.getId()));
     start.clear();
   }
 
-  public void logic(TextChannel channel, User user, String inputs) {
+  public void logic(String inputs) {
 
     if (WORD_HIDDEN.contains("_")) {
 
@@ -97,7 +92,7 @@ public class Hangman {
               + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
               + "\nИгрок: <@" + user.getIdLong() + ">");
 
-          channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+          channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), info.build()).queue();
           info.clear();
           return;
         }
@@ -120,10 +115,10 @@ public class Hangman {
                 + "Текущее слово: `" + result + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-            channel.editMessageById(messageId.get(user.getIdLong()), infof.build()).queue();
+            channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), infof.build()).queue();
             infof.clear();
             WORD = null;
-            removeGame(user.getIdLong());
+            HangmanRegistry.getInstance().getActiveHangman().remove(user.getIdLong());
             return;
           }
 
@@ -136,9 +131,8 @@ public class Hangman {
               + "Текущее слово: `" + result + "`"
               + "\nИгрок: <@" + user.getIdLong() + ">");
 
-          channel.editMessageById(messageId.get(user.getIdLong()), info.build())
-              .queue(null, (exception) ->
-                  channel.sendMessage(removeGameException(user.getIdLong())).queue());
+          channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), info.build())
+              .queue(null, (exception) -> channel.sendMessage(removeGameException(user.getIdLong())).queue());
           info.clear();
 
           return;
@@ -157,10 +151,10 @@ public class Hangman {
                 + "\n Слово которое было: `" + WORD + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-           channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+            channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), info.build()).queue();
             info.clear();
             WORD = null;
-            removeGame(user.getIdLong());
+            HangmanRegistry.getInstance().getActiveHangman().remove(user.getIdLong());
             return;
           }
 
@@ -175,14 +169,12 @@ public class Hangman {
                 + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
                 + "\nИгрок: <@" + user.getIdLong() + ">");
 
-            channel.editMessageById(messageId.get(user.getIdLong()), wordNotFound.build())
+            channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), wordNotFound.build())
                 .queue(null, (exception) ->
                     channel.sendMessage(removeGameException(user.getIdLong())).queue());
             wordNotFound.clear();
-
             return;
           }
-
         }
         return;
       }
@@ -197,11 +189,9 @@ public class Hangman {
           + "Текущее слово: `" + replacementLetters(WORD.indexOf(inputs)) + "`"
           + "\nИгрок: <@" + user.getIdLong() + ">");
 
-      channel.editMessageById(messageId.get(user.getIdLong()), info.build()).queue();
+      channel.editMessageById(HangmanRegistry.getInstance().getMessageId().get(user.getIdLong()), info.build()).queue();
       info.clear();
-
     }
-
   }
 
   private String getDescription(int count) {
@@ -252,29 +242,12 @@ public class Hangman {
       if (checkArray[i] == letter) {
         checkArray[i] = letter;
         index.add(i);
-        //System.out.println(checkArray[i]);
       }
     }
   }
 
-  public void setGame(long userId, Hangman game) {
-    games.put(userId, game);
-  }
-
-  public boolean hasGame(long userId) {
-    return games.containsKey(userId);
-  }
-
-  public Hangman getGame(long userId) {
-    return games.get(userId);
-  }
-
-  public void removeGame(long userId) {
-    games.remove(userId);
-  }
-
-  public String removeGameException(long userId) {
-    games.remove(userId);
+  private String removeGameException(long userId) {
+    HangmanRegistry.getInstance().getActiveHangman().remove(userId);
     WORD = null;
     return "Игра была отменена из-за того, что бот не смог получить ID\n" +
         "своего сообщения для редактирования. Попробуйте ещё раз.";
@@ -284,16 +257,8 @@ public class Hangman {
     return user;
   }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
-
   public Guild getGuild() {
     return guild;
-  }
-
-  public void setGuild(Guild guild) {
-    this.guild = guild;
   }
 
   public TextChannel getChannel() {

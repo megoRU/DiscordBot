@@ -34,62 +34,51 @@ public class GameHangmanListener extends ListenerAdapter {
       prefix2 = BotStart.mapPrefix.get(event.getGuild().getId()) + "hg stop";
     }
 
-    if (message.length() == 1) {
-      User user = event.getMember().getUser();
-      TextChannel channel = event.getChannel();
-      Hangman hangman;
-      hangman = new Hangman();
+    long userIdLong = event.getAuthor().getIdLong();
 
-      if (!hangman.hasGame(user.getIdLong())) {
+    if (message.length() == 1) {
+      if (!HangmanRegistry.getInstance().hasHangman(userIdLong)) {
         return;
       }
 
-      if (message.matches(HG_ONE_LETTER_ENG) && hangman.hasGame(user.getIdLong())) {
+      if (message.matches(HG_ONE_LETTER_ENG) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
         event.getChannel().sendMessage("Поддерживается только кириллица!").queue();
         return;
       }
 
-      if (hangman.hasGame(user.getIdLong())) {
-        hangman = hangman.getGame(user.getIdLong());
-        hangman.logic(channel, user, message);
+      if (HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+        HangmanRegistry.getInstance().getActiveHangman().get(userIdLong).logic(message);
       }
       return;
     }
 
     if (message.equals(prefix) || message.matches(HG_ONE_LETTER) || message
         .matches(HG_ONE_LETTER_ENG) || message.equals(prefix2)) {
-      User user = event.getMember().getUser();
-      TextChannel channel = event.getChannel();
-      Guild guild = event.getGuild();
-      Hangman hangman;
-      hangman = new Hangman();
 
-      if (message.equals(prefix) && hangman.hasGame(user.getIdLong())) {
-        event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.")
-            .queue();
+      if (message.equals(prefix) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+        event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.").queue();
         return;
       }
 
-      if (message.equals(prefix2) && hangman.hasGame(user.getIdLong())) {
-        hangman.removeGame(user.getIdLong());
+      if (message.equals(prefix2) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+        HangmanRegistry.getInstance().getActiveHangman().remove(userIdLong);
         event.getChannel().sendMessage("Вы завершили игру.\n" +
             "Чтобы начать новую игру напишите: `" + prefix + "`\n" +
             "Далее присылайте в чат по одной букве.").queue();
         return;
       }
 
-      if (message.equals(prefix2) && !hangman.hasGame(user.getIdLong())) {
+      if (message.equals(prefix2) && !HangmanRegistry.getInstance().hasHangman(userIdLong)) {
         event.getChannel().sendMessage("Вы сейчас не играете.").queue();
         return;
       }
 
-      if (!hangman.hasGame(user.getIdLong())) {
-        hangman.setGame(user.getIdLong(), new Hangman(guild, channel, user));
+      if (!HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+        HangmanRegistry.getInstance().setHangman(userIdLong, new Hangman(event.getGuild(), event.getChannel(), event.getMember().getUser()));
       }
 
-      if (hangman.hasGame(user.getIdLong())) {
-        hangman = hangman.getGame(user.getIdLong());
-        hangman.startGame(channel, user);
+      if (HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+        HangmanRegistry.getInstance().getActiveHangman().get(userIdLong).startGame(event.getChannel(), event.getMember().getUser());
       }
     }
   }

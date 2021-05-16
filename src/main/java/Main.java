@@ -1,3 +1,4 @@
+import games.HangmanRegistry;
 import messagesevents.ClassWithThread;
 import startbot.BotStart;
 
@@ -7,6 +8,7 @@ public class Main {
 
     BotStart botStart = new BotStart();
     botStart.startBot();
+    HangmanRegistry.getInstance();
 
 //    List<Thread> threads = new LinkedList<>();
 //    threads.add(new Thread((new ClassWithThread())));
@@ -14,8 +16,8 @@ public class Main {
 //    for(Thread thread : threads) {
 //      thread.join();
 //    }
-    ClassWithThread classWithThread = new ClassWithThread();
-    classWithThread.start();
+//    ClassWithThread classWithThread = new ClassWithThread();
+//    classWithThread.start();
 
   }
 
