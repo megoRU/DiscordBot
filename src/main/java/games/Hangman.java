@@ -19,7 +19,7 @@ public class Hangman {
   private final ArrayList<String> usedLetters = new ArrayList<>();
   private boolean isLetterPresent;
   private Integer count = 0;
-  private Integer count2 = 1;
+  private Integer count2 = 0;
   private final User user;
   private final Guild guild;
   private final TextChannel channel;
@@ -137,7 +137,7 @@ public class Hangman {
       if (!WORD.contains(inputs)) {
         count2++;
 
-        if (count2 > 5) {
+        if (count2 >= 5) {
           EmbedBuilder info = new EmbedBuilder();
           info.setColor(0x00FF00);
           info.setTitle("Виселица");
@@ -177,17 +177,17 @@ public class Hangman {
 
   private String getDescription(int count) {
     return "```"
-        + (count > 0 ? "|‾‾‾‾‾‾|      " : " ")
+        + (count >= 0 ? "|‾‾‾‾‾‾|      " : " ")
         + "   \n|     "
-        + (count > 1 ? "🎩" : " ")
+        + (count >= 1 ? "🎩" : " ")
         + "   \n|     "
-        + (count > 2 ? "\uD83E\uDD75" : " ")
+        + (count >= 2 ? "\uD83E\uDD75" : " ")
         + "   \n|   "
-        + (count > 3 ? "👌👕\uD83E\uDD19" : " ")
+        + (count >= 3 ? "👌👕\uD83E\uDD19" : " ")
         + "   \n|     "
-        + (count > 4 ? "🩳" : " ")
+        + (count >= 4 ? "🩳" : " ")
         + "   \n|    "
-        + (count > 5 ? "👞👞" : " ")
+        + (count >= 5 ? "👞👞" : " ")
         + "   \n|     \n|__________\n\n"
         + "```";
   }
