@@ -5,10 +5,8 @@ import java.util.Map;
 
 public class HangmanRegistry {
 
-  private static final Map<Long, Hangman> activeHangman = new HashMap<>();
   private static volatile HangmanRegistry hangmanRegistry;
-  private static final Map<Long, String> guildId = new HashMap<>();
-  private static final Map<Long, String> channelId = new HashMap<>();
+  private static final Map<Long, Hangman> activeHangman = new HashMap<>();
   private static final Map<Long, String> messageId = new HashMap<>();
 
   public static HangmanRegistry getInstance() {
@@ -28,14 +26,6 @@ public class HangmanRegistry {
     return activeHangman;
   }
 
-  public Map<Long, String> getGuildId() {
-    return guildId;
-  }
-
-  public Map<Long, String> getChannelId() {
-    return channelId;
-  }
-
   public Map<Long, String> getMessageId() {
     return messageId;
   }
@@ -50,6 +40,10 @@ public class HangmanRegistry {
 
   public boolean hasHangman(long userIdLong) {
     return activeHangman.containsKey(userIdLong);
+  }
+
+  public void removeHangman(long userIdLong) {
+    activeHangman.remove(userIdLong);
   }
 
 }

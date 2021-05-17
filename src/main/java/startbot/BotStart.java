@@ -30,9 +30,9 @@ public class BotStart {
 
   public void startBot() throws Exception {
     jdaBuilder.setAutoReconnect(true);
-    jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
+//    jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
     jdaBuilder.setStatus(OnlineStatus.ONLINE);
-    jdaBuilder.setActivity(Activity.playing("—> !music | !help"));
+    jdaBuilder.setActivity(Activity.playing("!help | !hg"));
     jdaBuilder.setBulkDeleteSplittingEnabled(false);
     jdaBuilder.addEventListeners(new BotShutDown());
     jdaBuilder.addEventListeners(new MessagePing());

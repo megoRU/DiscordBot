@@ -1,9 +1,6 @@
 package games;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -35,28 +32,23 @@ public class GameHangmanListener extends ListenerAdapter {
     }
 
     long userIdLong = event.getAuthor().getIdLong();
-
-    if (message.length() == 1) {
-      if (!HangmanRegistry.getInstance().hasHangman(userIdLong)) {
-        return;
-      }
-
-      if (message.matches(HG_ONE_LETTER_ENG) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+    if ((message.matches(HG_ONE_LETTER) || message.matches(HG_ONE_LETTER_ENG)) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
+      if (message.matches(HG_ONE_LETTER_ENG)) {
         event.getChannel().sendMessage("Поддерживается только кириллица!").queue();
         return;
       }
-
-      if (HangmanRegistry.getInstance().hasHangman(userIdLong)) {
-        HangmanRegistry.getInstance().getActiveHangman().get(userIdLong).logic(message);
-      }
+      HangmanRegistry.getInstance().getActiveHangman().get(userIdLong).logic(message);
       return;
     }
 
-    if (message.equals(prefix) || message.matches(HG_ONE_LETTER) || message
-        .matches(HG_ONE_LETTER_ENG) || message.equals(prefix2)) {
+    if (message.equals(prefix) || message.equals(prefix2)) {
 
       if (message.equals(prefix) && HangmanRegistry.getInstance().hasHangman(userIdLong)) {
-        event.getChannel().sendMessage("Сейчас вы играете.\nНужно прислать одну букву в чат.").queue();
+        event.getChannel().sendMessage(
+            "Сейчас вы играете.\n"
+                + "Нужно прислать одну букву в чат.\n"
+                + "Чтобы завершить игру напишите: " + prefix + "hg stop")
+            .queue();
         return;
       }
 
