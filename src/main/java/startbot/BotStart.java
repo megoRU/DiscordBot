@@ -48,7 +48,6 @@ public class BotStart {
         jdaBuilder.addEventListeners(new RepeatMyMessage());
         jdaBuilder.addEventListeners(new SendingMessagesToGuilds());
         jdaBuilder.addEventListeners(new GameOfDice());
-        jdaBuilder.addEventListeners(new GameHangmanListener());
         jdaBuilder.addEventListeners(new MessageChangeBitrate());
         jdaBuilder.addEventListeners(new MessageKick());
         jdaBuilder.addEventListeners(new MessageBan());
