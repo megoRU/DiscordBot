@@ -6,6 +6,5 @@ public class Main {
 
         BotStart botStart = new BotStart();
         botStart.startBot();
-        HangmanRegistry.getInstance();
     }
 }
