@@ -14,8 +14,8 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
     public void onGuildJoin(GuildJoinEvent event) {
         String idGuildJoin = event.getGuild().getId();
         String nameGuild = event.getGuild().getName();
-        String regionGuild = event.getGuild().getRegion().getName();
         try {
+        String regionGuild = event.getGuild().getVoiceChannels().get(0).getRegion().getName();
             if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
 
                 event.getGuild().getDefaultChannel()

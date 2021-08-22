@@ -71,7 +71,7 @@ public class GameOfDice extends ListenerAdapter {
                         + "**");
                 gameOfDice.setColor(Color.WHITE);
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
-                event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
+                event.getGuild().getTextChannelById(idChannel).sendMessageEmbeds(gameOfDice.build()).queue();
                 playerList.clear();
                 guild.clear();
                 chat.clear();
@@ -109,8 +109,8 @@ public class GameOfDice extends ListenerAdapter {
                 gameOfDice.setColor(Color.WHITE);
                 gameOfDice.setThumbnail(choiceOfSides(diceFirstPlayer, diceSecondPlayer));
                 event.getJDA().getGuildById(guild.get(0)).getTextChannelById(chat.get(0))
-                        .sendMessage(gameOfDice.build()).queue();
-                event.getGuild().getTextChannelById(idChannel).sendMessage(gameOfDice.build()).queue();
+                        .sendMessageEmbeds(gameOfDice.build()).queue();
+                event.getGuild().getTextChannelById(idChannel).sendMessageEmbeds(gameOfDice.build()).queue();
                 playerList.clear();
                 guild.clear();
                 chat.clear();
