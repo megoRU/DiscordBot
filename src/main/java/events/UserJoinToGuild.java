@@ -7,25 +7,25 @@ import org.jetbrains.annotations.NotNull;
 
 public class UserJoinToGuild extends ListenerAdapter {
 
-  @Override
-  public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
-    if (event.getUser().isBot()) {
-      return;
-    }
+    @Override
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        if (event.getUser().isBot()) {
+            return;
+        }
 
-    try {
-      String idGuild = event.getGuild().getId();
-      String idEnterUser = event.getMember().getId();
-      String nameEnterUser = event.getMember().getUser().getName();
-      String userFromDB = DataBase.getInstance().getUserId(idEnterUser, idGuild);
-      if (!userFromDB.equals(idEnterUser)) {
-        DataBase.getInstance().createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
-      }
-      //setJoinRole(event.getMember());
-    } catch (Exception e) {
-      e.printStackTrace();
+        try {
+            String idGuild = event.getGuild().getId();
+            String idEnterUser = event.getMember().getId();
+            String nameEnterUser = event.getMember().getUser().getName();
+            String userFromDB = DataBase.getInstance().getUserId(idEnterUser, idGuild);
+            if (!userFromDB.equals(idEnterUser)) {
+                DataBase.getInstance().createDefaultUserInGuild(idEnterUser, nameEnterUser, idGuild);
+            }
+            //setJoinRole(event.getMember());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-  }
 
 //  public static void setJoinRole(Member member) {
 //    try {
