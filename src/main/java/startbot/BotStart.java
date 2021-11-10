@@ -3,7 +3,6 @@ package startbot;
 import config.Config;
 import events.*;
 import games.GameOfDice;
-import lavaplayer.MessagePlayerControl;
 import messagesevents.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -27,7 +26,7 @@ public class BotStart {
         jdaBuilder.setAutoReconnect(true);
 //    jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
-        jdaBuilder.setActivity(Activity.playing("!help | !hg"));
+        jdaBuilder.setActivity(Activity.playing("!help"));
         jdaBuilder.setBulkDeleteSplittingEnabled(false);
         jdaBuilder.addEventListeners(new MessagePing());
         jdaBuilder.addEventListeners(new MessageDeleting());
@@ -54,7 +53,6 @@ public class BotStart {
         jdaBuilder.addEventListeners(new MessagePoll());
         jdaBuilder.addEventListeners(new PrefixChange());
         jdaBuilder.addEventListeners(new MessageCheckBotSettings());
-        jdaBuilder.addEventListeners(new MessagePlayerControl());
 
         jda = jdaBuilder.build();
         jda.awaitReady();

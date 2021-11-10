@@ -4,10 +4,10 @@ public class Config {
 
     private static final String DEV_BOT_TOKEN = ""; //TOKEN CHANGED
     private static final String PRODUCTION_BOT_TOKEN = ""; //TOKEN CHANGED
-    private static final String TOKEN = DEV_BOT_TOKEN; //TOKEN CHANGED
-    private static final String CONN = ""; //utf8mb4
-    private static final String USER = "";
-    private static final String PASS = "";
+    private static final String TOKEN = System.getenv("TOKEN"); //TOKEN CHANGED
+    private static final String CONN = System.getenv("DATABASE_URL"); //utf8mb4
+    private static final String USER = System.getenv("USER");
+    private static final String PASS = System.getenv("PASS");
     private static final String TOP_GG_API_TOKEN = "";
     private static final String BOT_ID = "754093698681274369";
 
