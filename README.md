@@ -20,19 +20,15 @@
 
 1.  Delete messages
 2.  Move user to you voice channel | Beta
-3.  Available Commands
-4.  Write to the special channel when someone entered/left
-5.  Converts YouTube links to timecode links
-6.  Bot welcome msg when Bot join Guild
-7.  Change channel bitrate
-8.  Exchange Rates (DOLLAR/EURO to RUB)
-9.  Exchange Values
-10. Repeat after me
-11. Game `!roll`
-12. Game `!hg` (Exclusive for Russian players)
-13. Now you can create giveaway - `!gift start`
-14. Music! :)
-15. Create `!poll`
+3.  Write to the special channel when someone entered/left
+4.  Converts YouTube links to timecode links
+5.  Bot welcome msg when Bot join Guild
+6.  Change channel bitrate
+7.  Exchange Rates (DOLLAR/EURO to RUB)
+8.  Exchange Values
+9. Repeat after me
+10. Game `!roll`
+11. Create `!poll`
 
 ## TODO
 
@@ -40,7 +36,6 @@
 
 ## Copyright Notice
 
-1.  The music function was taken a little from here: [Yui](https://github.com/DV8FromTheWorld/Yui)
 2.  The bot is made using the library: [JDA](https://github.com/DV8FromTheWorld/JDA)
 
 ## What data we collect
