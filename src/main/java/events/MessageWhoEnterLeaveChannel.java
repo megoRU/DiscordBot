@@ -63,7 +63,7 @@ public class   MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
             Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            if (hour >= 11 || (hour == 0)) {
+            if (hour >= 11 || hour == 0) {
                 if (isInChannelMeshiva() && !idEnterUser.equals(USER_ID_MESHIVA)) {
                     TextChannel textChannel = event.getGuild()
                             .getTextChannelsByName(BOT_CHANNEL_LOGS, true)
@@ -142,7 +142,7 @@ public class   MessageWhoEnterLeaveChannel extends ListenerAdapter {
 
             Calendar calendar = Calendar.getInstance();
             int hour = calendar.get(Calendar.HOUR_OF_DAY);
-            if (hour >= 11 || (hour == 0)) {
+            if (hour >= 11 || hour == 0) {
                 if (idLeaveUser.equals(USER_ID_MESHIVA)) {
                     TextChannel textChannel = event.getGuild().getTextChannelsByName(BOT_CHANNEL_LOGS, true)
                             .get(0);

@@ -2,7 +2,7 @@ package messagesevents;
 
 import db.DataBase;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
@@ -13,13 +13,11 @@ public class PrefixChange extends ListenerAdapter {
     private static final String PREFIX_RESET = "*prefix reset";
 
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
-            return;
-        }
-        if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-            return;
-        }
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
+        if (!event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_SEND)) return;
+
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String[] messages = message.split(" ", 2);
 

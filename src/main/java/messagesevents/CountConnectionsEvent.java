@@ -3,7 +3,7 @@ package messagesevents;
 import db.DataBase;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
@@ -19,14 +19,13 @@ public class CountConnectionsEvent extends ListenerAdapter {
     private static final String COUNT_TOP_THREE = "!top 3";
     private static final String COUNT_EN = "!amount";
 
+
     @Override
-    public void onGuildMessageReceived(@NotNull GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
-            return;
-        }
-        if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-            return;
-        }
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
+        if (!event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_SEND)) return;
+
         String message = event.getMessage().getContentRaw().toLowerCase().trim();
         String prefix = COUNT_RU;
         String prefix2 = COUNT_EN;

@@ -3,8 +3,9 @@ package messagesevents;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.Message;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 import startbot.BotStart;
 
 import java.util.concurrent.TimeUnit;
@@ -19,13 +20,11 @@ public class MessageInfoHelp extends ListenerAdapter {
     private static final String MUSIC = "!music";
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
-            return;
-        }
-        if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-            return;
-        }
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
+        if (!event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_SEND)) return;
+
         String message = event.getMessage().getContentRaw().toLowerCase();
         String prefix = HELP;
         String prefix2 = INFO;
@@ -67,21 +66,11 @@ public class MessageInfoHelp extends ListenerAdapter {
 
             info.addField("Other functions:",
                     "`" + p + "help` - Information."
-                            + "\n`" + p + "poll <text>` - Create a poll."
-                            + "\n`" + p + "kick` - Example: " + p + "kick <@user>/" + p + "kick <@user> <reason>"
-                            + "\n`" + p + "ban` - Example: " + p + "ban <@user> <days>/" + p
-                            + "ban <@user> <days> <reason>"
-                            + "\n`" + p + "bitrate <96>` - Changes the channel bitrate to the specified bitrate."
-                            + "\n`курс доллара, курс евро, курс, евро, доллар` - Данные от ЦБ к рублю."
-                            + "\n`100 долларов в рублях` - Доступны валюты: USD, EUR, RUB"
-                            + "\n`" + p + "uptime/uptime` - uptime bot."
                             + "\n`" + p + "ping/ping` - API response."
                             + "\n`" + p + "amount/" + p
                             + "колво]` - How many times have you connected to channels."
                             + "\n`top 3/колво топ` - Top 3 by connection."
                             + "\n`" + p
-                            + "clear + <number: >= 2 & <= 100>` - Deletes the specified number of messages."
-                            + "\n`" + p + "flip` - flip a coin."
                             + "\n`" + p + "ищи/ищи <текст>` - " + " [g.zeos.in](https://g.zeos.in/) "
                             + "\n`<YouTube link> <minutes> <seconds if present>` - Converts to a short link with time.",
                     false);

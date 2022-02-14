@@ -1,0 +1,11 @@
+version: '3.9'
+
+services:
+  musicandgames:
+    image: megoru/musicandgames
+    restart: always
+    environment:
+      TOKEN:
+      DATABASE_URL: jdbc:mysql:///DiscordBot?useSSL=false&serverTimezone=UTC&characterEncoding=utf8
+      USER:
+      PASS:

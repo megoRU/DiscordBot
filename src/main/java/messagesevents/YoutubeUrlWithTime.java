@@ -2,8 +2,9 @@ package messagesevents;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class YoutubeUrlWithTime extends ListenerAdapter {
 
@@ -17,13 +18,11 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
     public final String YOUTUBE_MINI_MIN = "(https:\\/\\/)?(?:)youtu\\.be\\/.+\\s+[0-9]+";
 
     @Override
-    public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-        if (event.getAuthor().isBot()) {
-            return;
-        }
-        if (!event.getGuild().getSelfMember().hasPermission(event.getChannel(), Permission.MESSAGE_WRITE)) {
-            return;
-        }
+    public void onMessageReceived(@NotNull MessageReceivedEvent event) {
+        if (event.getAuthor().isBot()) return;
+        if (!event.isFromGuild()) return;
+        if (!event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_SEND)) return;
+
         String message = event.getMessage().getContentDisplay().trim();
 
         if (message.matches(YOUTUBE_LINKS_MIN_SEC)
@@ -58,7 +57,7 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
         }
     }
 
-    public String youtubeLinks(GuildMessageReceivedEvent event, String idUser, String message, String count, String argument) {
+    public String youtubeLinks(@NotNull MessageReceivedEvent event, String idUser, String message, String count, String argument) {
         String[] text = message.split(" ");
         String slash = "/";
         String equal = "=";

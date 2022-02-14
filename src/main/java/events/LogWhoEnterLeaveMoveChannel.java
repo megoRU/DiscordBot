@@ -15,7 +15,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     @Override
     public void onGuildVoiceJoin(@NotNull GuildVoiceJoinEvent event) {
         if (!event.getMember().getUser().isBot()) {
-            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_SEND)) {
                 return;
             }
             String nameChannelEnterUser = event.getChannelJoined().getName();
@@ -35,7 +35,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     @Override
     public void onGuildVoiceMove(@NotNull GuildVoiceMoveEvent event) {
         if (!event.getMember().getUser().isBot()) {
-            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_SEND)) {
                 return;
             }
             String nameChannelMoveUser = event.getChannelJoined().getName();
@@ -56,7 +56,7 @@ public class LogWhoEnterLeaveMoveChannel extends ListenerAdapter {
     @Override
     public void onGuildVoiceLeave(@NotNull GuildVoiceLeaveEvent event) {
         if (!event.getMember().getUser().isBot()) {
-            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_WRITE)) {
+            if (!event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_SEND)) {
                 return;
             }
             String nameChannelLeaveUser = event.getChannelLeft().getName();
