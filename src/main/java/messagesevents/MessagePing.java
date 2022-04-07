@@ -1,7 +1,6 @@
 package messagesevents;
 
 import net.dv8tion.jda.api.Permission;
-import net.dv8tion.jda.api.entities.MessageChannel;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -26,13 +25,10 @@ public class MessagePing extends ListenerAdapter {
         }
 
         if (message.equals(prefix) || message.equals(PING_WITH_OUT)) {
-            MessageChannel channels = event.getChannel();
-            long time = System.currentTimeMillis();
-            channels.sendMessage("Pong!") /* => RestAction<Message> */
-                    .queue(response /* => Message */ -> {
-                        response.editMessageFormat("API Response: %d ms", System.currentTimeMillis() - time)
-                                .queue();
-                    });
+            event.getJDA().getRestPing().queue((time)  ->
+                    event.getChannel()
+                            .sendMessageFormat("Rest Ping: %d ms\nWebSocket Ping: %d ms", time, event.getJDA().getGatewayPing())
+                            .queue());
         }
     }
 }
