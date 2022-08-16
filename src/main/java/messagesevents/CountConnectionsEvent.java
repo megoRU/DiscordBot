@@ -3,6 +3,7 @@ package messagesevents;
 import db.DataBase;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +63,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
 
                 if ((message.equals(COUNT4) || message.equals(COUNT_TOP_THREE))
                         && topThreeUsers.size() < 3) {
-                    event.getMessage().addReaction("\u26D4").queue();
+                    event.getMessage().addReaction(Emoji.fromUnicode("\u26D4")).queue();
                     EmbedBuilder info = new EmbedBuilder();
                     info.setColor(0x00FF00);
                     info.setDescription("Not enough data!");
@@ -90,7 +91,7 @@ public class CountConnectionsEvent extends ListenerAdapter {
                     info.clear();
                 }
             } catch (Exception exception) {
-                event.getMessage().addReaction("\u26D4").queue();
+                event.getMessage().addReaction(Emoji.fromUnicode("\u26D4")).queue();
                 exception.printStackTrace();
             }
         }

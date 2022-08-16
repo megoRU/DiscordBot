@@ -2,6 +2,7 @@ package games;
 
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
+import net.dv8tion.jda.api.entities.emoji.Emoji;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +46,7 @@ public class GameOfDice extends ListenerAdapter {
                     guild.remove(1);
                     chat.remove(1);
                     playerList.remove(1);
-                    event.getMessage().addReaction("\u26D4").queue();
+                    event.getMessage().addReaction(Emoji.fromUnicode("\u26D4")).queue();
                     event.getChannel().sendMessage("You are already on the list!").queue();
                     return;
                 }
@@ -82,7 +83,7 @@ public class GameOfDice extends ListenerAdapter {
                     guild.remove(1);
                     chat.remove(1);
                     playerList.remove(1);
-                    event.getMessage().addReaction("\u26D4").queue();
+                    event.getMessage().addReaction(Emoji.fromUnicode("\u26D4")).queue();
                     event.getChannel().sendMessage("You are already on the list!").queue();
                     return;
                 }

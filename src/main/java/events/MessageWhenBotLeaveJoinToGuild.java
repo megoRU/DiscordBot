@@ -19,6 +19,7 @@ public class MessageWhenBotLeaveJoinToGuild extends ListenerAdapter {
             if (event.getGuild().getSelfMember().hasPermission(Permission.MESSAGE_SEND)) {
 
                 event.getGuild().getDefaultChannel()
+                        .asTextChannel()
                         .sendMessage(
                                 "Thanks for adding " + "**mego**" + " to " + event.getGuild().getName() + "!"
                                         + "\nUse **!help/help/info** for a list of commands."
