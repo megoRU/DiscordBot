@@ -8,10 +8,12 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BotStart {
 
@@ -21,8 +23,23 @@ public class BotStart {
     public static final Map<String, String> idMessagesWithPollEmoji = new HashMap<>();
 
     public void startBot() throws Exception {
+
+        List<GatewayIntent> intents = new ArrayList<>(
+                Arrays.asList(
+                        GatewayIntent.MESSAGE_CONTENT,
+                        GatewayIntent.GUILD_MESSAGES,
+                        GatewayIntent.GUILD_EMOJIS_AND_STICKERS,
+                        GatewayIntent.GUILD_MESSAGE_REACTIONS,
+                        GatewayIntent.DIRECT_MESSAGES,
+                        GatewayIntent.DIRECT_MESSAGE_TYPING));
+
+        jdaBuilder.disableCache(
+                CacheFlag.ROLE_TAGS,
+                CacheFlag.ACTIVITY,
+                CacheFlag.MEMBER_OVERRIDES);
+
         jdaBuilder.setAutoReconnect(true);
-//    jdaBuilder.enableIntents(GatewayIntent.GUILD_MEMBERS); // also enable privileged intent
+        jdaBuilder.enableIntents(intents);
         jdaBuilder.setStatus(OnlineStatus.ONLINE);
         jdaBuilder.setActivity(Activity.playing("!help"));
         jdaBuilder.setBulkDeleteSplittingEnabled(false);
@@ -43,6 +60,10 @@ public class BotStart {
 
         jda = jdaBuilder.build();
         jda.awaitReady();
+
+        Message.suppressContentIntentWarning();
+
+        jda.getPresence().setActivity(Activity.playing("!help " + jda.getGuilds().size() + " guilds"));
 
         try {
             Connection conn = DriverManager.getConnection(Config.getCONN(), Config.getUSER(), Config.getPASS());

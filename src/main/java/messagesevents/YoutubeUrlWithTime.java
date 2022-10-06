@@ -1,6 +1,5 @@
 package messagesevents;
 
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -22,13 +21,17 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
         if (event.getAuthor().isBot()) return;
         if (!event.isFromGuild()) return;
         if (!event.getGuild().getSelfMember().hasPermission(event.getGuildChannel(), Permission.MESSAGE_SEND)) return;
+        if (event.getMember() == null) return;
 
         String message = event.getMessage().getContentDisplay().trim();
+
+        System.out.println(message);
 
         if (message.matches(YOUTUBE_LINKS_MIN_SEC)
                 || message.matches(YOUTUBE_MINI_MIN_SEC)
                 || message.matches(YOUTUBE_MINI_MIN)
                 || message.matches(YOUTUBE_LINKS_MIN)) {
+
             String idUser = event.getMember().getUser().getId();
             try {
                 if (message.matches(YOUTUBE_LINKS_MIN_SEC)) {
@@ -47,43 +50,29 @@ public class YoutubeUrlWithTime extends ListenerAdapter {
                     youtubeLinks(event, idUser, message, "2", "/");
                 }
             } catch (Exception exception) {
-                EmbedBuilder errorYoutube = new EmbedBuilder();
-                errorYoutube.setColor(0xff3923);
-                errorYoutube.setTitle("🔴 Error: unexpected error");
-                errorYoutube.setDescription("-> YoutubeUrlWithTime.java");
-                event.getChannel().sendMessageEmbeds(errorYoutube.build()).queue();
-                errorYoutube.clear();
+                exception.printStackTrace();
             }
         }
     }
 
-    public String youtubeLinks(@NotNull MessageReceivedEvent event, String idUser, String message, String count, String argument) {
+    public void youtubeLinks(@NotNull MessageReceivedEvent event, String idUser, String message, String count, String argument) {
         String[] text = message.split(" ");
-        String slash = "/";
-        String equal = "=";
         int indexFirst = 0;
-        if (slash.equals(argument)) {
-            indexFirst = text[0].lastIndexOf(slash);
-        }
-        if (equal.equals(argument)) {
-            indexFirst = text[0].lastIndexOf(equal);
+        switch (argument) {
+            case "/", "=" -> indexFirst = text[0].lastIndexOf(argument);
         }
         int length = text[0].length();
         int timeMinutes = Integer.parseInt(text[1]);
         int results = 0;
-        String one = "1";
-        String two = "2";
-        if (one.equals(count)) {
-            results = timeMinutes * 60;
+        switch (count) {
+            case "1" -> results = timeMinutes * 60;
+            case "2" -> results = (timeMinutes * 60) + Integer.parseInt(text[2]);
         }
-        if (two.equals(count)) {
-            results = (timeMinutes * 60) + Integer.parseInt(text[2]);
-        }
+
         String resultsUrl = text[0].substring(indexFirst + 1, length);
-        String lastMessage = event.getChannel().getLatestMessageId();
-        event.getChannel().deleteMessageById(lastMessage).queue();
-        event.getChannel().sendMessage("<@" + idUser + ">! " + "sent a message:" + "\n"
-                + "https://youtu.be/" + resultsUrl + "?t=" + results).queue();
-        return null;
+        event.getChannel().deleteMessageById(event.getMessageId()).queue();
+
+        String url = String.format("<@%s>! sent a message:\nhttps://youtu.be/%s?t=%s", idUser, resultsUrl, results);
+        event.getChannel().sendMessage(url).queue();
     }
 }

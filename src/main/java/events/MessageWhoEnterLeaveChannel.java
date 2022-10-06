@@ -1,7 +1,7 @@
 package events;
 
 import db.DataBase;
-import net.dv8tion.jda.api.entities.TextChannel;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceJoinEvent;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceLeaveEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -17,7 +17,7 @@ public class   MessageWhoEnterLeaveChannel extends ListenerAdapter {
     private static final String MAIN_GUILD_ID = "250700478520885248";
     //bottestchannel //botchat
     private static final String BOT_CHANNEL_LOGS = "botchat";
-    private boolean inChannelMeshiva;
+    private static volatile boolean inChannelMeshiva;
 
     //TODO: Сделать ООП
     private Boolean whoLastEnter(String idUser, String idGuild) {
