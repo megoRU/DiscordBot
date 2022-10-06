@@ -1,4 +1,4 @@
 CHCP 65001
-docker build -t megoru/musicandgames .
-docker push megoru/musicandgames
+docker build -t megoru/helper .
+docker push megoru/helper
 CD C:\java_GitHub\DiscordBot
